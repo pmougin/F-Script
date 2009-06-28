@@ -1,0 +1,86 @@
+" FlightTutorial.txt by Philippe Mougin"
+" This F-Script code creates the object graph needed for the Flight Tutorial described in the F-Script Manual"
+
+A := {FSAirplane airplaneWithIdent:4412 model:'A320' capacity:278 location:'PARIS',
+FSAirplane airplaneWithIdent:2200 model:'A320' capacity:278 location:'CHICAGO',
+FSAirplane airplaneWithIdent:3000 model:'A300' capacity:104 location:'CHICAGO',
+FSAirplane airplaneWithIdent:5608 model:'A300' capacity:100 location:'PARIS',
+FSAirplane airplaneWithIdent:1207 model:'A300' capacity:100 location:'NEW YORK',
+FSAirplane airplaneWithIdent:1001 model:'A320' capacity:312 location:'NEW YORK',
+FSAirplane airplaneWithIdent:5637 model:'A320' capacity:300 location:'PARIS',
+FSAirplane airplaneWithIdent:1201 model:'A300' capacity:100 location:'BOSTON',
+FSAirplane airplaneWithIdent:1004 model:'A320' capacity:306 location:'NEW YORK'
+}.
+P := {FSPilot pilotWithName:'GRANT' address:'NEW YORK' salary:200000 age:30,
+FSPilot pilotWithName:'SIMPSON' address:'NEW YORK' salary:209000 age:28,
+FSPilot pilotWithName:'DUPONT' address:'PARIS' salary:300000 age:45,
+FSPilot pilotWithName:'MOORE' address:'NEW YORK' salary:250000 age:55,
+FSPilot pilotWithName:'COOPER' address:'NEW YORK' salary:700000 age:30,
+FSPilot pilotWithName:'MARTIN' address:'PARIS' salary:225457 age:50,
+FSPilot pilotWithName:'CARTER' address:'BOSTON' salary:100120 age:43
+}.
+F := {FSFlight flightWithIdent:1008 pilot:(P at:0) airplane:(A at:8) departureDate:(NSDate dateWithString:'1998-07-15 12:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-15 14:00:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'CHICAGO',
+FSFlight flightWithIdent:1009 pilot:(P at:0 ) airplane:(A at:8) departureDate:(NSDate dateWithString:'1998-07-15 16:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-15 18:00:00 +0000') departureLocation:'CHICAGO' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1010 pilot:(P at:1 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-15 20:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-15 22:00:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'CHICAGO',
+FSFlight flightWithIdent:1011 pilot:(P at:1 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-16 00:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 02:00:00 +0000') departureLocation:'CHICAGO' arrivalLocation:'NEW YORK', 
+
+FSFlight flightWithIdent:1012 pilot:(P at:2 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-16 04:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 06:00:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'CHICAGO',
+FSFlight flightWithIdent:1013 pilot:(P at:2 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-16 08:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 10:00:00 +0000') departureLocation:'CHICAGO' arrivalLocation:'NEW YORK', 
+
+FSFlight flightWithIdent:1014 pilot:(P at:0 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-16 12:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 14:00:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'CHICAGO',
+FSFlight flightWithIdent:1015 pilot:(P at:0 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-16 16:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 18:00:00 +0000') departureLocation:'CHICAGO' arrivalLocation:'NEW YORK', 
+
+FSFlight flightWithIdent:1016 pilot:(P at:1 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-16 20:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 22:00:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'CHICAGO',
+FSFlight flightWithIdent:1017 pilot:(P at:1 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-17 00:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-17 02:00:00 +0000') departureLocation:'CHICAGO' arrivalLocation:'NEW YORK', 
+
+FSFlight flightWithIdent:1018 pilot:(P at:2 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-17 04:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-17 06:00:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'CHICAGO',
+FSFlight flightWithIdent:1019 pilot:(P at:2 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-17 08:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-17 10:00:00 +0000') departureLocation:'CHICAGO' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1020 pilot:(P at:0 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-17 12:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-17 14:00:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'CHICAGO',
+FSFlight flightWithIdent:1021 pilot:(P at:0 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-17 16:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-17 18:00:00 +0000') departureLocation:'CHICAGO' arrivalLocation:'NEW YORK', 
+
+FSFlight flightWithIdent:1022 pilot:(P at:1 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-17 20:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-17 22:00:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'CHICAGO',
+FSFlight flightWithIdent:1023 pilot:(P at:1 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-18 00:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-18 02:00:00 +0000') departureLocation:'CHICAGO' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1024 pilot:(P at:2 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-18 04:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-18 06:00:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'CHICAGO',
+FSFlight flightWithIdent:1025 pilot:(P at:2 ) airplane:(A at:0) departureDate:(NSDate dateWithString:'1998-07-18 08:00:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-18 10:00:00 +0000') departureLocation:'CHICAGO' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1026 pilot:(P at:3 ) airplane:(A at:1) departureDate:(NSDate dateWithString:'1998-07-15 12:22:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-15 13:35:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'BOSTON',
+FSFlight flightWithIdent:1027 pilot:(P at:3 ) airplane:(A at:1) departureDate:(NSDate dateWithString:'1998-07-15 16:10:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-15 17:23:00 +0000') departureLocation:'BOSTON' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1028 pilot:(P at:3 ) airplane:(A at:2) departureDate:(NSDate dateWithString:'1998-07-16 12:22:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 13:35:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'BOSTON',
+FSFlight flightWithIdent:1029 pilot:(P at:3 ) airplane:(A at:2) departureDate:(NSDate dateWithString:'1998-07-16 16:10:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 17:23:00 +0000') departureLocation:'BOSTON' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1030 pilot:(P at:3 ) airplane:(A at:3) departureDate:(NSDate dateWithString:'1998-07-17 12:22:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 13:35:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'BOSTON',
+FSFlight flightWithIdent:1031 pilot:(P at:3 ) airplane:(A at:3) departureDate:(NSDate dateWithString:'1998-07-17 16:10:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 17:23:00 +0000') departureLocation:'BOSTON' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1032 pilot:(P at:3 ) airplane:(A at:1) departureDate:(NSDate dateWithString:'1998-07-18 12:22:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-18 13:35:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'BOSTON',
+FSFlight flightWithIdent:1033 pilot:(P at:3 ) airplane:(A at:1) departureDate:(NSDate dateWithString:'1998-07-18 16:10:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-18 17:23:00 +0000') departureLocation:'BOSTON' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1034 pilot:(P at:4 ) airplane:(A at:5) departureDate:(NSDate dateWithString:'1998-07-15 10:15:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-15 18:05:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'PARIS',
+FSFlight flightWithIdent:1035 pilot:(P at:5 ) airplane:(A at:6) departureDate:(NSDate dateWithString:'1998-07-15 09:30:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-15 17:35:00 +0000') departureLocation:'PARIS' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1036 pilot:(P at:5 ) airplane:(A at:6) departureDate:(NSDate dateWithString:'1998-07-16 10:15:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 18:05:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'PARIS',
+FSFlight flightWithIdent:1037 pilot:(P at:4 ) airplane:(A at:5) departureDate:(NSDate dateWithString:'1998-07-16 09:30:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-16 17:35:00 +0000') departureLocation:'PARIS' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1038 pilot:(P at:4 ) airplane:(A at:7) departureDate:(NSDate dateWithString:'1998-07-17 10:15:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-17 18:05:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'PARIS',
+FSFlight flightWithIdent:1039 pilot:(P at:5 ) airplane:(A at:4) departureDate:(NSDate dateWithString:'1998-07-17 09:30:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-17 17:35:00 +0000') departureLocation:'PARIS' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1040 pilot:(P at:5 ) airplane:(A at:4) departureDate:(NSDate dateWithString:'1998-07-18 10:15:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-18 18:05:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'PARIS',
+FSFlight flightWithIdent:1041 pilot:(P at:4 ) airplane:(A at:7) departureDate:(NSDate dateWithString:'1998-07-18 09:30:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-18 17:35:00 +0000') departureLocation:'PARIS' arrivalLocation:'NEW YORK',
+
+
+
+FSFlight flightWithIdent:1042 pilot:(P at:0 ) airplane:(A at:1) departureDate:(NSDate dateWithString:'1998-07-20 10:15:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-20 18:05:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'PARIS',
+FSFlight flightWithIdent:1043 pilot:(P at:0 ) airplane:(A at:2) departureDate:(NSDate dateWithString:'1998-07-21 09:30:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-21 17:35:00 +0000') departureLocation:'PARIS' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1044 pilot:(P at:0 ) airplane:(A at:3) departureDate:(NSDate dateWithString:'1998-07-22 10:15:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-22 18:05:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'PARIS',
+FSFlight flightWithIdent:1045 pilot:(P at:0 ) airplane:(A at:4) departureDate:(NSDate dateWithString:'1998-07-23 09:30:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-23 17:35:00 +0000') departureLocation:'PARIS' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1046 pilot:(P at:0 ) airplane:(A at:5) departureDate:(NSDate dateWithString:'1998-07-24 10:15:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-24 18:05:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'PARIS',
+FSFlight flightWithIdent:1047 pilot:(P at:0 ) airplane:(A at:6) departureDate:(NSDate dateWithString:'1998-07-25 09:30:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-25 17:35:00 +0000') departureLocation:'PARIS' arrivalLocation:'NEW YORK',
+
+FSFlight flightWithIdent:1048 pilot:(P at:0 ) airplane:(A at:7) departureDate:(NSDate dateWithString:'1998-07-29 10:15:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-29 18:05:00 +0000') departureLocation:'NEW YORK' arrivalLocation:'PARIS',
+FSFlight flightWithIdent:1049 pilot:(P at:0 ) airplane:(A at:8) departureDate:(NSDate dateWithString:'1998-07-30 09:30:00 +0000') arrivalDate:(NSDate dateWithString:'1998-07-30 17:35:00 +0000') departureLocation:'PARIS' arrivalLocation:'NEW YORK'
+}.

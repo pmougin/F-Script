@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
+<plist version="0.9">
+<dict>
+	<key>Commands</key>
+	<dict>
+		<key>Eval</key>
+		<dict>
+			<key>Description</key>
+			<string>Evaluate an object.</string>
+			<key>Name</key>
+			<string>eval</string>
+		</dict>
+	</dict>
+	<key>Description</key>
+	<string>Commands for fs.</string>
+	<key>Name</key>
+	<string>FScript Suite</string>
+</dict>
+</plist>

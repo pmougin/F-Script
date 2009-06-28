@@ -1,0 +1,23 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {updateAction = id; }; 
+            CLASS = FSAttributedStringInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                attributedStringView = NSTextView; 
+                printStringView = NSTextView; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {updateAction = id; }; 
+            CLASS = FSGenericObjectInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {printStringView = NSTextView; window = NSWindow; }; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

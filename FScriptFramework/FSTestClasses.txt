@@ -1,0 +1,902 @@
+t := KTestManager alloc init autorelease.
+t setShouldLog:YES.
+
+"--------------------------------------------------------------------------------------------------------"
+
+"--- NOT SUPPORTED YET ----"
+"
+t startTest:'adding an F-Script method to an Objective-C class'.
+
+anFSTestObjCClass2 := FSTestObjCClass2 alloc init autorelease.
+
+FSTestObjCClass2 
+{ 
+  - fscriptMethodAddedToObjCClass
+  {
+    ^'hello, I''m from an F-Script method added to an Objective-C class'.
+  }
+}
+
+t assert: anFSTestObjCClass2 fscriptMethodAddedToObjCClass = 'hello, I''m from an F-Script method added to an Objective-C class'.
+
+t startTest:'call to super from ObjC to F-Script'.
+"
+"----------------------------"
+
+t startCategory:'Class Creation'.
+
+"**********************************************************************"
+"t startTest:'root class'."
+"FSTestClassRoot : nil {}."
+
+" TODO
+t startTest:'addition to an undefined class'.
+t assertError:[FSTestClass0 { - foo { ^44 } }].
+"
+
+"**********************************************************************"
+t startTest:'empty explicit NSObject subclass'.
+FSTestClass1 : NSObject {}.
+t assert: FSTestClass1 superclass == NSObject.
+
+"**********************************************************************"
+t startTest:'empty Array subclass'.
+FSTestClass2 : Array {}.
+t assert: FSTestClass2 superclass == Array.
+
+"**********************************************************************"
+t startTest:'complex subclass'.
+FSTestClass3 : FSTestObjCClass2 
+{
+  iv_a 
+  iv_b
+  iv_c
+  
+  "Not yet supported"
+  "
+  - (void) dealloc
+  {
+    deallocationProof appendString:' FSTestObjCClass3 '.
+  }
+  "
+  
+  - myVoidPtr
+  {
+    ^iv_voidPtr.
+  }
+  
+  - ivars 
+  {
+    ^ { iv__Bool, 
+        iv_char,
+        iv_unsigned_char,
+        iv_short,
+        iv_unsigned_short,
+        iv_int,
+        iv_unsigned_int,
+        iv_long,
+        iv_unsigned_long,
+        iv_long_long,
+        iv_unsigned_long_long,
+        iv_id,
+        iv_Class,
+        iv_float,
+        iv_double,
+        iv_SEL,
+        iv_NSRange,
+        iv_NSSize,
+        iv_CGSize,
+        iv_NSPoint,
+        iv_CGPoint,
+        iv_NSRect,
+        iv_CGRect,
+        iv__Bool2, 
+        iv_char2,
+        iv_unsigned_char2,
+        iv_short2,
+        iv_unsigned_short2,
+        iv_int2,
+        iv_unsigned_int2,
+        iv_long2,
+        iv_unsigned_long2,
+        iv_long_long2,
+        iv_unsigned_long_long2,
+        iv_id2,
+        iv_Class2,
+        iv_float2,
+        iv_double2,
+        iv_SEL2,
+        iv_NSRange2,
+        iv_NSSize2,
+        iv_CGSize2,
+        iv_NSPoint2,
+        iv_CGPoint2,
+        iv_NSRect2,
+        iv_CGRect2,
+        iv_a,
+        iv_b,
+        iv_c } 
+  }
+  
+  - setIvarsUsingMultipleAssignment:ivars
+  {
+    ^[ |iv_id_old iv_id2_old iv_a_old iv_b_old iv_c_old|
+    
+    iv_id_old  := iv_id.  
+    iv_id2_old := iv_id2. 
+    iv_a_old   := iv_a.   
+    iv_b_old   := iv_b.   
+    iv_c_old   := iv_c.  
+    
+    { iv__Bool, 
+      iv_char,
+      iv_unsigned_char,
+      iv_short,
+      iv_unsigned_short,
+      iv_int,
+      iv_unsigned_int,
+      iv_long,
+      iv_unsigned_long,
+      iv_long_long,
+      iv_unsigned_long_long,
+      iv_id,
+      iv_Class,
+      iv_float,
+      iv_double,
+      iv_SEL,
+      iv_NSRange,
+      iv_NSSize,
+      iv_CGSize,
+      iv_NSPoint,
+      iv_CGPoint,
+      iv_NSRect,
+      iv_CGRect,
+      iv__Bool2, 
+      iv_char2,
+      iv_unsigned_char2,
+      iv_short2,
+      iv_unsigned_short2,
+      iv_int2,
+      iv_unsigned_int2,
+      iv_long2,
+      iv_unsigned_long2,
+      iv_long_long2,
+      iv_unsigned_long_long2,
+      iv_id2,
+      iv_Class2,
+      iv_float2,
+      iv_double2,
+      iv_SEL2,
+      iv_NSRange2,
+      iv_NSSize2,
+      iv_CGSize2,
+      iv_NSPoint2,
+      iv_CGPoint2,
+      iv_NSRect2,
+      iv_CGRect2,
+      iv_a,
+      iv_b,
+      iv_c
+    } := ivars.
+    
+    iv_id retain.  
+    iv_id2 retain. 
+    iv_a retain.   
+    iv_b retain.   
+    iv_c retain.  
+    
+    iv_id_old  release.  
+    iv_id2_old release. 
+    iv_a_old   release.   
+    iv_b_old   release.   
+    iv_c_old   release. ] value.
+  }
+  
+  - tags
+  {
+    ^ super tags ++ {'FSTestClass3'}
+  }
+  
+  - sendInvalidMessageToSuper
+  {
+    ^ super invalidMessageToSuper
+  }
+  
+  - sendInvalidMessageToSuper2
+  {
+    ^ super sendInvalidMessageToSuper2
+  }
+}.
+
+aFSTestClass3 := FSTestClass3 alloc init autorelease.
+
+t assert: (aFSTestClass3 ivars isEqual:{YES, YES, 5, -1972, 1933, -300000, 987654321,    88, 89, -123, 1500400300, 'hello', NSView  ,    3, -1.23, #init        , NSValue rangeWithLocation:2 length:10, NSValue sizeWithWidth:200.3 height:400.25, NSValue sizeWithWidth:200.3 height:400.25, 100<>200, 100<>200, 5<>5 extent:640<> 480, 5<>5 extent:640 <>480,
+                                         NO,  NO, 0, -1515, 1905,      35,         1, -1234, 99,   77,        789, 'world', NSButton, 2345, 56.2 , #between:and:, NSValue rangeWithLocation:0 length:51, NSValue sizeWithWidth:100   height:6.3   , NSValue sizeWithWidth:100   height:6.3   , 0 <> 500,   0<>500, 0<>0 extent:1024<>768, 0<>0 extent:1024<>768, nil, nil, nil}).
+
+t assert: aFSTestClass3 voidPtr address = aFSTestClass3 myVoidPtr address.
+
+newIvars := {YES, false, 123, -197, 2708, -712345, 789642312,    43, 89, -123, 1500400300, 'do re mi' , NSWindow,    3, -1.23, #isEqual:, NSValue rangeWithLocation:0 length:0  , NSValue sizeWithWidth:50.3 height:40.25, NSValue sizeWithWidth:200.3 height:400.25, 0<>20  , 10<>11, 68<>22 extent:0<>100 , 5<>5 extent:640 <>480,
+              NO,  true,   8, -151,   34,    7654,    765335,  -237, 99,   77,        789, 'fa sol la', NSObject, 2345, 56.2 , #+      , NSValue rangeWithLocation:10 length:51, NSValue sizeWithWidth:0   height:50000 , NSValue sizeWithWidth:100   height:6.3   , 0 <> 50, 0<>500, 0<>0 extent:1024<>768, 0<>0 extent:1024<>768, 6, 34, 'toto'}.
+
+aFSTestClass3 setIvarsUsingMultipleAssignment:newIvars.
+
+t assert:(aFSTestClass3 ivars isEqual:newIvars).
+
+newIvarsInvalid1 := {YES, false, 123, -197, 678652708, -712345, 789642312,    43, 89, -123, 1500400300, 'do re mi' , NSWindow,    3, -1.23, #isEqual:, NSValue rangeWithLocation:0 length:0  , NSValue sizeWithWidth:50.3 height:40.25, NSValue sizeWithWidth:200.3 height:400.25, 0<>20  , 10<>11, 68<>22 extent:0<>100 , 5<>5 extent:640 <>480,
+                     NO,  true,   8, -151,   34,    7654,    765335,  -237, 99,   77,        789, 'fa sol la', NSObject, 2345, 56.2 , #+      , NSValue rangeWithLocation:10 length:51, NSValue sizeWithWidth:0   height:50000 , NSValue sizeWithWidth:100   height:6.3   , 0 <> 50, 0<>500, 0<>0 extent:1024<>768, 0<>0 extent:1024<>768, 6, 34, 'toto'}.
+
+newIvarsInvalid2 := {YES, false, 123, -197,  34, -712345, 789642312,    'toto', 89, -123, 1500400300, 'do re mi' , NSWindow,    3, -1.23, #isEqual:, NSValue rangeWithLocation:0 length:0  , NSValue sizeWithWidth:50.3 height:40.25, NSValue sizeWithWidth:200.3 height:400.25, 0<>20  , 10<>11, 68<>22 extent:0<>100 , 5<>5 extent:640 <>480,
+                     NO,  true,   8, -151,   34,    7654,    765335,  -237, 99,   77,        789, 'fa sol la', NSObject, 2345, 56.2 , #+      , NSValue rangeWithLocation:10 length:51, NSValue sizeWithWidth:0   height:50000 , NSValue sizeWithWidth:100   height:6.3   , 0 <> 50, 0<>500, 0<>0 extent:1024<>768, 0<>0 extent:1024<>768, 6, 34, 'toto'}.
+
+newIvarsInvalid3 := {false, 123, -197,  34, -712345, 789642312,    'toto', 89, -123, 1500400300, 'do re mi' , NSWindow,    3, -1.23, #isEqual:, NSValue rangeWithLocation:0 length:0  , NSValue sizeWithWidth:50.3 height:40.25, NSValue sizeWithWidth:200.3 height:400.25, 0<>20  , 10<>11, 68<>22 extent:0<>100 , 5<>5 extent:640 <>480,
+                     NO,  true,   8, -151,   34,    7654,    765335,  -237, 99,   77,        789, 'fa sol la', NSObject, 2345, 56.2 , #+      , NSValue rangeWithLocation:10 length:51, NSValue sizeWithWidth:0   height:50000 , NSValue sizeWithWidth:100   height:6.3   , 0 <> 50, 0<>500, 0<>0 extent:1024<>768, 0<>0 extent:1024<>768, 6, 34, 'toto'}.
+
+newIvarsInvalid4 := {YES, false, true, 123, -197,  34, -712345, 789642312,    'toto', 89, -123, 1500400300, 'do re mi' , NSWindow,    3, -1.23, #isEqual:, NSValue rangeWithLocation:0 length:0  , NSValue sizeWithWidth:50.3 height:40.25, NSValue sizeWithWidth:200.3 height:400.25, 0<>20  , 10<>11, 68<>22 extent:0<>100 , 5<>5 extent:640 <>480,
+                     NO,  true,   8, -151,   34,    7654,    765335,  -237, 99,   77,        789, 'fa sol la', NSObject, 2345, 56.2 , #+      , NSValue rangeWithLocation:10 length:51, NSValue sizeWithWidth:0   height:50000 , NSValue sizeWithWidth:100   height:6.3   , 0 <> 50, 0<>500, 0<>0 extent:1024<>768, 0<>0 extent:1024<>768, 6, 34, 'toto'}.
+
+
+t assertError:[aFSTestClass3 setIvarsUsingMultipleAssignment:newIvarsInvalid1].
+t assertError:[aFSTestClass3 setIvarsUsingMultipleAssignment:newIvarsInvalid2].
+t assertError:[aFSTestClass3 setIvarsUsingMultipleAssignment:newIvarsInvalid3].
+t assertError:[aFSTestClass3 setIvarsUsingMultipleAssignment:newIvarsInvalid4].
+t assertError:[aFSTestClass3 sendInvalidMessageToSuper].
+t assertError:[aFSTestClass3 sendInvalidMessageToSuper2].
+
+t assert:(aFSTestClass3 tags isEqual:{'FSTestObjCClass1','FSTestObjCClass2', 'FSTestClass3'}).
+
+"**********************************************************************"
+t startTest:'subclass of an F-Script class'.
+FSTestClass4 : FSTestClass3
+{
+  x y 
+  
+  - tags
+  {
+    ^ super tags ++ {'FSTestClass4'}
+  }
+  
+  - x { ^ x }
+  - setX:value { x := value }
+  
+  - y { ^ y }
+  - setY:value { y := value }
+  
+  - a { ^ iv_a }
+  - setA:value { value retain. iv_a release. iv_a := value }
+
+  - b { ^ iv_b }
+  - setB:value { value retain. iv_b release. iv_b := value }
+  
+  - sh { ^ iv_short }
+  - setSh:value { iv_short := value }
+  
+  - sumOf:array
+  {
+    | sum i count|
+    sum   := 0.
+    i     := 0.
+    count := array count.
+    [i < count] whileTrue:
+    [
+      sum := sum + (array at:i).
+      i := i + 1.
+    ].
+    ^ sum.
+  }
+  
+  - testLocalInitializedToNil
+  {
+    |a b c|
+    b := 7.
+    ^ {a, b, c}.
+  }
+
+}.
+
+
+aFSTestClass4 := FSTestClass4 alloc init autorelease.
+t assert:(aFSTestClass4 tags isEqual:{'FSTestObjCClass1','FSTestObjCClass2', 'FSTestClass3', 'FSTestClass4'}).
+
+"**********************************************************************"
+"**********************************************************************"
+t startCategory:'Misc'.
+
+t startTest:'Instance variables'.
+
+anotherFSTestClass4 := FSTestClass4 alloc init autorelease.
+
+aFSTestClass4 setA:'a'.
+aFSTestClass4 setB:'b'.
+aFSTestClass4 setX:'x'.
+aFSTestClass4 setY:'y'.
+aFSTestClass4 setSh:12.
+
+anotherFSTestClass4 setA:'aaa'.
+anotherFSTestClass4 setB:'bbb'.
+anotherFSTestClass4 setX:'xxx'.
+anotherFSTestClass4 setY:'yyy'.
+anotherFSTestClass4 setSh:-8.
+
+t assert: aFSTestClass4 a  = 'a'.
+t assert: aFSTestClass4 b  = 'b'.
+t assert: aFSTestClass4 x  = 'x'.
+t assert: aFSTestClass4 y  = 'y'.
+t assert: aFSTestClass4 sh =  12.
+
+t assert: anotherFSTestClass4 a  = 'aaa'.
+t assert: anotherFSTestClass4 b  = 'bbb'.
+t assert: anotherFSTestClass4 x  = 'xxx'.
+t assert: anotherFSTestClass4 y  = 'yyy'.
+t assert: anotherFSTestClass4 sh =  -8.
+
+t assertError:[aFSTestClass4 setSh:'zz'].
+t assertError:[aFSTestClass4 setSh:32768].
+
+"**********************************************************************"
+t startTest:'local variables'.
+
+t assert: (aFSTestClass4 sumOf:{1, 2, 3, 5, 10}) = 21.
+t assert: (aFSTestClass4 testLocalInitializedToNil isEqual:{nil, 7, nil}).
+
+"**********************************************************************"
+t startTest:'deallocation'.
+
+(NSGarbageCollector defaultCollector == nil) ifTrue:
+[
+  "We are not running with GC"
+  
+  pool := FSAutoreleasePool alloc init.
+
+  o1 := FSTestClass4 alloc init autorelease.
+  o2 := FSTestClass4 alloc init autorelease.
+
+  proof1 := NSMutableString string.
+  proof2 := NSMutableString string.
+
+  o1 setDeallocationProof:proof1.
+  o2 setDeallocationProof:proof2.
+
+  o1 setX:o2.
+
+  o1 := nil.
+  o2 := nil.  
+
+  pool release.
+  pool := nil.  "Should lead to deallocation of o1 and o2 "
+
+  t assert: proof1 = ' FSTestObjCClass2  FSTestObjCClass1 '.
+  t assert: proof2 = ' FSTestObjCClass2  FSTestObjCClass1 '.
+].
+
+
+"**********************************************************************"
+t startTest:'class redefinition'.
+
+t assertError:[FSTestClass3 : FSTestObjCClass1{}]. "modifying the superclass is illegal"
+
+
+"**********************************************************************"
+t startTest:'class methods'.
+
+FSTestClass5 : NSObject
+{
+  + myMethod { ^ 'FSTestClass5 class method myMethod' }
+  
+  - myMethod { ^ 'FSTestClass5 instance method myMethod' }
+}.
+
+t assert: FSTestClass5 alloc init autorelease myMethod = 'FSTestClass5 instance method myMethod'.
+t assert: FSTestClass5 myMethod = 'FSTestClass5 class method myMethod'.
+
+"**********************************************************************"
+t startTest:'class methods inheritance'.
+
+FSTestClass6 : FSTestClass5
+{
+  + myMethod { ^ 'FSTestClass6 class method myMethod calling ' ++ super myMethod }
+  
+  - myMethod { ^ 'FSTestClass6 instance method myMethod calling ' ++ super myMethod }
+}.
+
+t assert: FSTestClass6 alloc init autorelease myMethod = 'FSTestClass6 instance method myMethod calling FSTestClass5 instance method myMethod'.
+t assert: FSTestClass6 myMethod = 'FSTestClass6 class method myMethod calling FSTestClass5 class method myMethod'.
+
+
+"**********************************************************************"
+t startTest:'dynamic ivar access from subclass'.
+
+FSTestClass7 : NSObject
+{
+  a b
+  
+  - setA:value { a := value }
+    
+  - setB:value { b := value }
+}.
+
+FSTestClass8 : FSTestClass7
+{
+  - a { ^ a }
+  
+  - b { ^ b }
+}.
+
+aFSTestClass8 := FSTestClass8 alloc init autorelease.
+aFSTestClass8 setA:'toto'.
+aFSTestClass8 setB:47.
+
+t assert: aFSTestClass8 a = 'toto'.
+t assert: aFSTestClass8 b = 47.
+
+"**********************************************************************"
+t startTest:'Circle'.
+
+Circle : NSObject
+{
+  color
+
+  + circleWithColor:aColor
+  {
+     ^ self alloc initWithColor:aColor
+  }
+
+  - draw
+  {
+     color set.
+     (NSBezierPath bezierPathWithOvalInRect:(400<>100 extent:100<>100)) fill
+  }
+
+  - initWithColor:aColor
+  {
+     self := super init.
+     self == nil ifFalse:
+     [
+        color := aColor
+     ].
+     ^ self
+  }
+}.
+
+circle := Circle circleWithColor:NSColor greenColor.
+circle draw.
+
+"**********************************************************************"
+"_cmd is not currently suported"
+"t startTest:'_cmd'.
+
+FSTestClass9 : NSObject
+{
+  - zzz { ^ _cmd }
+  
+  - add:a and:b { ^ {a+b, _cmd} }
+  - + x { ^ {self add:1 and:x, _cmd} }
+}.
+
+
+aFSTestClass9 := FSTestClass9 alloc init autorelease.
+
+t assert: aFSTestClass9 zzz = #zzz.
+t assert: ((aFSTestClass9 add:4 and:3) isEqual:{7, #add:and:}).
+t assert: ((aFSTestClass9 + 100) isEqual:{{101, #add:and:}, #+}).
+t assert: ((aFSTestClass9 + 100) at:1) printString = '#+'.
+t assert: (((aFSTestClass9 + 100) at:1) value:3 value:2) = 5.
+"
+
+"**********************************************************************"
+t startTest:'KVO'.
+
+Observer : NSObject
+{
+  journal
+ 
+  - init 
+  {
+    self := super init.
+    journal := {}.
+    ^ self
+  } 
+ 
+  - journal 
+  {
+    ^ journal
+  }
+
+  - (void)observeValueForKeyPath:keyPath ofObject:object change:change context:context
+  {
+    journal addObject:{keyPath, object, change}.
+  }
+}.
+
+observer := Observer alloc init.
+
+Buddy : NSObject
+{
+   firstName lastName email
+
+   - initWithFirstName:first lastName:last email:theEmail
+   {
+      self := super init.
+      self == nil ifFalse:
+      [
+         firstName := first.
+         lastName := last.
+         email := theEmail.
+      ].
+      ^self
+   }
+
+   - description
+   {
+      ^'Hello, I am your buddy ' ++ firstName ++ ' ' ++ lastName ++ ' at ' ++ email
+   }
+
+  - email 
+  {
+    ^email
+  }
+
+  - (void)setEmail:theEmail
+  {
+    email := theEmail.
+  }
+}.
+
+john := Buddy alloc initWithFirstName:'John' lastName:'Doe' email:'john@mac.com'.
+
+john addObserver:observer forKeyPath:'email' options:NSKeyValueObservingOptionNew + NSKeyValueObservingOptionOld context:nil.
+
+john setEmail:'jj@orange.fr'.
+
+t assert: ((observer journal at:0) isEqual:{'email', john, NSDictionary dictionaryWithObjects:{NSKeyValueChangeSetting, 'john@mac.com', 'jj@orange.fr'} forKeys:{NSKeyValueChangeKindKey, NSKeyValueChangeOldKey, NSKeyValueChangeNewKey}}).
+
+"**********************************************************************"
+t startTest:'argument and return value mapping'.
+
+FSTestClass10 : NSObject
+{
+  - (id)                   giveBackId:                    (id)                  arg { ^arg }
+  - (id *)                 giveBackIdPtr:                 (id *)                arg { ^arg }
+  - (id)                   dereferenceIdPtr:              (id *)                arg { ^arg at:0 }
+  
+  - (Class)                giveBackClass:                 (Class)               arg { ^arg }
+  - (Class *)              giveBackClassPtr:              (Class *)             arg { ^arg }
+  - (Class)                dereferenceClassPtr:           (Class *)             arg { ^arg at:0 }
+
+  - (SEL)                  giveBackSEL:                   (SEL)                 arg { ^arg }
+  - (SEL *)                giveBackSELPtr:                (SEL *)               arg { ^arg }
+  - (SEL)                  dereferenceSELPtr:             (SEL *)               arg { ^arg at:0 }
+
+  - (BOOL)                 giveBackBOOL:                  (BOOL)                arg { ^arg }
+  - (BOOL *)               giveBackBOOLPtr:               (BOOL *)              arg { ^arg }
+  - (BOOL)                 dereferenceBOOLPtr:            (BOOL *)              arg { ^arg at:0 }
+
+  - (_Bool)                giveBack_Bool:                 (_Bool)               arg { ^arg }
+  - (_Bool *)              giveBack_BoolPtr:              (_Bool *)             arg { ^arg }
+  - (_Bool)                dereference_BoolPtr:           (_Bool *)             arg { ^arg at:0 }
+  
+  - (char)                 giveBackChar:                  (char)                 arg { ^arg }
+  - (char *)               giveBackCharPtr:               (char *)               arg { ^arg }
+  - (char)                 dereferenceCharPtr:            (char *)               arg { ^arg at:0 }
+  
+  - (unsigned char)        giveBackUnsignedChar:          (unsigned char)        arg { ^arg }
+  - (unsigned char *)      giveBackUnsignedCharPtr:       (unsigned char *)      arg { ^arg }
+  - (unsigned char)        dereferenceUnsignedCharPtr:    (unsigned char *)      arg { ^arg at:0 }
+  
+  - (short)                giveBackShort:                 (short)                arg { ^arg }
+  - (short *)              giveBackShortPtr:              (short *)              arg { ^arg }
+  - (short)                dereferenceShortPtr:           (short *)              arg { ^arg at:0 }
+  
+  - (unsigned short)       giveBackUnsignedShort:         (unsigned short)       arg { ^arg }
+  - (unsigned short *)     giveBackUnsignedShortPtr:      (unsigned short *)     arg { ^arg }
+  - (unsigned short)       dereferenceUnsignedShortPtr:   (unsigned short *)     arg { ^arg at:0 }
+  
+  - (int)                  giveBackInt:                   (int)                  arg { ^arg }
+  - (int *)                giveBackIntPtr:                (int *)                arg { ^arg }
+  - (int)                  dereferenceIntPtr:             (int *)                arg { ^arg at:0 }
+  
+  - (unsigned int)         giveBackUnsignedInt:           (unsigned int)         arg { ^arg }
+  - (unsigned int *)       giveBackUnsignedIntPtr:        (unsigned int *)       arg { ^arg }
+  - (unsigned int)         dereferenceUnsignedIntPtr:     (unsigned int *)       arg { ^arg at:0 }
+  
+  - (long)                 giveBackLong:                  (long)                 arg { ^arg }
+  - (long *)               giveBackLongPtr:               (long *)               arg { ^arg }
+  - (long)                 dereferenceLongPtr:            (long *)               arg { ^arg at:0 }
+  
+  - (unsigned long)        giveBackUnsignedLong:          (unsigned long)        arg { ^arg }
+  - (unsigned long *)      giveBackUnsignedLongPtr:       (unsigned long *)      arg { ^arg }
+  - (unsigned long)        dereferenceUnsignedLongPtr:    (unsigned long *)      arg { ^arg at:0 }
+  
+  - (long long)            giveBackLongLong:              (long long)            arg { ^arg }
+  - (long long *)          giveBackLongLongPtr:           (long long *)          arg { ^arg }
+  - (long long)            dereferenceLongLongPtr:        (long long *)          arg { ^arg at:0 }
+  
+  - (unsigned long long)   giveBackUnsignedLongLong:      (unsigned long long)   arg { ^arg }
+  - (unsigned long long *) giveBackUnsignedLongLongPtr:   (unsigned long long *) arg { ^arg }
+  - (unsigned long long)   dereferenceUnsignedLongLongPtr:(unsigned long long *) arg { ^arg at:0 }
+  
+  - (NSInteger)            giveBackNSInteger:             (NSInteger)            arg { ^arg }
+  - (NSInteger *)          giveBackNSIntegerPtr:          (NSInteger *)          arg { ^arg }
+  - (NSInteger)            dereferenceNSIntegerPtr:       (NSInteger *)          arg { ^arg at:0 }
+
+  - (NSUInteger)           giveBackNSUInteger:            (NSUInteger)           arg { ^arg }
+  - (NSUInteger *)         giveBackNSUIntegerPtr:         (NSUInteger *)         arg { ^arg }
+  - (NSUInteger)           dereferenceNSUIntegerPtr:      (NSUInteger *)         arg { ^arg at:0 }
+
+  - (float)                giveBackFloat:                 (float)                arg { ^arg }
+  - (float *)              giveBackFloatPtr:              (float *)              arg { ^arg }
+  - (float)                dereferenceFloatPtr:           (float *)              arg { ^arg at:0 }
+  
+  - (double)               giveBackDouble:                (double)               arg { ^arg }
+  - (double *)             giveBackDoublePtr:             (double *)             arg { ^arg }
+  - (double)               dereferenceDoublePtr:          (double *)             arg { ^arg at:0 }
+
+  - (CGFloat)              giveBackCGFloat:               (CGFloat)              arg { ^arg }
+  - (CGFloat *)            giveBackCGFloatPtr:            (CGFloat *)            arg { ^arg }
+  - (CGFloat)              dereferenceCGFloatPtr:         (CGFloat *)            arg { ^arg at:0 }
+
+  - (NSRange)              giveBackNSRange:               (NSRange)              arg { ^arg }
+  - (NSRange *)            giveBackNSRangePtr:            (NSRange *)            arg { ^arg }
+  - (NSRange)              dereferenceNSRangePtr:         (NSRange *)            arg { ^arg at:0 }
+
+  - (NSPoint)              giveBackNSPoint:               (NSPoint)              arg { ^arg }
+  - (NSPoint *)            giveBackNSPointPtr:            (NSPoint *)            arg { ^arg }
+  - (NSPoint)              dereferenceNSPointPtr:         (NSPoint *)            arg { ^arg at:0 }
+
+  - (CGPoint)              giveBackCGPoint:               (CGPoint)              arg { ^arg }
+  - (CGPoint *)            giveBackCGPointPtr:            (CGPoint *)            arg { ^arg }
+  - (CGPoint)              dereferenceCGPointPtr:         (CGPoint *)            arg { ^arg at:0 }
+
+  - (NSRect)               giveBackNSRect :               (NSRect)               arg { ^arg }
+  - (NSRect *)             giveBackNSRectPtr:             (NSRect *)             arg { ^arg }
+  - (NSRect)               dereferenceNSRectPtr:          (NSRect *)             arg { ^arg at:0 }
+
+  - (CGRect)               giveBackCGRect :               (CGRect)               arg { ^arg }
+  - (CGRect *)             giveBackCGRectPtr:             (CGRect *)             arg { ^arg }
+  - (CGRect)               dereferenceCGRectPtr:          (CGRect *)             arg { ^arg at:0 }
+
+  - (NSSize)               giveBackNSSize :               (NSSize)               arg { ^arg }
+  - (NSSize *)             giveBackNSSizePtr:             (NSSize *)             arg { ^arg }
+  - (NSSize)               dereferenceNSSizePtr:          (NSSize *)             arg { ^arg at:0 }
+
+  - (CGSize)               giveBackCGSize :               (CGSize)               arg { ^arg }
+  - (CGSize *)             giveBackCGSizePtr:             (CGSize *)             arg { ^arg }
+  - (CGSize)               dereferenceCGSizePtr:          (CGSize *)             arg { ^arg at:0 }
+
+  - (CGAffineTransform)    giveBackCGAffineTransform :     (CGAffineTransform)    arg { ^arg }
+  - (CGAffineTransform *)  giveBackCGAffineTransformPtr:   (CGAffineTransform *)  arg { ^arg }
+  - (CGAffineTransform)    dereferenceCGAffineTransformPtr:(CGAffineTransform *)  arg { ^arg at:0 }
+
+  - (void *)               giveBackVoidPtr:               (void *)               arg { ^arg }
+  - (float)                dereferenceVoidPtrAsFloat:     (void *)               arg { arg setType:'f'. ^arg at:0 }
+
+  - (unsigned long long **) giveBackUnsignedLongLongPtrPtr:   (unsigned long long **) arg { ^arg }
+  - (unsigned long long *)  dereferenceUnsignedLongLongPtrPtr:(unsigned long long **) arg { ^arg at:0 }
+
+  - (NSString *)           giveBackNSString:              (NSString *)           arg { ^arg }
+  - (FSTestClass10 *)      giveBackFSTestClass10:         (FSTestClass10 *)      arg { ^arg }
+
+  - (NSArray *) giveBackArrayWithId:(id)a1 Class:(Class)a2 SEL:(SEL)a3 BOOL:(BOOL)a4 _Bool:(_Bool)a5 char:(char)a6 unsignedChar:(unsigned char)a7 
+                short:(short)a8 unsignedShort:(unsigned short)a9 int:(int)a10 unsignedInt:(unsigned int)a11 long:(long)a12 unsignedLong:(unsigned long)a13
+                longLong:(long long)a14 unsignedLongLong:(unsigned long long)a15 NSInteger:(NSInteger)a16 NSUInteger:(NSUInteger)a17 float:(float)a18
+                double:(double)a19 CGFloat:(CGFloat)a20 NSRange:(NSRange)a21 NSPoint:(NSPoint)a22 CGPoint:(CGPoint)a23 NSRect:(NSRect)a24 CGRect:(CGRect)a25
+                NSSize:(NSSize)a26 CGSize:(CGSize)a27 CGAffineTransform:(CGAffineTransform)a28 NSString:(NSString *)a29
+  {
+    ^ {a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22, a23, a24, a25, a26, a27, a28, a29}
+  }              
+}.
+
+testHelper := FSTestClass10 alloc init autorelease.
+
+t testMethodMappingWithFScriptObject:testHelper.
+
+"**********************************************************************"
+t startTest:'instance variable (and class instance variable) shadowing not allowed'.
+
+FSTestClass11 : NSObject
+{
+  i (class instance variable)
+  a 
+  b  
+  c
+}.
+
+t assertError:
+[
+  FSTestClass12 : FSTestClass11
+  {
+     x a y
+  }
+].
+
+t assertError:
+[
+  FSTestClass12bis : FSTestClass11
+  {
+    x i (class instance variable) y
+  }
+].
+
+
+t assertError:
+[
+  FSTestClass13 : FSTestClass11
+  {
+     x isa y
+  }
+].
+
+t assertError:
+[
+  FSTestClass13 : FSTestClass11
+  {
+     x isa (class instance variable) y
+  }
+].
+
+FSTestClass13 : FSTestClass11
+{
+   x y i
+}.
+
+t assertError:
+[
+  FSTestClass13 : FSTestClass11
+  {
+     x a y
+  }
+].
+
+t assertError:
+[
+  FSTestClass13 : FSTestClass11
+  {
+     x i (class instance variable)  y
+  }
+].
+
+"**********************************************************************"
+t startTest:'class instance variables'.
+
+FSTestClass14 : NSObject
+{
+  v (class instance variable)
+  v
+  
+  + v { ^v }
+  + setV:val { v := val }
+
+  - v { ^v }
+  - setV:val { v := val }
+}.
+
+aFSTestClass14 := FSTestClass14 alloc init.
+
+aFSTestClass14 setV:'hello'.
+FSTestClass14 setV:569.
+
+t assert: aFSTestClass14 v = 'hello'.
+t assert: FSTestClass14  v = 569. 
+
+FSTestClass15 : FSTestClass14 
+{}.
+
+FSTestClass15 setV:'anna'.
+
+t assert: FSTestClass14  v = 569. 
+t assert: FSTestClass15  v = 'anna'. 
+
+"**********************************************************************"
+t startTest:'Expansion of consciousness'.
+
+"Define the PsychedelicCircleView class, a subclass of Cocoa's NSView"
+PsychedelicCircleView : NSView
+{
+  "Instance variables" 
+  timer       "A NSTimer object used to animate the view" 
+  message     "The message to display" 
+  attributes  "A dictionary holding drawing attributes" 
+
+  "Define the designated initializer"
+  - initWithFrame:(NSRect)frame
+  {
+     self := super initWithFrame:frame.
+     self == nil ifFalse:
+     [
+         |font| "A local variable to hold the font object"
+
+         "Determine the font to use.
+         We use Synchro LET if available, the default user font otherwise"
+         font := NSFont fontWithName:'Synchro LET' size:40.
+         font == nil ifTrue:[ font := NSFont userFontOfSize:40 ].
+
+         "Initialize the attributes dictionary used to draw the message"
+         attributes := NSDictionary dictionaryWithObjects:{font}
+                                    forKeys:{NSFontAttributeName}.
+
+         "Initialize the message to display"
+         message := '       Click to start/stop\nexpansion of consciousness'.
+     ].
+     ^self
+  }
+
+  "Define the method invoked by Cocoa to draw the view"
+  - (void) drawRect:(NSRect)aRect
+  {
+    "Define local variables"
+    |red green blue size x y|  
+
+    "Generate random values for color components"
+    red   := 10 random / 9.
+    green := 10 random / 9.
+    blue  := 10 random / 9.
+
+    "Set the color and draw the circle"
+    (NSColor colorWithCalibratedRed:red green:green blue:blue alpha:1) set.
+    (NSBezierPath bezierPathWithOvalInRect:self bounds) fill.
+
+    "If the psychedelic mode is not active, draw a message"
+    timer == nil ifTrue:
+    [
+        "Compute coordinates of the message in order to have it centered"
+        size := message sizeWithAttributes:attributes.
+        x := self bounds extent x / 2 - (size width  / 2).
+        y := self bounds extent y / 2 - (size height / 2).
+
+        "Draw the message"
+        message drawAtPoint:x<>y withAttributes:attributes.
+    ].
+  }
+
+  "Define the method invoked by Cocoa when the view is clicked"
+  - (void) mouseDown:(NSEvent *)theEvent
+  {
+    timer == nil ifTrue:
+    [
+        "Create a NSTimer object to put the psychedelic process in motion"
+        timer := NSTimer scheduledTimerWithTimeInterval:0.01
+                                                 target:[self setNeedsDisplay:YES]
+                                               selector:#value
+                                               userInfo:nil
+                                                repeats:YES
+    ]
+    ifFalse:
+    [
+        "Stop the psychedelic process"
+        timer invalidate.
+        timer := nil.
+        self setNeedsDisplay:YES.
+    ]
+  }
+}.
+
+"Instantiate and configure a window"
+window := NSWindow alloc initWithContentRect:(0<>0 extent:700<>700)
+                                   styleMask:NSTitledWindowMask + NSClosableWindowMask + NSMiniaturizableWindowMask + NSResizableWindowMask
+                                     backing:NSBackingStoreBuffered
+                                       defer:NO.
+
+window setBackgroundColor:NSColor blackColor;
+       setReleasedWhenClosed:NO;
+       setTitle:'Psychedelic Circle';
+       center.
+
+"Instantiate and configure a psychedelic circle"
+circle := PsychedelicCircleView alloc initWithFrame:window contentView bounds.
+circle setAutoresizingMask:NSViewWidthSizable + NSViewHeightSizable.
+
+"Put the circle view in the window"
+window contentView addSubview:circle.
+
+"Put the window onscreen"
+window makeKeyAndOrderFront:nil.
+
+"**********************************************************************"
+t startTest:'overriding retain or release not allowed'.
+
+t assertError:['[MyClass : NSObject { - retain { ^self } }]' asBlock].
+t assertError:['[MyClass : NSObject { - (void) release { ^5 } }]' asBlock].
+
+"--------------------------------------------------------------------------------------------------------"
+
+t finish. 
+t report.

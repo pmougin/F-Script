@@ -1,0 +1,109 @@
+
+				                    GRAMMAIRE
+						   ================
+
+note: this file is now out of date.
+
+note: F-Script comments aren between "
+      example: "this is a comment"
+								 
+<liste_instruction>   :   <instruction>
+                        | <instruction> ; 
+                        | <instruction> ; <liste_instruction>
+								 
+<instruction>         :  <exp>
+
+<exp>                 :  <identificateur> := <exp>
+                         | <exp1> | <exp1> <keyword_sel>
+
+<exp1>                :  <exp2> | <exp2> <reste_exp1>
+
+<exp2>                :  <exp3> | <exp3> <reste_exp2>
+
+<exp3>		      :  <identificateur> | <literal> | (<expression>)		  
+					 
+<reste_exp1 >         :   <binary_sel> <exp2> 
+                        | <binary_sel> <exp2> <reste_exp1>
+
+<reste_exp2>          : <unary_sel> | <unary_sel> <reste_exp2>						
+
+
+<method>              : <method_signature> <method_body> 
+
+<method_signature>    : <unary_method_signature> | <binary_method_signature> | <keyword_method_signature> 
+		
+<unary_method_signature> : <identificateur>
+
+<binary_method_signature> : <liste_signe_op>
+
+<keyword_method_signature> : <identificateur> : <identificateur> {<liste_method_argument>}
+
+<liste_method_argument> : <identificateur> : <identificateur>
+
+<method_body>         : [ <liste_instruction> ]
+			   
+<unary_sel>           : <patern_elt><selector>
+
+<patern_elt>          : <patern_atom> | <patern_atom> <patern_elt>
+
+
+<keyword_sel>         :   <selector> : <expression>
+                        | <selector> : <expression> <liste_argument>			
+					  					  					   
+<binary_sel>          : <liste_signe_op>
+
+<liste_signe_op>      : <signe_op> | <signe_op> <liste_signe_op>
+
+<signe_op>            : + | - | * | = | >  | < | ~ | ? | . |% |! | & | | | \
+
+<selector>            : <identificateur>
+
+<liste_argument>      : <argument> | <argument> <liste_argument>
+
+<argument>            : <selector> : <expression> | : <expression>
+
+<literal>             :  <nombre> | <chaine> | <tableau> | <block> | <Predefined_constant>
+                        | true | TRUE | FALSE | false | YES | NO |nil  
+					    
+<chaine>              :  '<liste-caractere-quelconque>'
+
+<tableau>             : \{<liste_elem>\} | \{\}
+
+<liste_elem>          : <expression> {,<liste_elem>}
+             
+<liste_argument>      : <spec_argument> {<liste_argument>}
+				       
+<liste_var_locale>    : <spec_var_locale> {<liste_var_locale>}
+
+<spec_argument>       : :<identificateur>
+
+<spec_var_locale>     : <identificateur>
+
+<Predefined_constant> : les constantes Openstep predefinies.
+
+<message_name>        : <selector> | <binary_sel> | <keyword_sel_name>
+
+<keyword_sel_name>    : <selecor>:{<keyword_sel_name>}
+
+<nombre>              : {-}<suite_chiffre>{e|E}{-|+}<suite_chiffre> |     
+                   <suite_chiffre>.{<suite_chiffre>}{e|E}{-|+}{<suite_chiffre>}
+                       
+
+<suite_chiffre>       :  <chiffre> <suite_chiffre> | <chiffre>
+	
+<liste_caractere_quelconque> :  tout les caracteres propose par le systeme
+                                sous-jacent														   						
+						
+<identificateur>      :   ( <lettre> | _ ) <liste_lettre_chiffre_under> 
+                        | <lettre> | _
+                        // != <mot_clef>				
+
+<lettre>              :  a...Z
+
+<liste_lettre_chiffre_under>:  <lettre> <liste_lettre_chiffre_under> 
+                             | <chiffre> <liste_lettre_chiffre_under>
+		| _ <liste_lettre_chiffre_under>
+		 | <lettre> | <chiffre> | _ 
+						  
+<chiffre>         	  :  0...9
+  								 

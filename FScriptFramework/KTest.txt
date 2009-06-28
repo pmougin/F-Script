@@ -1,0 +1,3659 @@
+"KTest.txt by Philippe Mougin
+This F-Script code is used in order to test the F-Script system
+It can be run from within F-Script with 'sys ktest' "
+
+[|a a2 c d e f i m n s bl result test valid r1 sys2 name home home2 home3 home4 path repositoryPath archivePath repositoryExists obj enclosure|
+
+sys log:'start KTest'.
+
+t := KTestManager alloc init autorelease.
+"t setShouldLog:YES."
+
+repositoryPath      := (NSUserDefaults standardUserDefaults stringForKey:'FScriptRepositoryPath').
+archivePath         := (repositoryPath stringByAppendingPathComponent:'_fscriptKTest').
+repositoryExists    := NSFileManager defaultManager fileExistsAtPath:repositoryPath.
+FSTest1DOServerPath := NSBundle mainBundle pathForResource:'FSTest1' ofType:'app'.
+FSTest2DOServerPath := NSBundle mainBundle pathForResource:'FSTest2' ofType:'app'.
+
+NSWorkspace sharedWorkspace launchApplication: FSTest1DOServerPath.
+NSWorkspace sharedWorkspace launchApplication: FSTest2DOServerPath.  
+"We launch them at the begining of this test because it needs time to start and vend its objects.
+Later in this test we will need to connect to these objects." 
+
+sys installFlightTutorial.
+
+t startCategory:'Misc'.
+
+
+"///////////////////////////////////////////////////////////////////////"
+t startTest:'support for nil:'.
+t assert: nil == nil.
+t assert: (nil == 8) not.
+t assert: nil ~~ 8.
+t assert: (nil ~~ nil) not.
+
+"///////////////////////////////////////////////////////////////////////"
+
+t startTest:'whileTrue:'.
+i := 0. [i < 100] whileTrue:[i := i+1].
+t assert:i = 100. 
+
+"///////////////////////////////////////////////////////////////////////"
+t startTest:'cascade'.
+
+a := {}.
+t assert: (a count; count) = 0.
+t assert: (a addObject:0; addObject:1; count) = 2.
+t assert: (a isEqual:{0,1}).
+t assert: ((a count; ++ {2}) isEqual:{0,1,2}).
+
+t assert: (6 between:9 and:12; abs) = 6.
+t assert: (6*2; + 4) = 10.
+
+"///////////////////////////////////////////////////////////////////////"
+
+t startTest:'return'.
+i := 0. 
+b := [|j| j := 20. [true] whileTrue:[i := i+ 1. i = j ifTrue:[b return]]].
+r := b value.
+t assert:(r isKindOfClass:FSVoid) & (i = 20). 
+
+t assert:[b := [b return:8]. b value] value = 8.
+b := nil.
+
+t assertError:[[[7] return] value].
+
+"///////////////////////////////////////////////////////////////////////"
+
+t startTest:'return:'.
+i := 0. 
+b1 := [|j| j := 20. [true] whileTrue:[i := i+ 1. i = j ifTrue:[b1 return:i]]].
+r1 := b1 value.
+b2 := #value.
+r2 := b2 value:[b2 return:20].
+t assert:r1 = 20 & (r2 = 20). 
+
+b1 := nil.
+b2 := nil.
+
+"///////////////////////////////////////////////////////////////////////"
+
+t startTest:'playing with array'.
+
+a := 200 iota. b := 0.5 enlist:200 . c := 200 iota.
+
+test :=   { a+a         , a+c         , a*c                , a/b         , a-c}.
+result := { 200 iota * 2, 200 iota * 2, 200 iota raisedTo:2, 200 iota * 2, 0 enlist:200}.
+
+t assert:(test isEqual:result).
+
+a add:true. a removeLastObject.
+b add:true. b removeLastObject.
+c add:true. c removeLastObject.
+
+test :=   { a+a         , a+c         , a*c        , a/b           , a-c}.
+result := { 200 iota * 2, 200 iota * 2, 200 iota raisedTo:2, 200 iota * 2, 0 enlist:200}.
+            
+t assert:(test isEqual:result).
+
+test := { [:a :b| a+b] value:{1,2,3} value:{10,20,30},
+          [:a :b| a+b] value:@{1,2,3} value:@{10,20,30},
+          [:t||s| s := 0. [:e| s := s+e] value:@t. s] value:{1,2,3},
+          {1,2,3} @1 * @2 {10,100,1000,10000},
+          {1,2,3} @ * @2 {10,100,1000,10000},
+          {'a1','a2','a3'} ++ {'b1','b2','b3'},
+          {'a1','a2','a3'} @ ++ @ {'b1','b2','b3'},
+          {'a1','a2','a3'} @1 ++ @2 {'b1','b2','b3','b4'},
+          {'a1','a2','a3'} @2 ++ @1 {'b1','b2','b3','b4'},
+          [:a :b| a ++ b] value:{'a1','a2','a3'} value:{'b1','b2','b3','b4'},
+          [:a :b| a ++ b] value:@1{'a1','a2','a3'} value:@2{'b1','b2','b3','b4'},
+          {{'a11','a12','a13'},{'a21','a22','a23'}} ++ {{'b11','b12'},{'b21','b22'}},  "No pattern"
+          {{'a11','a12','a13'},{'a21','a22','a23'}} @ ++ {{'b11','b12'},{'b21','b22'}},
+          {{'a11','a12'},{'a21','a22'}} @@ ++ @@ {{'b11','b12'},{'b21','b22'}},
+          {{'a11','a12'},{'a21','a22'}} @1@ ++ @2@ {{'b11','b12'},{'b21','b22'}},
+          {{'a11','a12','a13'},{'a21','a22','a23'}} @1@2 ++ @2@1 {{'b11','b12'},{'b21','b22'}},
+          {1,2,3,4} \ [:a :b| a+b],
+          {1,10,2,7,8} \ #max:,
+          {1,2,3,4,5,6} = {-1,2,-3,4,-5,6} \ #&,
+          {1,2,3,4,5} scan: #+,
+          {'aa','b','cc',''} scan: #++,
+          {1,2,3,4,5} scan:[:a :b| a+b],
+          {'aa','b','cc',''} scan:[:a :b| a++b],
+          100 iota ! 20,
+          100 iota !! 20,
+          {1,2,3,true,nil,false,[6]} ! true,
+          {} \ #+,
+          {1} \ #+
+}.
+
+result := { {11,22,33},
+            {11,22,33},
+            6,
+            {{10, 100, 1000, 10000}, {20, 200, 2000, 20000}, {30, 300, 3000, 30000}},
+            {{10, 100, 1000, 10000}, {20, 200, 2000, 20000}, {30, 300, 3000, 30000}},
+            {'a1', 'a2', 'a3', 'b1', 'b2', 'b3'},
+            {'a1b1', 'a2b2', 'a3b3'},
+            {{'a1b1', 'a1b2', 'a1b3', 'a1b4'}, {'a2b1', 'a2b2', 'a2b3', 'a2b4'}, {'a3b1', 'a3b2', 'a3b3', 'a3b4'}},
+            {{'a1b1', 'a2b1', 'a3b1'}, {'a1b2', 'a2b2', 'a3b2'}, {'a1b3', 'a2b3', 'a3b3'}, {'a1b4', 'a2b4', 'a3b4'}},
+            {'a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'b4'},
+            {{'a1b1', 'a1b2', 'a1b3', 'a1b4'}, {'a2b1', 'a2b2', 'a2b3', 'a2b4'}, {'a3b1', 'a3b2', 'a3b3', 'a3b4'}},
+            {{'a11', 'a12', 'a13'}, {'a21', 'a22', 'a23'}, {'b11', 'b12'}, {'b21', 'b22'}},
+            {{'a11', 'a12', 'a13', {'b11', 'b12'}, {'b21', 'b22'}}, {'a21', 'a22', 'a23', {'b11', 'b12'}, {'b21', 'b22'}}},
+            {{'a11b11', 'a12b12'}, {'a21b21', 'a22b22'}},
+            {{{'a11b11', 'a12b12'}, {'a11b21', 'a12b22'}}, {{'a21b11', 'a22b12'}, {'a21b21', 'a22b22'}}},
+            {{{{'a11b11','a12b11','a13b11'},{'a11b12','a12b12','a13b12'}},{{'a11b21','a12b21','a13b21'},{'a11b22','a12b22','a13b22'}}},
+             {{{'a21b11','a22b11','a23b11'},{'a21b12','a22b12','a23b12'}},{{'a21b21','a22b21','a23b21'},{'a21b22','a22b22','a23b22'}}}},
+            10,
+            10,
+            false,
+            {1,3,6,10,15},
+            {'aa', 'aab', 'aabcc', 'aabcc'},
+            {1,3,6,10,15},
+            {'aa', 'aab', 'aabcc', 'aabcc'},
+            20,
+            100,
+            3,
+            nil,
+            1 
+}.
+
+t assert:(test isEqual:result).
+
+a := {}.
+b := 200 iota.
+b add:true.
+a setValue: b.
+a removeLastObject.
+b removeLastObject.
+
+t assert:a = b \ #&.
+
+"///////////////////////////////////////////////////////////////////////"
+
+t startTest:'playing with points'.
+
+p := (40<>500).
+p2 := p copy autorelease.
+r := p extent:(100<>200).
+
+test :=   { p x, p y, p2, p clone   , p2 clone, (NSValue valueWithPoint:p) pointValue, r                      , r origin, r extent, r rectValue}.
+result := { 40 , 500, p , 40<>500   , p       , p                                        , 40<>500 extent:100<>200, p       , 100<>200, r}.
+            
+t assert:(test isEqual:result).
+
+"///////////////////////////////////////////////////////////////////////"
+
+t startTest:'playing with array 2'.
+
+a := false enlist:9.
+b := 200 iota.
+a setValue: b.
+b add:nil.
+b add:true.
+b removeLastObject.
+b removeLastObject.
+b insert:sys at:0.
+b insert:sys at:100.
+b insert:sys at:b count.
+b removeAt:b count-1.
+b removeAt:100.
+b at:100 put:(b at:100).
+b removeAt:0.
+b := [:e| e ] value:@b.
+z := {'toto', 'tutu', 8, false, NSNotFound}.
+b add:z.
+b removeAt:b !! z.
+b := b + 5.
+a := a + 5.
+c := a + b.
+c := c - b.
+d := b + a.
+d := d - a.
+e := a \#+.
+f := b \#+.
+
+t assert:a = b \#& & (e = f) & (a ~= a \#|) not & (a > a \#|) not & (a >= a \#&)& (a < a \#|) not & (a <= a \#&). 
+
+"/////////////////////////////////////////////////////////////////////"
+
+t startTest:'AppKit scripting 1'.
+
+'NSWindow' asClass == nil ifTrue:
+[
+  t addComment:' AppKit not supported. Bypassing this test.'.
+]
+ifFalse:
+[
+  |w button f i nbEntries|
+
+  nbEntries := 1.
+
+  baseWidth  := 300.
+  baseHeight := 55+(nbEntries*30).
+
+  w := NSWindow alloc initWithContentRect:(100<>100 extent:baseWidth<>baseHeight) styleMask:NSTitledWindowMask+NSClosableWindowMask+NSMiniaturizableWindowMask+NSResizableWindowMask backing:NSBackingStoreBuffered defer:false.
+  w setTitle:'Arguments'.
+  w setMinSize:(NSValue sizeWithWidth:130 height:90).
+  w orderFront:nil.
+
+  button := NSButton alloc initWithFrame:(baseWidth/2-60<>10 extent:110<>30).
+  button setBezelStyle:NSRoundedBezelStyle.
+  button setTitle:'Send message'.   
+
+  f := NSForm alloc initWithFrame:(10<>55 extent: baseWidth-20<>(baseHeight-65)).
+  f setAutoresizingMask:NSViewWidthSizable + NSViewHeightSizable.
+
+  w contentView addSubview:f.
+  w contentView addSubview:button.
+
+  i := 0.
+  [i < nbEntries] whileTrue:[f addEntry:'Entry ' ++ i description. i := i+1].
+
+  f setAutosizesCells:YES.
+  
+  w close.
+].
+
+"////////////////////////////////////////////////////////////////////"
+
+t startTest:'AppKit scripting 2'.
+
+'NSWindow' asClass == nil ifTrue:
+[
+  t addComment:' AppKit not supported. Bypassing this test.'.
+]
+ifFalse:
+[
+  _w := NSWindow alloc initWithContentRect:(100<>100 extent:300<>300)   styleMask:NSTitledWindowMask+NSClosableWindowMask+NSMiniaturizableWindowMask+NSResizableWindowMask backing:NSBackingStoreBuffered defer:false.
+  _w setTitle:'I am a window'.
+  _w orderFront:nil.
+  _b := (NSButton alloc initWithFrame:(80<>20 extent:100<>100)) autorelease.
+  _b setBezelStyle: NSRoundedBezelStyle.
+  _w contentView addSubview:_b.
+  _t1 := (NSTextField alloc initWithFrame:(20<>220 extent:50<>25)) autorelease.
+  _t2 := (NSTextField alloc initWithFrame:(200<>220 extent:50<>25)) autorelease.
+  _w contentView addSubview:_t1.
+  _w contentView addSubview:_t2.
+  _bl := [|t1 t2| t1 := _t1. t2 := _t2. t2 setDoubleValue:t1 doubleValue * 2].
+  _b setTarget:_bl.
+  _b setAction:#value:.
+  _t1 setDoubleValue:-34.12e-5.
+  _b performClick:nil.
+  _w performClose:nil.
+
+  t assert:_t2 doubleValue = (-34.12e-5*2).
+
+  _bl := nil.
+].
+  
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'AppKit scripting: currency converter (version 1)'.
+
+"F-SCRIPT CURRENCY CONVERTER (version 1)"
+
+"Instantiate and configure a window"
+window := NSWindow alloc initWithContentRect:(125<>513 extent:400<>200)      
+          styleMask:NSTitledWindowMask + NSClosableWindowMask
+                    + NSMiniaturizableWindowMask + NSResizableWindowMask  
+          backing:NSBackingStoreBuffered 
+          defer:NO.
+
+"Put the window on screen"
+window orderFront:nil.
+
+"Give a title to the window"
+window setTitle:'Currency Converter'.
+
+"Instantiate a form object"                         
+form := NSForm alloc initWithFrame:(60<>90 extent:320<>85).
+
+"Put the form into the window"
+window contentView addSubview:form.
+
+"Configure the form"
+form addEntry:'Exchange Rate per $1'.
+form addEntry:'Dollars to Convert'.
+form addEntry:'Amount in Other Currency'.
+form setInterlineSpacing:7.
+form setAutosizesCells:YES.
+
+"Instantiate a decorative line and put it in the window"
+line := NSBox alloc initWithFrame:(15<>70 extent:370<>2).
+window contentView addSubview:line.
+
+"Instantiate a button, put it in the window and configure it"
+button := NSButton alloc initWithFrame:(250<>20 extent:90<>30).
+window contentView addSubview:button.
+button setBezelStyle:NSRoundedBezelStyle.
+button setTitle:'Convert'. 
+
+"Instantiate the script that will compute the currency conversion"
+conversionScript := [(form cellAtIndex:2) setStringValue:(form cellAtIndex:0) floatValue * (form cellAtIndex:1) floatValue. form selectTextAtIndex:0].
+
+"Make the script the target of the form"  
+"The script will be evaluated when the user presses Return"
+form setTarget:conversionScript.
+form setAction:#value.
+
+"Make the script the target of the button"
+"The script will be evaluated when the user presses the button"     
+button setTarget:conversionScript.
+button setAction:#value.
+
+(form cellAtIndex:0) setIntValue:7.
+(form cellAtIndex:1) setIntValue:10.
+button performClick:nil.
+window performClose:nil.
+
+t assert:(form cellAtIndex:2) intValue = 70.
+
+conversionScript := nil.
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'AppKit scripting: currency converter (version 2)'.
+
+window := NSWindow alloc initWithContentRect:(125<>513 extent:400<>200) 
+                   styleMask:NSTitledWindowMask + NSClosableWindowMask 
+                             + NSMiniaturizableWindowMask + NSResizableWindowMask  
+                   backing:NSBackingStoreBuffered 
+                   defer:NO.
+
+conversionScript := [(form cellAtIndex:2) setStringValue:(form cellAtIndex:0) floatValue * (form cellAtIndex:1) floatValue. form selectTextAtIndex:0].
+  
+form := (NSForm alloc initWithFrame:(60<>90 extent:320<>85)) autorelease.
+form addEntry:@{'Exchange Rate per $1','Dollars to Convert','Amount in Other Currency'}.
+form setAutosizesCells:YES; setTarget:conversionScript; setAction:#value; setInterlineSpacing:7.
+
+button := (NSButton alloc initWithFrame:(250<>20 extent:90<>30)) autorelease.
+button setBezelStyle:NSRoundedBezelStyle; setTitle:'Convert'; setTarget:conversionScript; setAction:#value.
+
+line := (NSBox alloc initWithFrame:(15<>70 extent:370<>2)) autorelease.
+  
+window contentView addSubview:@{form, button, line}. 
+window setTitle:'Currency Converter'; orderFront:nil.
+
+(form cellAtIndex:0) setIntValue:2.
+(form cellAtIndex:1) setIntValue:10.
+button performClick:nil.
+window performClose:nil.
+
+t assert:(form cellAtIndex:2) intValue = 20.
+
+conversionScript := nil.
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'AppKit scripting: currency converter (version 3)'.
+
+converter := [:title | |window conversionScript form button line|
+  window := NSWindow alloc initWithContentRect:(125<>513 extent:400<>200) 
+                     styleMask:NSTitledWindowMask + NSClosableWindowMask 
+                               + NSMiniaturizableWindowMask + NSResizableWindowMask  
+                     backing:NSBackingStoreBuffered 
+                     defer:NO.
+
+  conversionScript := [(form cellAtIndex:2) setStringValue:(form cellAtIndex:0) 
+  floatValue * (form cellAtIndex:1) floatValue. form selectTextAtIndex:0].
+  
+  form := (NSForm alloc initWithFrame:(60<>90 extent:320<>85)) autorelease.
+  form addEntry:@{'Exchange Rate per $1', 'Dollars to Convert', 'Amount in Other Currency'}.
+  form setAutosizesCells:YES; setTarget:conversionScript;setAction:#value; setInterlineSpacing:7.
+
+  button := (NSButton alloc initWithFrame:(250<>20 extent:90<>30)) autorelease.
+  button setBezelStyle:NSRoundedBezelStyle; setTitle:'Convert'; setTarget:conversionScript; setAction:#value.
+
+  line := (NSBox alloc initWithFrame:(15<>70 extent:370<>2)) autorelease.
+  
+  window contentView addSubview:@{form, button, line}. 
+  window setTitle:title; orderFront:nil.
+  (form cellAtIndex:0) setIntValue:7.
+  (form cellAtIndex:1) setIntValue:20.
+  button performClick:nil.
+  window performClose:nil.
+
+  t assert:(form cellAtIndex:2) intValue = 140.
+  conversionScript := nil.
+].
+
+converter value:'Converter is cool!'.
+converter := nil.
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'Complex Block archiving/unarchiving'.
+
+converter := [:title | |window conversionScript form button line|
+  window := NSWindow alloc initWithContentRect:(125<>513 extent:400<>200) 
+                     styleMask:NSTitledWindowMask + NSClosableWindowMask 
+                               + NSMiniaturizableWindowMask + NSResizableWindowMask  
+                     backing:NSBackingStoreBuffered 
+                     defer:NO.
+
+  conversionScript := [(form cellAtIndex:2) setStringValue:(form cellAtIndex:0) 
+  floatValue * (form cellAtIndex:1) floatValue. form selectTextAtIndex:0].
+  
+  form := (NSForm alloc initWithFrame:(60<>90 extent:320<>85)) autorelease.
+  form addEntry:@{'Exchange Rate per $1', 'Dollars to Convert', 'Amount in Other Currency'}.
+  form setAutosizesCells:YES; setTarget:conversionScript;setAction:#value; setInterlineSpacing:7.
+
+  button := (NSButton alloc initWithFrame:(250<>20 extent:90<>30)) autorelease.
+  button setBezelStyle:NSRoundedBezelStyle; setTitle:'Convert'; setTarget:conversionScript; setAction:#value.
+
+  line := (NSBox alloc initWithFrame:(15<>70 extent:370<>2)) autorelease.
+  
+  window contentView addSubview:@{form, button, line}. 
+  window setTitle:title; orderFront:nil.
+  (form cellAtIndex:0) setIntValue:7.
+  (form cellAtIndex:1) setIntValue:20.
+  button performClick:nil.
+  window performClose:nil.
+
+  conversionScript := nil.
+
+  (form cellAtIndex:2) intValue = 140.
+  
+].
+
+path := (NSUserDefaults standardUserDefaults stringForKey:'FScriptRepositoryPath').
+(NSFileManager defaultManager fileExistsAtPath:path) ifTrue:
+[
+  converter save: path ++ '/_converter'.
+  NSKeyedArchiver archiveRootObject:converter toFile: path ++'/_converterxxx'.
+  unarchivedConverter := sys load: path ++ '/_converter'.
+  unarchivedConverterxxx := NSKeyedUnarchiver unarchiveObjectWithFile: path ++'/_converterxxx'.
+  t assert:(unarchivedConverter value:'brume d''aurore, air qui pique').
+  t assert:(unarchivedConverterxxx value:'plage qui dort, c''est typique').
+  
+  unarchivedConverter := sys load: path ++ '/_converter'.
+  unarchivedConverterxxx := NSKeyedUnarchiver unarchiveObjectWithFile: path ++'/_converterxxx'.
+  t assert:(unarchivedConverter value:'brume d''aurore, air qui pique').
+  t assert:(unarchivedConverterxxx value:'plage qui dort, c''est typique').
+  
+  t assert:(converter value:'Au lac de tes yeux tres profonds Mon pauvre coeur se noit et fond').
+  
+  converter save: path ++ '/_converter'.
+  NSKeyedArchiver archiveRootObject:converter toFile: path ++'/_converterxxx'.
+  unarchivedConverter := sys load: path ++ '/_converter'.
+  unarchivedConverterxxx := NSKeyedUnarchiver unarchiveObjectWithFile: path ++'/_converterxxx'.
+  t assert:(unarchivedConverter value:'brume d''aurore, air qui pique').
+  t assert:(unarchivedConverterxxx value:'plage qui dort, c''est typique').
+
+  unarchivedConverter := sys load: path ++ '/_converter'.
+  unarchivedConverterxxx := NSKeyedUnarchiver unarchiveObjectWithFile: path ++'/_converterxxx'.
+  t assert:(unarchivedConverter value:'brume d''aurore, air qui pique').
+  t assert:(unarchivedConverterxxx value:'plage qui dort, c''est typique').
+  
+  unarchivedConverter := nil.
+  unarchivedConverterxxx := nil.
+  converter := nil.
+  
+]
+ifFalse:
+[
+  t addComment:'F-SCRIPT repository does not exist, so I bypass this test.'.
+].
+
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'Drawing with NSBezierPath'.
+NSColor blueColor set.
+(NSBezierPath bezierPathWithOvalInRect:(500<>300 extent:100<>100)) stroke.
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'factorial (including recursivity)'.
+
+_fact1 := [:n| |fact res| fact := [:n| n=1 ifTrue:[1] ifFalse:[n*(fact value:n-1)]]. res := fact value:n. fact := nil. res] value:30.
+_fact2 := [:n||res i| res := 1. i := 1. [i <= n] whileTrue:[res := res*i. i := i+1]. res] value:30.
+_fact3 := [:n| n iota + 1 \#*] value:30. 
+
+t assert:_fact1 = _fact2 & (_fact2 = _fact3).  
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'tak (including recursivity)'.
+
+"Note: _tak1 and _tak2 are now the same... (we used to test our ExecutionControl support here, but it's no longer the case, since ExecutionControl has been removed from F-Script)"
+_tak1  := [:x :y :z| y >= x ifTrue:[z] ifFalse:[_tak1 value:(_tak1 value:x-1 value:y value:z) value:(_tak1 value:y-1 value: z value:x) value:(_tak1 value:z-1 value:x value:y)]].
+_tak2  := [:x :y :z| y >= x ifTrue:[z] ifFalse:[_tak2 value:(_tak2 value:x-1 value:y value:z) value:(_tak2 value:y-1 value: z value:x) value:(_tak2 value:z-1 value:x value:y)]].
+_tak1res := _tak1 value:12 value:6 value:3.
+_tak2res := _tak2 value:12 value:6 value:3.
+
+_tak1 := nil.
+_tak2 := nil.
+
+t assert:_tak1res = _tak2res & (_tak1res == nil) not. "to do when perf will be acceptables: (tak value:18 value:12 value:6) = 7" 
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'closure 1'.
+
+b  := [:x | [:y | y + x]].
+b1 := b value:2.
+b2 := b value:5.
+
+t assert:(b1 value:10) = 12.
+t assert:(b2 value:10) = 15.
+
+b := nil.
+b1 := nil.
+b2 := nil.
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'closure 2'.
+
+blocks := {}. 
+1 to:3 do:
+[ 
+  :arg| | squared |
+  squared := arg * arg.
+  blocks add:[squared].
+]. 
+t assert:(blocks value isEqual:{1, 4, 9}).
+
+blocks := nil.
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'closure 3'.
+
+b := [|l| l := 7. (NSException exceptionWithName:'lolo' reason:'test' userInfo:(NSDictionary dictionaryWithObject:[l] forKey:'subBlock')) raise].
+t assert:((b onException:[:e| e userInfo objectForKey:'subBlock']) value = 7).
+
+b := nil.
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'Block, local variable initialization'.
+
+t assert:[|l1| l1] value == nil.
+t assert:([:a| |l1| l1] value:8) == nil.
+t assert:([|l1 l2| {l1,l2}] value isEqual:{nil,nil}).
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'Block save/load'.
+
+_b := 5.
+x := [|n| n :=100. [:w| _b+(n*w)] value:[2+(n/100+_b)] value].
+y := [_b].
+z := x copy autorelease.
+zz := z.
+bl := [:a| {[a+_b] value, x, y, z, zz, x value}].
+path := (NSUserDefaults standardUserDefaults stringForKey:'FScriptRepositoryPath').
+(NSFileManager defaultManager fileExistsAtPath:path) ifTrue:
+[
+  bl save:path++'/_test'.
+]
+ifFalse:
+[
+  t addComment:'F-SCRIPT repository does not exist, so I bypass this test.'.
+].
+
+(NSFileManager defaultManager fileExistsAtPath:path++'/_test') ifTrue:
+[
+  bl2 := sys load:path++'/_test'.
+  t assert:( ((bl2 value:10) at:0) = 15). 
+  t assert:( (((bl2 value:10) at:1) value:10) = 805 ).
+  _b:=300.
+  t assert:( ((bl2 value:10) at:2) value = 300 ).
+  _b := 5.
+  t assert:( (((bl2 value:10) at:3) value:10) = 805 ).
+  t assert:( (((bl2 value:10) at:4) value:10) = 805 ).
+  t assert:( ((bl2 value:10) at:5) = 805).
+  
+  bl2 := nil.
+]
+ifFalse:
+[
+  t addComment:'_test file does not exist, so I bypass some test.'.
+].
+
+(NSFileManager defaultManager fileExistsAtPath:path++'/_test') ifTrue:
+[ |bl2|
+  bl2 := sys load:path++'/_test'.
+  t assert:( ((bl2 value:10) at:0) = 15). 
+  t assert:( (((bl2 value:10) at:1) value:10) = 805 ).
+  _b:=300.
+  t assert:( (((bl2 value:10) at:2) value) = 300 ).
+  _b := 5.
+  t assert:( (((bl2 value:10) at:3) value:10) = 805 ).
+  t assert:( (((bl2 value:10) at:4) value:10) = 805 ).
+  t assert:(((bl2 value:10) at:5) = 805).
+  
+  bl2 := nil.
+]
+ifFalse:
+[
+  t addComment:'_test file does not exist, so I bypass some test.'.
+].
+
+x := nil.
+y := nil.
+z := nil.
+zz := nil.
+bl := nil.
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'playing with flight tutorial objects 1'.
+
+(sys identifiers containsObject:@{'F','A','P'}) \#& ifTrue:
+[
+  r1 := P salary.
+  P_salary := [|i nb r| r := {}. i := 0. nb := P count. [i < nb] whileTrue:[r add:(P at:i) salary. i := i+1]. r]. 
+  r2 := P_salary value.
+  t assert:(r1 isEqual:r2).   
+]
+ifFalse:
+[
+  t addComment:'F,A or P undefined, so I bypass this test.'.
+].
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'playing with flight tutorial objects 2'.
+
+(sys identifiers containsObject:@{'F','A','P'}) \#& ifTrue:
+[
+  _r1 := A at:({'PARIS', 'NEW YORK', 'BOSTON'} containsObject:@ A location).
+  _r2 := A at:(A location @2=@1 {'PARIS', 'NEW YORK', 'BOSTON'} \#|).
+  _r3 := A at:(A location @1=@2 {'PARIS', 'NEW YORK', 'BOSTON'} @\#|).
+  _r4 := A at:((A location >< {'PARIS', 'NEW YORK', 'BOSTON'}) @count > 0).
+  _r5 := A at:({'PARIS', 'NEW YORK', 'BOSTON'} !@ A location < 3).
+  
+  t assert:(_r1 isEqual:_r2) & (_r2 isEqual:_r3) & (_r3 isEqual:_r4) & (_r1 isEqual:_r5).
+  
+  _r1 := A where:({'PARIS', 'NEW YORK', 'BOSTON'} containsObject:@ A location).
+  _r2 := A where:(A location @2=@1 {'PARIS', 'NEW YORK', 'BOSTON'} \#|).
+  _r3 := A where:(A location @1=@2 {'PARIS', 'NEW YORK', 'BOSTON'} @\#|).
+  _r4 := A where:((A location >< {'PARIS', 'NEW YORK', 'BOSTON'}) @count > 0).
+  _r5 := A where:({'PARIS', 'NEW YORK', 'BOSTON'} !@ A location < 3).
+  
+  t assert:(_r1 isEqual:_r2) & (_r2 isEqual:_r3) & (_r3 isEqual:_r4) & (_r1 isEqual:_r5).
+
+  
+  _N := (A >< @ (F at:@(P >< F pilot)) airplane) @@count.
+  t assert:(_N @\#+ \#+ = (_N \#+ \#+) & (_N \#+ \#+ = F count)).
+  
+  _N := _N transposedBy:{1,0}.
+  t assert: (_N @\#+ \#+ = (_N \#+ \#+) & (_N \#+ \#+ = F count)).  
+]
+ifFalse:
+[
+  t addComment:'F,A or P undefined, so I bypass this test.'.
+].
+
+"////////////////////////////////////////////////////////////////////////"
+
+t startTest:'asBlock & blockFromString:'.
+
+_t := 10000 random:200.
+
+_sort := [:v ||unsorted which sorted|
+    unsorted := v clone.
+    sorted := {}. 
+    [unsorted count > 0] whileTrue:
+    [
+        which := unsorted = (unsorted \#min:).
+        sorted := sorted ++ (unsorted where:which).
+        unsorted := unsorted where:which not. 
+    ].
+    sorted.
+].
+
+t assert: (_t at:_t sort) = (_sort value:_t) \#&.
+
+_sort2 := '[:v| |unsorted which sorted|
+    unsorted := v clone.
+    sorted := {}. 
+    [unsorted count > 0] whileTrue:
+    [
+        which := unsorted = (unsorted \#min:).
+        sorted := sorted ++ (unsorted where:which).
+        unsorted := unsorted where:which not. 
+    ].
+    sorted.
+]' asBlock.
+
+t assert:((_t at:_t sort) @=@ (_sort2 value:_t) \#&).
+
+_zero := 0.
+_sort3 := sys blockFromString:'[:v| |unsorted which sorted|
+    unsorted := v clone.
+    sorted := {}. 
+    [unsorted count > _zero] whileTrue:
+    [
+        which := unsorted @= (unsorted \#min:).
+        sorted := sorted ++ (unsorted where:which).
+        unsorted := unsorted where:which not. 
+    ].
+    sorted.
+]'.
+
+t assert:((_t at:_t sort) = (_sort3 value:_t) \ #&).
+
+_sort := nil.
+_sort2 := nil.
+_sort3 := nil.
+
+"/////////////////////////////////// Forwarding ///////////////////////////////////"
+
+t startCategory:'Forwarding'.
+
+t assertError:[t thisMethodDoesNotExist].
+t assert:(t testForward1:34) = 68.
+t assert:(t testForward2:'hello') = 'hello'.
+t assert:(t testForward3:#init :'arg' :'arg' :'arg' :'arg' :'arg' :'arg' :'arg' :'arg') = #init.
+
+"/////////////////////////////////// C types Mapping ///////////////////////////////////"
+
+t startCategory:'C types Mapping'.
+
+
+"To do" 
+
+t assert: (t CGPointMapping:7<>0) = (7<>0). 
+t assert: (t CGSizeMapping:(NSValue sizeWithWidth:10.2 height:33.3)) = (NSValue sizeWithWidth:10.2 height:33.3). 
+t assert: (t CGRectMapping:(7<>0 extent:10.2<>33.3)) = (7<>0 extent:10.2<>33.3). 
+
+"/////////////////////////////////// array support (FSNSArray, FSArray) /////////////////////////////////////"
+t startCategory:'array support (FSNSArray, FSArray)'.
+
+numbersA1 := {0,1,2,3}.                                 t assert:numbersA1 arrayRep class == ArrayRepDouble.
+numbersA2 := numbersA1 clone. numbersA2 becomeArrayOfId.t assert:numbersA2 arrayRep class == ArrayRepId.
+numbersA3 := NSArray arrayWithArray:numbersA1.
+numbersB1 := {0.2,2,2,1}.                               t assert:numbersB1 arrayRep class == ArrayRepDouble.
+numbersB2 := numbersB1 clone. numbersB2 becomeArrayOfId.t assert:numbersB2 arrayRep class == ArrayRepId.
+numbersB3 := NSArray arrayWithArray:numbersB1.
+numbersC1 := {-1}.                                      t assert:numbersC1 arrayRep class == ArrayRepDouble.
+numbersC2 := numbersC1 clone. numbersC2 becomeArrayOfId.t assert:numbersC2 arrayRep class == ArrayRepId.
+numbersC3 := NSArray arrayWithArray:numbersC1.
+booleans1:= {false,true,false,true}.                    t assert:booleans1 arrayRep class == ArrayRepBoolean.
+booleans2:= booleans1 clone. booleans2 becomeArrayOfId. t assert:booleans2 arrayRep class == ArrayRepId.  
+booleans3:= NSArray arrayWithArray:booleans1.
+allTrue1 := {true,true,true,true}.                      t assert:allTrue1  arrayRep class == ArrayRepBoolean.
+allTrue2 := allTrue1 clone. allTrue2 becomeArrayOfId.   t assert:allTrue2  arrayRep class == ArrayRepId.
+allTrue3 := NSArray arrayWithArray:allTrue1.
+allFalse1:= {false, false, false, false}.               t assert:allFalse1 arrayRep class == ArrayRepBoolean. 
+allFalse2:= allFalse1 clone. allFalse2 becomeArrayOfId. t assert:allFalse2 arrayRep class == ArrayRepId.
+allFalse3:= NSArray arrayWithArray:allFalse1.
+empty1   := {}.                                         t assert:empty1    arrayRep class == ArrayRepEmpty.
+empty2   := {}. empty2 becomeArrayOfId.                 t assert:empty2    arrayRep class == ArrayRepId.
+empty3   := {1}.empty3 removeAt:0.                      t assert:empty3    arrayRep class == ArrayRepDouble.
+empty4   := {true}.empty4 removeAt:0.                   t assert:empty4    arrayRep class == ArrayRepBoolean.
+empty5   := NSArray arrayWithArray:empty1.
+mixed1   := {0,true,'toto',#+}.
+mixed2   := NSArray arrayWithArray:mixed1.
+sumBlock1 := #+.
+sumBlock2 := [:a :b| a+b].
+errorBlock1 := [1/0].
+errorBlock2 := [:a :b :c :d :e :f :g :h | 1/0].
+
+arrayTestBlock1 := 
+[:numbersA :numbersB :numbersC :booleans :allTrue :allFalse :empty :sumBlock :errorBlock| 
+
+"/////////////////// Objective-C 2.0 fast enumeration "
+t startTest:'Objective-C 2.0 fast enumeration'.
+t assert:numbersA = (t duplicateUsingFastEnemeration:numbersA) \ #&.
+t assert:numbersB = (t duplicateUsingFastEnemeration:numbersB) \ #&.
+t assert:numbersC = (t duplicateUsingFastEnemeration:numbersC) \ #&.
+t assert:booleans = (t duplicateUsingFastEnemeration:booleans) \ #&.
+t assert:allTrue  = (t duplicateUsingFastEnemeration:allTrue)  \ #&.
+t assert:allFalse = (t duplicateUsingFastEnemeration:allFalse) \ #&.
+t assert:(empty   = (t duplicateUsingFastEnemeration:empty)) ++ {true} \ #&.
+
+
+"/////////////////// \ "
+t startTest:'\\'.
+t assert:numbersA \ sumBlock = 6.
+t assert:numbersA \ #* = 0.
+t assert:numbersA \ #max: = 3.
+t assert:numbersA \ #min: = 0.
+t assertError:[numbersA \ errorBlock].
+t assertError:[numbersA \ 'toto'].
+
+t assert:numbersC \ sumBlock = -1.
+
+t assert:booleans \ sumBlock = 2 & (allTrue \ sumBlock = 4) & (allFalse \ sumBlock = 0).
+t assert:(booleans \#&) not & (allTrue \#&) & (allFalse \#&) not.
+t assert:(booleans \#|) & (allTrue \#|) & (allFalse \#|) not.  
+t assertError:[booleans \ errorBlock].
+t assertError:[booleans \ 'toto'].
+
+t assert:empty \ sumBlock == nil.
+t assertError:[empty \ errorBlock].
+t assertError:[empty \ 'toto'].
+
+"/////////////////// ! "
+t startTest:'!'.
+t assert:(numbersA ! 0 = 0) & (numbersA ! 1 = 1) & (numbersA ! 3 = 3) & (numbersA ! nil = 4) & (numbersA ! 99 = 4).
+t assert:(booleans ! false = 0) & (booleans ! true = 1) & (booleans ! nil = 4) & (booleans ! 99 = 4).
+t assert:(empty ! nil = 0) & (empty ! 99 = 0).
+
+"/////////////////// !! "
+t startTest:'!!'.
+t assert:(numbersA !! 0 = 4) & (numbersA !! 1 = 4) & (numbersA !! 3 = 4) & (numbersA !! nil = 4) & (numbersA !! 99 = 4).
+t assert:(booleans !! false = 0) & (booleans !! true = 1) & (booleans !! nil = 4) & (booleans !! 99 = 4).
+t assert:(empty !! nil = 0) & (empty !! 99 = 0).
+[ |a b c d array|
+  a := 'toto'.
+  b := #+.
+  c := 'toto'.
+  d := 3<>2.
+  array := {nil,nil,a,nil,a,b,c,b,a,d,c,a,d}.
+  t assert:array !!@ {a,b,c,d,nil,99} = {2,5,6,9,0,array count} \#&.
+] value.
+
+
+"/////////////////// difference: "
+t startTest:'difference:'.
+t assert:((numbersA difference:numbersA) isEqual:empty).
+t assert:((numbersA difference:numbersC) containsObject:@numbersA) \#&.
+t assert:((numbersA difference:{3,0}) containsObject:@{1,2}) \#&.
+t assert:(numbersA difference:{3,0}) count = 2.
+t assert:((numbersA difference:empty) containsObject:@numbersA) \#&.
+t assert:((booleans difference:allTrue) isEqual:{false}).
+t assert:((booleans difference:allFalse) isEqual:{true}).
+t assert:(({nil,5,8,nil,'toto'} difference:{nil}) containsObject:@{5,8,'toto'}) \#&.
+t assert:(({nil,5,8,nil,'toto'} difference:{5,'toto'}) containsObject:@{nil,8}) \#&.
+t assert:((empty difference:numbersA) isEqual:empty).
+t assertError:[numbersA difference:nil].
+t assertError:[numbersA difference:'toto'].
+
+"/////////////////// distinct "
+t startTest:'distinct'.
+t assert:(numbersA distinct containsObject:@numbersA) \#&.
+t assert:(numbersA distinct count = numbersA count).
+t assert:(numbersB distinct containsObject:@{0.2,2,1}) \#&.
+t assert:(numbersA distinct count = 4).
+t assert:(booleans distinct containsObject:@{true,false}) \#&.
+t assert:(booleans distinct count = 2).
+t assert:(empty distinct isEqual:empty).
+t assert:({nil} distinct isEqual:{nil}).
+t assert:({nil,nil} distinct isEqual:{nil}).
+t assert:({nil,5,'toto',nil,8} distinct containsObject:@{5,8,'toto',nil}) \#&.
+t assert:{nil,5,'toto',nil,8,5,'toto',nil} distinct count = 4.
+
+"/////////////////// distinctId "
+t startTest:'distinctId'.
+t assert:(numbersB distinctId containsObject:@{2,0.2,1}) \ #&.
+t assert:numbersB distinctId count = 4.
+t assert:(booleans distinctId containsObject:@{true,false}) \ #&.
+t assert:booleans distinctId count = 2.
+[ |a b c d array|
+  a := 'toto'.
+  b := #+.
+  c := 'toto'.
+  d := 3<>2.
+  array := {nil,nil,a,nil,a,b,c,b,a,d,c,a,d} distinctId.
+  t assert:(array indexOfObjectIdenticalTo:@{a,b,c,d,nil}) ~= NSNotFound \#&.
+  t assert:array count = 5.
+] value.
+t assert:({nil} distinctId isEqual:{nil}).
+t assert:({nil,nil} distinctId isEqual:{nil}).
+t assert:(empty distinctId isEqual:empty).
+
+"/////////////////// index"
+t startTest:'index'.
+t assert:(numbersA index isEqual:{0,1,2,3}).
+t assert:(numbersB index isEqual:{0,1,2,3}).
+t assert:(booleans index isEqual:{0,1,2,3}).
+t assert:(empty index isEqual:{}).
+t assert:({3,'toto'} index isEqual:{0,1}). 
+
+"/////////////////// intersection:"
+t startTest:'intersection:'.
+t assert:((NSSet setWithArray:(numbersA intersection:numbersA)) isEqual:(NSSet setWithArray:numbersA)).
+t assert:((NSSet setWithArray:(numbersA intersection:numbersB)) isEqual:(NSSet setWithArray:{2,1})).
+t assert:((NSSet setWithArray:(numbersB intersection:numbersA)) isEqual:(NSSet setWithArray:{2,1})).
+t assert:((NSSet setWithArray:(numbersA intersection:booleans)) isEqual:(NSSet setWithArray:{})).
+t assert:((NSSet setWithArray:(numbersA intersection:empty)) isEqual:(NSSet setWithArray:{})).
+t assert:((numbersA intersection:{nil,3}) isEqual:{3}).
+t assert:(({nil,3} intersection:numbersA) isEqual:{3}).
+t assert:(({nil,3,nil} intersection:{1,nil,'toto',nil,77,3}) containsObject:@{nil,3}) \ #&.
+t assert:({nil,3,nil} intersection:{1,nil,'toto',nil,77,3}) count = 2.
+t assertError:[numbersA intersection:nil].
+t assertError:[numbersA intersection:'toto'].
+
+"/////////////////// prefixes"
+t startTest:'prefixes'.
+t assert:(numbersA prefixes isEqual:{{0},{0,1},{0,1,2},{0,1,2,3}}).
+t assert:(booleans prefixes isEqual:{{false},{false,true},{false,true,false},{false,true,false,true}}).
+t assert:(empty prefixes isEqual:empty).
+t assert:({nil,1,nil,nil} prefixes isEqual:{{nil},{nil,1},{nil,1,nil},{nil,1,nil,nil}}).
+
+"/////////////////// reverse"
+t startTest:'reverse'.
+t assert:(numbersA reverse isEqual:{3,2,1,0}).
+t assert:(empty reverse isEqual:{}).
+t assert:({nil,2,3,nil,nil} reverse isEqual:{nil,nil,3,2,nil}).
+
+"/////////////////// rotatedBy:"
+t startTest:'rotatedBy:'.
+t assert:((numbersA rotatedBy:0) isEqual:numbersA).
+t assert:((numbersA rotatedBy:numbersA count) isEqual:numbersA).
+t assert:((numbersA rotatedBy:numbersA count negated) isEqual:numbersA).
+t assert:((numbersA rotatedBy:1) isEqual:{1,2,3,0}).
+t assert:((numbersA rotatedBy:2) isEqual:{2,3,0,1}).
+t assert:((numbersA rotatedBy:10) isEqual:{2,3,0,1}).
+t assert:((numbersA rotatedBy:-1) isEqual:{3,0,1,2}).
+t assert:((numbersA rotatedBy:-2) isEqual:{2,3,0,1}).
+t assert:((numbersA rotatedBy:-5) isEqual:{3,0,1,2}).
+t assertError:[numbersA rotatedBy:nil].
+t assertError:[numbersA rotatedBy:'toto'].
+
+t assert:((empty rotatedBy:0) isEqual:empty).
+t assert:((empty rotatedBy:1) isEqual:empty).
+t assert:((empty rotatedBy:-1) isEqual:empty).
+t assert:((empty rotatedBy:10) isEqual:empty).
+
+"/////////////////// scan:"
+t startTest:'scan:'.
+t assert:((numbersA scan:sumBlock) isEqual:{0,1,3,6}).
+t assert:((numbersA scan:#*) isEqual:{0,0,0,0}).
+t assert:((numbersA scan:#max:) isEqual:{0,1,2,3}).
+t assert:((numbersA scan:#min:) isEqual:{0,0,0,0}).
+t assertError:[numbersA scan:errorBlock].
+t assertError:[numbersA scan:'toto'].
+t assertError:[numbersA scan:nil].
+t assert:((numbersC scan:sumBlock) isEqual:{-1}).
+t assert:((empty scan:sumBlock) isEqual:{}).
+t assertError:[empty scan:'toto'].
+t assertError:[empty scan:nil].
+
+"/////////////////// sort"
+t startTest:'sort'.
+t assert:(numbersA sort isEqual:{0,1,2,3}).
+t assert:(numbersB sort isEqual:{0,3,1,2}).
+t assert:(numbersC sort isEqual:{0}).
+t assert:(booleans sort isEqual:{0,2,1,3}).
+t assert:({nil,'b','a','c',nil,'d'} sort isEqual:{2,1,3,5,0,4}).
+t assert:(empty sort isEqual:{}).
+t assertError:[{#+,8,9,10} sort].
+t assertError:[{8,9,10,11,12,#+} sort].
+t assertError:[{8,9,10,11,12,#+,13} sort].
+
+"/////////////////// subpartsOfSize:"
+t startTest:'subpartsOfSize:'.
+t assertError:[numbersA subpartsOfSize:0].
+t assert:((numbersA subpartsOfSize:1) isEqual:{{0},{1},{2},{3}}).
+t assert:((numbersA subpartsOfSize:2) isEqual:{{0,1},{1,2},{2,3}}).
+t assert:((numbersA subpartsOfSize:3) isEqual:{{0,1,2},{1,2,3}}).
+t assert:((numbersA subpartsOfSize:4) isEqual:{{0,1,2,3}}).
+t assert:((numbersA subpartsOfSize:5) isEqual:{}).
+t assertError:[empty subpartsOfSize:0].
+t assert:((empty subpartsOfSize:1) isEqual:{}).
+
+"/////////////////// union: "
+t startTest:'union:'.
+t assert:((numbersA union:numbersA) containsObject:@numbersA) \#&.
+t assert:(numbersA union:numbersA) count = numbersA count.
+t assert:((numbersA union:numbersC) containsObject:@(numbersA ++ numbersC)) \#&.
+t assert:((numbersA union:{3,0}) containsObject:@numbersA) \#&.
+t assert:((numbersA union:empty) containsObject:@numbersA) \#&.
+t assert:((booleans union:allTrue) containsObject:@{true,false}) \#&.
+t assert:((allFalse union: allTrue) containsObject:@{true,false}) \#&.
+t assert:(allFalse union: allTrue) count = 2.
+t assert:(({nil,5,8,nil,'toto'} union:{nil}) containsObject:@{5,8,nil,'toto'}) \#&.
+t assert:(({5,8,'toto'} union:{nil}) containsObject:@{5,8,nil,'toto'}) \#&.
+t assert:(({nil,5,8,nil,'toto'} union:{5,'toto'}) containsObject:@{nil,5,'toto',8}) \#&.
+t assert:((empty union:numbersA) containsObject:@numbersA) \#&.
+t assertError:[numbersA union:nil].
+t assertError:[numbersA union:'toto'].
+].
+
+arrayTestBlock1 value:@1{numbersA1, numbersA2, numbersA3, numbersA3, numbersA3} value:@1{numbersB1, numbersB2, numbersB3, numbersB3, numbersB3} value:@1{numbersC1, numbersC2, numbersC3, numbersC3, numbersC3 } value:@1{booleans1,booleans2,booleans3,booleans3,booleans3} value:@1{allTrue1,allTrue2,allTrue3,allTrue3,allTrue3} value:@1{allFalse1,allFalse2,allFalse3,allFalse3,allFalse3} value:@1{empty1,empty2,empty3,empty4,empty5} value:@2{sumBlock1,sumBlock2} value:@2{errorBlock1, errorBlock2}.
+arrayTestBlock1 := nil.
+
+arrayTestBlock2 := 
+[:numbersA :numbersB :booleans :allTrue :empty :mixed|
+|arrayWithNil indexSet|
+arrayWithNil := {nil,1,2,nil,'foo'}.
+
+"/////////////////// Objective-C 2.0 fast enumeration "
+t startTest:'Objective-C 2.0 fast enumeration'.
+t assert:numbersA     = (t duplicateUsingFastEnemeration:numbersA) \ #&.
+t assert:numbersB     = (t duplicateUsingFastEnemeration:numbersB) \ #&.
+t assert:booleans     = (t duplicateUsingFastEnemeration:booleans) \ #&.
+t assert:allTrue      = (t duplicateUsingFastEnemeration:allTrue)  \ #&.
+t assert:(empty       = (t duplicateUsingFastEnemeration:empty)) ++ {true} \ #&.
+t assert:mixed        = (t duplicateUsingFastEnemeration:mixed)  \ #&.
+t assert:(arrayWithNil isEqual:(t duplicateUsingFastEnemeration:arrayWithNil)).
+
+"/////////////////// at:"
+t startTest:'at:'.
+
+indexSet := NSMutableIndexSet indexSet.
+indexSet addIndex:@{0,2,3}.
+
+t assert:(numbersA at:numbersB) = {0,2,2,1} \#&.
+t assert:(numbersA at:booleans) = {1,3} \#&.
+t assert:(numbersA at:allTrue) = numbersA \#&.
+t assert:((numbersA at:{nil,nil,nil,nil}) isEqual:{}) .
+t assert:((numbersA at:empty) isEqual:{}).
+t assert:(numbersA at:{nil,nil,3,nil,nil,1,nil,nil}) = {3,1} \#&.
+t assert:((numbersA at:indexSet) isEqual:{0,2,3}).
+t assert:((numbersA at:NSMutableIndexSet indexSet) isEqual:{}).
+t assertError:[numbersA at:mixed]. 
+t assertError:[numbersA at:nil].
+t assertError:[numbersA at:{nil}].
+t assertError:[numbersA at:{nil,nil,nil,nil,nil}].
+t assertError:[numbersA at:-1].
+t assertError:[numbersA at:4].
+t assertError:[numbersA at:{-1}].
+t assertError:[numbersA at:{4}].
+indexSet addIndex:4.
+t assertError:[numbersA at:indexSet].
+indexSet removeIndex:4.
+
+t assert:(booleans at:numbersB) = {NO,NO,NO,YES} \#&.
+t assert:(booleans at:booleans) = {YES,YES} \#&.
+t assert:(booleans at:allTrue) = booleans \#&.
+t assert:((numbersA at:{nil,nil,nil,nil}) isEqual:{}) .
+t assert:((booleans at:empty) isEqual:{}).
+t assert:(booleans at:{nil,nil,3,nil,nil,1,nil,nil}) = {YES,YES} \#&.
+t assert:((booleans at:indexSet) isEqual:{false,false,true}).
+t assert:((booleans at:NSMutableIndexSet indexSet) isEqual:{}).
+t assertError:[booleans at:mixed].
+t assertError:[booleans at:nil].
+t assertError:[booleans at:{nil}].
+t assertError:[booleans at:{nil,nil,nil,nil,nil}].
+t assertError:[booleans at:-1].
+t assertError:[booleans at:4].
+t assertError:[booleans at:{-1}].
+t assertError:[booleans at:{4}].
+indexSet addIndex:4.
+t assertError:[booleans at:indexSet].
+indexSet removeIndex:4.
+
+t assert:(mixed at:numbersB) = {0,'toto','toto',YES} \#&.
+t assert:(mixed at:booleans) = {true, #+} \#&.
+t assert:(mixed at:allTrue) = mixed \#&.
+t assert:((mixed at:empty) isEqual:{}).
+t assert:((mixed at:indexSet) isEqual:{0,'toto',#+}).
+t assert:((mixed at:NSMutableIndexSet indexSet) isEqual:{}).
+t assertError:[mixed at:mixed].
+t assertError:[mixed at:nil].
+t assertError:[mixed at:{nil}].
+t assertError:[mixed at:{nil,nil,nil,nil,nil}].
+t assertError:[mixed at:-1].
+t assertError:[mixed at:4].
+t assertError:[mixed at:{-1}].
+t assertError:[mixed at:{4}].
+indexSet addIndex:4.
+t assertError:[mixed at:indexSet].
+indexSet removeIndex:4.
+
+"/////////////////// = "
+t startTest:'='.
+t assert:(numbersA = numbersA \#&).
+t assert:(numbersA = numbersB isEqual:{false,false,true,false}).
+t assert:(numbersA = booleans isEqual:{false,false,false,false}).
+t assertError:[numbersA = empty].
+t assert:(numbersA = mixed isEqual:{true,false,false,false}).
+t assert:(booleans = numbersA isEqual:{false,false,false,false}).
+t assert:booleans = booleans \#&.
+t assert:(booleans = allTrue isEqual:{false, true, false, true}). 
+t assertError:[booleans = empty].
+t assert:(booleans = mixed isEqual:{false,true, false, false}).
+t assertError:[empty = numbersA].
+t assert:(empty = empty isEqual:{}) & (empty = {} isEqual:empty) & (empty = NSArray array isEqual:empty).
+t assert:(mixed = numbersA isEqual:{true,false,false,false}).
+
+"/////////////////// ~= "
+t startTest:'~='.
+t assert:((numbersA ~= numbersA) not \#&).
+t assert:(numbersA ~= numbersB isEqual:{true,true,false,true}).
+t assert:(numbersA ~= booleans \#&).
+t assertError:[numbersA ~= empty].
+t assert:(numbersA ~= mixed isEqual:{false,true,true,true}).
+t assert:(booleans ~= numbersA) \#&. 
+t assert:(booleans ~= booleans) not \#&.
+t assert:(booleans ~= allTrue isEqual:{true, false, true, false}). 
+t assertError:[booleans ~= empty].
+t assert:(booleans ~= mixed isEqual:{true, false, true, true}).
+t assertError:[empty ~= numbersA].
+t assert:(empty ~= empty isEqual:{}) & (empty ~= {} isEqual:empty) & (empty ~= NSArray array isEqual:empty).
+t assert:(mixed ~= numbersA isEqual:{false,true, true, true}).
+
+"/////////////////// ++ "
+t startTest:'++'.
+
+t assert:numbersA ++ numbersA = {0,1,2,3,0,1,2,3} \ #&.
+t assert:numbersA ++ numbersB = {0,1,2,3,0.2,2,2,1} \ #&.
+t assert:numbersA ++ booleans = {0,1,2,3,false,true,false,true} \ #&.
+t assert:numbersA ++ empty = numbersA \ #&.
+t assert:numbersA ++ mixed = {0,1,2,3,0,true,'toto',#+} \ #&.
+t assertError:[numbersA ++ nil].
+t assertError:[numbersA ++ 99].
+
+t assert:booleans ++ numbersA = {false,true,false,true,0,1,2,3} \ #&.
+t assert:booleans ++ booleans = {false,true,false,true,false,true,false,true} \ #&.
+t assert:booleans ++ empty = booleans \ #&.
+t assert:booleans ++ mixed = {false,true,false,true,0,true,'toto',#+} \ #&.
+t assertError:[booleans ++ nil].
+t assertError:[booleans ++ 99].
+
+t assert:empty ++ numbersA = numbersA \ #&.
+t assert:empty ++ booleans = booleans \ #&.
+t assert:(empty ++ empty isEqual:empty).
+t assert:empty ++ mixed = mixed \ #&.
+t assertError:[empty ++ nil].
+t assertError:[empty ++ 99].
+
+t assert:mixed ++ numbersA = {0,true,'toto',#+,0,1,2,3} \ #&.
+t assert:mixed ++ booleans = {0,true,'toto',#+,false,true,false,true} \ #&.
+t assert:mixed ++ empty = mixed \ #&.
+t assert:mixed ++ mixed = {0,true,'toto',#+,0,true,'toto',#+} \ #&.
+t assertError:[mixed ++ nil].
+t assertError:[mixed ++ 99].
+
+"/////////////////// replicate: "
+t startTest:'replicate:'.
+
+t assert:((numbersA replicate:numbersA) isEqual:{1,2,2,3,3,3}).
+t assert:((numbersB replicate:numbersA) isEqual:{2,2,2,1,1,1}).
+t assertError:[numbersA replicate:booleans].
+t assertError:[numbersA replicate:mixed].
+t assertError:[numbersA replicate:empty].
+t assertError:[numbersA replicate:{0,1,2,-1}].
+t assertError:[numbersA replicate:{0,1,nil,1}].
+t assertError:[numbersA replicate:nil].
+t assertError:[numbersA replicate:99].
+
+t assert:((booleans replicate:numbersA) isEqual:{true,false,false,true,true,true}).
+t assertError:[booleans replicate:booleans].
+t assertError:[booleans replicate:mixed].
+t assertError:[booleans replicate:empty].
+t assertError:[booleans replicate:{0,1,2,-1}].
+t assertError:[booleans replicate:{0,1,nil,1}].
+t assertError:[booleans replicate:nil].
+t assertError:[booleans replicate:99].
+
+t assertError:[empty replicate:numbersA].
+t assertError:[empty replicate:booleans].
+t assertError:[empty replicate:mixed].
+t assert:((empty replicate:empty) isEqual:{}).
+t assertError:[empty replicate:nil].
+t assertError:[empty replicate:99].
+
+"/////////////////// where:"
+t startTest:'where:'.
+
+indexSet := NSMutableIndexSet indexSet.
+indexSet addIndex:@{0,2,3}.
+
+t assertError:[numbersA where:numbersB].
+t assert:(numbersA where:booleans) = {1,3} \#&.
+t assert:(numbersA where:allTrue) = numbersA \#&.
+t assert:((numbersA where:{nil,nil,nil,nil}) isEqual:{}) .
+t assertError:[numbersA where:empty].
+t assertError:[numbersA where:{nil,nil,3,nil,nil,1,nil,nil}].
+t assertError:[numbersA where:indexSet].
+t assertError:[numbersA where:mixed]. 
+t assertError:[numbersA where:nil].
+t assertError:[numbersA where:{nil}].
+t assertError:[numbersA where:{nil,nil,nil,nil,nil}].
+t assertError:[numbersA where:4].
+t assertError:[numbersA where:{4}].
+
+t assertError:[booleans where:numbersB].
+t assert:(booleans where:booleans) = {YES,YES} \#&.
+t assert:(booleans where:allTrue) = booleans \#&.
+t assert:((numbersA where:{nil,nil,nil,nil}) isEqual:{}) .
+t assertError:[booleans where:empty].
+t assertError:[booleans where:{nil,nil,3,nil,nil,1,nil,nil}].
+t assertError:[booleans where:indexSet].
+t assertError:[booleans where:mixed].
+t assertError:[booleans where:nil].
+t assertError:[booleans where:{nil}].
+t assertError:[booleans where:{nil,nil,nil,nil,nil}].
+t assertError:[booleans where:4].
+t assertError:[booleans where:{4}].
+
+t assertError:[mixed where:numbersB].
+t assert:(mixed where:booleans) = {true, #+} \#&.
+t assert:(mixed where:allTrue) = mixed \#&.
+t assertError:[mixed where:empty].
+t assertError:[mixed where:indexSet].
+t assertError:[mixed where:mixed].
+t assertError:[mixed where:nil].
+t assertError:[mixed where:{nil}].
+t assertError:[mixed where:{nil,nil,nil,nil,nil}].
+t assertError:[mixed where:4].
+t assertError:[mixed where:{4}].
+].
+
+arrayTestBlock2 value:@1{numbersA1, numbersA2, numbersA3} value:@2{numbersB1, numbersB2, numbersB3} value:@3{booleans1,booleans2,booleans3} value:@4{allTrue1,allTrue2,allTrue3} value:@5{empty1,empty2,empty3,empty4,empty5} value:@6{mixed1,mixed2}.
+arrayTestBlock2 := nil.
+
+arrayTestBlock3 := 
+[:numbersA :booleans :empty :mixed|
+|arrayWithNil|
+arrayWithNil := {nil,1,2,nil,'foo'}.
+
+"/////////////////// Objective-C 2.0 fast enumeration "
+t startTest:'Objective-C 2.0 fast enumeration'.
+t assert:numbersA     = (t duplicateUsingFastEnemeration:numbersA) \ #&.
+t assert:booleans     = (t duplicateUsingFastEnemeration:booleans) \ #&.
+t assert:(empty       = (t duplicateUsingFastEnemeration:empty)) ++ {true} \ #&.
+t assert:mixed        = (t duplicateUsingFastEnemeration:mixed)  \ #&.
+t assert:(arrayWithNil isEqual:(t duplicateUsingFastEnemeration:arrayWithNil)).
+
+"/////////////////// >< "
+t startTest:'><'.
+t assert:(numbersA >< numbersA isEqual:{{0},{1},{2},{3}}).
+t assert:(numbersA >< mixed isEqual:{{0},{},{},{}}).
+t assert:(numbersA >< empty isEqual:{{},{},{},{}}).
+t assert:(empty >< numbersA isEqual:{}).
+t assert:(arrayWithNil >< arrayWithNil isEqual:{{0,3},{1},{2},{0,3},{4}}).
+t assertError:[numbersA >< nil].
+t assertError:[numbersA >< 99].
+
+"/////////////////// arrayWithArray: "
+t startTest:'arrayWithArray:'.
+t assert:((FSArray arrayWithArray:arrayWithNil) isEqual:arrayWithNil).
+
+"/////////////////// arrayWithObject: "
+t startTest:'arrayWithObject:'.
+t assert:((FSArray arrayWithObject:nil) isEqual:{nil}).
+t assert:((FSArray arrayWithObject:7) isEqual:{7}).
+
+"/////////////////// arrayWithObjects:count:, getObjects, getObjects:range: "
+t startTest:'arrayWithObjects:count:, getObjects, getObjects:range:'.
+buffer := FSPointer malloc:(t sizeofId * arrayWithNil count).
+arrayWithNil getObjects:buffer.
+t assert:((FSArray arrayWithObjects:buffer count:arrayWithNil count) isEqual:arrayWithNil).
+buffer free.
+
+buffer := FSPointer malloc:(t sizeofId * arrayWithNil count).
+arrayWithNil getObjects:buffer range:(NSValue rangeWithLocation:0 length:arrayWithNil count).
+t assert:((FSArray arrayWithObjects:buffer count:arrayWithNil count) isEqual:arrayWithNil).
+buffer free.
+
+buffer := FSPointer malloc:(t sizeofId * 2).
+arrayWithNil getObjects:buffer range:(NSValue rangeWithLocation:2 length:2).
+t assert:((FSArray arrayWithObjects:buffer count:2) isEqual:{2,nil}).
+buffer free.
+
+buffer := FSPointer malloc:(t sizeofId * 2).
+t assertError:[arrayWithNil getObjects:buffer range:(NSValue rangeWithLocation:0 length:arrayWithNil count +1)].
+t assertError:[arrayWithNil getObjects:buffer range:(NSValue rangeWithLocation:2 length:arrayWithNil count -1)].
+t assertError:[arrayWithNil getObjects:buffer range:(NSValue rangeWithLocation:22 length:0)].
+buffer free.
+
+
+"/////////////////// arrayByAddingObject: "
+t startTest:'arrayByAddingObject:'.
+t assert:((arrayWithNil arrayByAddingObject:7) isEqual:{nil,1,2,nil,'foo',7}). 
+t assert:((arrayWithNil arrayByAddingObject:nil) isEqual:{nil,1,2,nil,'foo',nil}).
+
+"/////////////////// arrayByAddingObjectsFromArray: "
+t startTest:'arrayByAddingObjectsFromArray:'.
+t assert:((arrayWithNil arrayByAddingObjectsFromArray:{}) isEqual:arrayWithNil). 
+t assert:((arrayWithNil arrayByAddingObjectsFromArray:{nil}) isEqual:{nil,1,2,nil,'foo',nil}). 
+t assert:((arrayWithNil arrayByAddingObjectsFromArray:{nil,4}) isEqual:{nil,1,2,nil,'foo',nil,4}).
+t assert:((arrayWithNil arrayByAddingObjectsFromArray:{1,nil}) isEqual:{nil,1,2,nil,'foo',1,nil}).
+
+"/////////////////// componentsJoinedByString: "
+
+t startTest:'componentsJoinedByString:'.
+t assert:(arrayWithNil componentsJoinedByString:'**') = 'nil**1**2**nil**foo'.
+
+"/////////////////// containsObject: "
+t startTest:'containsObject:'.
+t assert:(arrayWithNil containsObject:nil) & (arrayWithNil containsObject:2) & (arrayWithNil containsObject:'foo') & (arrayWithNil containsObject:99) not.
+
+"/////////////////// count "
+t startTest:'count'.
+t assert:arrayWithNil count = 5.
+
+"/////////////////// description "
+t startTest:'description'.
+t assert:arrayWithNil description = '{nil, 1, 2, nil, ''foo''}'.
+
+"/////////////////// descriptionWithLocale: "
+t startTest:'descriptionWithLocale:'.
+t assert:(arrayWithNil descriptionWithLocale:nil) = '{nil, 1, 2, nil, ''foo''}'.
+
+"/////////////////// descriptionWithLocale:indent: "
+t startTest:'descriptionWithLocale:indent:'.
+t assert:(arrayWithNil descriptionWithLocale:nil indent:0) = '{nil, 1, 2, nil, ''foo''}'.
+
+"/////////////////// firstObjectCommonWithArray: "
+t startTest:'firstObjectCommonWithArray:'.
+t assert:(arrayWithNil firstObjectCommonWithArray:{'foo',2,78}) = 2.
+t assert:(arrayWithNil firstObjectCommonWithArray:{nil,'tt',78,nil,2}) == nil.
+t assert:(arrayWithNil firstObjectCommonWithArray:{7,'toto',2, nil,'tt',78, nil,2}) == nil.
+t assert:(arrayWithNil firstObjectCommonWithArray:{7,'toto',2,'tt',78}) = 2.
+t assert:(arrayWithNil firstObjectCommonWithArray:(NSArray arrayWithArray:{'tt',78,2})) = 2.
+
+"/////////////////// getObjects, getObjects:range: "
+" See test for -> arrayWithObjects:count:"
+
+"/////////////////// indexOfObject: "
+t startTest:'indexOfObject:'.
+t assert:(arrayWithNil indexOfObject:nil) = 0 & ((arrayWithNil indexOfObject:1) = 1) & ((arrayWithNil indexOfObject:'foo') = 4).
+
+"/////////////////// indexOfObject:inRange:"
+t startTest:'indexOfObject:inRange:'.
+t assertError:[numbersA indexOfObject:1 inRange:(NSValue rangeWithLocation:0 length:6)].
+t assertError:[numbersA indexOfObject:2 inRange:(NSValue rangeWithLocation:5 length:0)].
+t assert:(arrayWithNil indexOfObject:nil inRange:(NSValue rangeWithLocation:0 length:5)) =0.
+t assert:((arrayWithNil indexOfObject:1 inRange:(NSValue rangeWithLocation:0 length:5)) = 1) & ((arrayWithNil indexOfObject:1 inRange:(NSValue rangeWithLocation:2 length:2)) = NSNotFound) & ((arrayWithNil indexOfObject:1 inRange:(NSValue rangeWithLocation:1 length:0)) = NSNotFound).
+t assert:((arrayWithNil indexOfObject:'foo' inRange:(NSValue rangeWithLocation:0 length:5)) = 4) & ((arrayWithNil indexOfObject:'foo' inRange:(NSValue rangeWithLocation:0 length:4)) = NSNotFound).
+
+"/////////////////// indexOfObjectIdenticalTo: "
+t startTest:'indexOfObjectIdenticalTo:'.
+t assert:(arrayWithNil indexOfObjectIdenticalTo:nil) = 0 & ((arrayWithNil indexOfObjectIdenticalTo:1) = NSNotFound) & ((arrayWithNil indexOfObjectIdenticalTo:(arrayWithNil at:1)) = 1) & ((arrayWithNil indexOfObjectIdenticalTo:'foo') = NSNotFound) & ((arrayWithNil indexOfObjectIdenticalTo:'toto') = NSNotFound).
+
+"/////////////////// indexOfObjectIdenticalTo:inRange:"
+t startTest:'indexOfObjectIdenticalTo:inRange:'.
+t assertError:[numbersA indexOfObjectIdenticalTo:1 inRange:(NSValue rangeWithLocation:0 length:6)].
+t assertError:[numbersA indexOfObjectIdenticalTo:2 inRange:(NSValue rangeWithLocation:5 length:0)].
+t assert:(arrayWithNil indexOfObjectIdenticalTo:nil inRange:(NSValue rangeWithLocation:0 length:5)) = 0.
+t assert:((arrayWithNil indexOfObjectIdenticalTo:1 inRange:(NSValue rangeWithLocation:0 length:5)) = NSNotFound) & ((arrayWithNil indexOfObjectIdenticalTo:(arrayWithNil at:1) inRange:(NSValue rangeWithLocation:0 length:5)) = 1) & ((arrayWithNil indexOfObjectIdenticalTo:(arrayWithNil at:1) inRange:(NSValue rangeWithLocation:2 length:2)) = NSNotFound) & ((arrayWithNil indexOfObjectIdenticalTo:(arrayWithNil at:1) inRange:(NSValue rangeWithLocation:0 length:0)) = NSNotFound).
+t assert:((arrayWithNil indexOfObjectIdenticalTo:'foo' inRange:(NSValue rangeWithLocation:0 length:5)) = NSNotFound) & ((arrayWithNil indexOfObjectIdenticalTo:(arrayWithNil at:4) inRange:(NSValue rangeWithLocation:0 length:5)) = 4) & ((arrayWithNil indexOfObjectIdenticalTo:(arrayWithNil at:4) inRange:(NSValue rangeWithLocation:0 length:4)) = NSNotFound).
+
+
+"/////////////////// initWithArray: "
+t startTest:'initWithArray:'.
+t assert:((FSArray alloc initWithArray:arrayWithNil) isEqual:arrayWithNil).
+
+"/////////////////// initWithArray:copyItems: "
+t startTest:'initWithArray:copyItems:'.
+t assert:((FSArray alloc initWithArray:arrayWithNil copyItems:NO) isEqual:arrayWithNil).
+t assert:((FSArray alloc initWithArray:arrayWithNil copyItems:YES) isEqual:arrayWithNil).
+
+"/////////////////// initWithObject: "
+t startTest:'initWithObject:'.
+t assert:((FSArray alloc initWithObject:nil) isEqual:{nil}).
+t assert:((FSArray alloc initWithObject:7) isEqual:{7}).
+
+"/////////////////// initWithObjects:count: "
+t startTest:'initWithObjects:count:'.
+buffer := FSPointer malloc:(t sizeofId * arrayWithNil count).
+arrayWithNil getObjects:buffer.
+t assert:((FSArray alloc initWithObjects:buffer count:arrayWithNil count) isEqual:arrayWithNil).
+buffer free.
+
+"/////////////////// isEqual: "
+t startTest:'isEqual:'.
+t assert:(arrayWithNil isEqual:'foo') not & (arrayWithNil isEqual:nil) not.
+t assert:(arrayWithNil isEqual:{nil, 1, 2, nil, 'foo', 8}) not & (arrayWithNil isEqual:{nil, 1, 2, 6, 'foo'}) not.
+t assert:(arrayWithNil isEqual:{nil, 1, 2, nil, 'foo'}).
+
+"/////////////////// isEqualToArray: "
+t startTest:'isEqualToArray:'.
+t assert:(arrayWithNil isEqual:{nil, 1, 2, nil, 'foo', 8}) not & (arrayWithNil isEqual:{nil, 1, 2, 6, 'foo'}) not.
+t assert:(arrayWithNil isEqual:{nil, 1, 2, nil, 'foo'}).
+
+"/////////////////// lastObject"
+t startTest:'lastObject'.
+t assert:arrayWithNil lastObject = 'foo'.
+t assert:{nil} lastObject == nil.
+t assert:{nil,1,2,nil} lastObject == nil.
+
+"/////////////////// makeObjectsPerformSelector:"
+t startTest:'makeObjectsPerformSelector:'.
+arrayWithNil makeObjectsPerformSelector:#class.
+t assertError:[arrayWithNil makeObjectsPerformSelector:#thisMethodDoesNotExist1449765eft].
+
+"/////////////////// makeObjectsPerformSelector:withObject:"
+t startTest:'makeObjectsPerformSelector:withObject:'.
+arrayWithNil makeObjectsPerformSelector:#isKindOfClass: withObject:NSString.
+t assertError:[arrayWithNil makeObjectsPerformSelector:#thisMethodDoesNotExist1449765eft withObject:99].
+
+"/////////////////// objectAtIndex:"
+t startTest:'objectAtIndex:'.
+t assert:([numbersA objectAtIndex:numbersA count. false.] onException:[:e| e name = 'NSRangeException']).
+t assert:(numbersA objectAtIndex:0) = 0 & ((numbersA objectAtIndex:1) = 1) & ((numbersA objectAtIndex:2) = 2) & ((numbersA objectAtIndex:3) = 3).
+t assert:([booleans objectAtIndex:booleans count. false.] onException:[:e| e name = 'NSRangeException']).
+t assert:((booleans objectAtIndex:0) = false) & ((booleans objectAtIndex:1) = true) & ((booleans objectAtIndex:2) = false) & ((booleans objectAtIndex:3) = true).
+t assert:([empty objectAtIndex:empty count. false.] onException:[:e| e name = 'NSRangeException']).
+t assert:([arrayWithNil objectAtIndex:arrayWithNil count. false.] onException:[:e| e name = 'NSRangeException']).
+t assert:((arrayWithNil objectAtIndex:0) == nil) & ((arrayWithNil objectAtIndex:1) = 1) & ((arrayWithNil objectAtIndex:2) = 2) & ((arrayWithNil objectAtIndex:3) == nil) & ((arrayWithNil objectAtIndex:4) = 'foo').
+
+"/////////////////// objectEnumerator, reverseObjectEnumerator"
+t startTest:'objectEnumerator, reverseObjectEnumerator'.
+[|enumerator|
+enumerator := arrayWithNil objectEnumerator.
+t assert:(enumerator nextObject == nil) & (enumerator nextObject = 1) & (enumerator nextObject = 2) & (enumerator nextObject == nil) & (enumerator nextObject = 'foo') & (enumerator nextObject == nil) & (enumerator nextObject == nil).
+enumerator := arrayWithNil objectEnumerator.
+t assert:(enumerator allObjects isEqual:arrayWithNil) & (enumerator nextObject == nil) & (enumerator nextObject == nil).
+enumerator := arrayWithNil objectEnumerator.
+t assert:(enumerator nextObject == nil) & (enumerator allObjects isEqual:{1,2,nil,'foo'}) & (enumerator nextObject == nil) & (enumerator nextObject == nil).
+enumerator := {} objectEnumerator.
+t assert:enumerator nextObject == nil & (enumerator nextObject == nil).
+enumerator := {} objectEnumerator.
+t assert:(enumerator allObjects isEqual:{}).
+
+enumerator := arrayWithNil reverseObjectEnumerator.
+t assert:(enumerator nextObject = 'foo') & (enumerator nextObject == nil) & (enumerator nextObject = 2) & (enumerator nextObject = 1) & (enumerator nextObject == nil) & (enumerator nextObject == nil) & (enumerator nextObject == nil).
+enumerator := arrayWithNil reverseObjectEnumerator.
+t assert:(enumerator allObjects isEqual:arrayWithNil) & (enumerator nextObject == nil) & (enumerator nextObject == nil).
+enumerator := arrayWithNil reverseObjectEnumerator.
+t assert:(enumerator nextObject = 'foo') & (enumerator nextObject == nil) & (enumerator allObjects isEqual:{nil,1,2}) & (enumerator nextObject == nil) & (enumerator nextObject == nil).
+enumerator := {} reverseObjectEnumerator.
+t assert:enumerator nextObject == nil & (enumerator nextObject == nil).
+enumerator := {} reverseObjectEnumerator.
+t assert:(enumerator allObjects isEqual:{}).
+] value.
+
+"/////////////////// subarrayWithRange:"
+t startTest:'subarrayWithRange:'.
+t assert:((arrayWithNil subarrayWithRange:(NSValue rangeWithLocation:0 length:arrayWithNil count)) isEqual:arrayWithNil).
+t assert:((arrayWithNil subarrayWithRange:(NSValue rangeWithLocation:0 length:0)) isEqual:{}).
+t assert:((arrayWithNil subarrayWithRange:(NSValue rangeWithLocation:1 length:0)) isEqual:{}).
+t assert:((arrayWithNil subarrayWithRange:(NSValue rangeWithLocation:0 length:4)) isEqual:{nil,1,2,nil}).
+t assert:((arrayWithNil subarrayWithRange:(NSValue rangeWithLocation:1 length:4)) isEqual:{1,2,nil,'foo'}).
+t assert:((arrayWithNil subarrayWithRange:(NSValue rangeWithLocation:1 length:3)) isEqual:{1,2,nil}).
+t assertError:[empty subarrayWithRange:(NSValue rangeWithLocation:0 length:1)].
+t assertError:[empty subarrayWithRange:(NSValue rangeWithLocation:1 length:0)].
+
+[:array|
+t assertError:[array subarrayWithRange:(NSValue rangeWithLocation:0 length:array count+1)].
+t assertError:[array subarrayWithRange:(NSValue rangeWithLocation:2 length:array count-1)].
+t assertError:[array subarrayWithRange:(NSValue rangeWithLocation:array count +1 length:0)].
+t assert:((array subarrayWithRange:(NSValue rangeWithLocation:array count-1 length:1)) isEqual:(array lastObject) enlist).
+t assert:((array subarrayWithRange:(NSValue rangeWithLocation:0 length: array count)) isEqual:array).
+t assert:((array subarrayWithRange:(NSValue rangeWithLocation:1 length: array count-1)) isEqual:(array at:(array count-1) iota + 1)).
+] value:@{numbersA,booleans,mixed}.
+].
+
+arrayTestBlock3 value:@{numbersA1, numbersA2, numbersA3, numbersA3, numbersA3} value:@{booleans1,booleans2,booleans3,booleans3,booleans3} value:@{empty1,empty2,empty3,empty4,empty5} value:@{mixed1,mixed2,mixed2,mixed2,mixed2}.
+arrayTestBlock3 := nil.
+
+arrayTestBlock4 := 
+[:numbersA :numbersB :booleans :allTrue :empty :mixed| |indexSet|
+
+"/////////////////// Objective-C 2.0 fast enumeration "
+t startTest:'Objective-C 2.0 fast enumeration'.
+t assert:numbersA     = (t duplicateUsingFastEnemeration:numbersA) \ #&.
+t assert:numbersB     = (t duplicateUsingFastEnemeration:numbersB) \ #&.
+t assert:booleans     = (t duplicateUsingFastEnemeration:booleans) \ #&.
+t assert:allTrue      = (t duplicateUsingFastEnemeration:allTrue) \ #&.
+t assert:(empty       = (t duplicateUsingFastEnemeration:empty)) ++ {true} \ #&.
+t assert:mixed        = (t duplicateUsingFastEnemeration:mixed)  \ #&.
+
+"/////////////////// at:put: "
+t startTest:'at:put:'.
+
+numbersA at:numbersB put:numbersB.  
+t assert:(numbersA isEqual:{0.2,1,2,3}).
+numbersA at:numbersB put:booleans.
+t assert:(numbersA isEqual:{false,true,false,3}).
+numbersA at:numbersB put:mixed.
+t assert:(numbersA isEqual:{0,#+,'toto',3}).
+numbersA at:numbersB put:'wlurk'.
+t assert:(numbersA isEqual:{'wlurk','wlurk','wlurk',3}).
+
+t assertError:[numbersA at:{0,4,2,3} put:numbersB].
+t assertError:[numbersA at:{0,-1,2,3} put:numbersB].
+t assertError:[numbersA at:mixed put:numbersB].
+t assertError:[numbersA at:{0,1,2} put:numbersB].
+t assertError:[numbersA at:{0,1,2,3,2} put:numbersB].
+t assertError:[numbersA at:{true,false,1,true} put:numbersB].
+t assertError:[numbersA at:{1,false,2,true} put:numbersB].
+t assertError:[numbersA at:nil put:numbersB].
+t assertError:[numbersA at:'toto' put:numbersB].
+
+indexSet := NSMutableIndexSet indexSet.
+indexSet addIndex:@{0,2,3}.
+numbersA at:indexSet put:{0.2,88,99}.  
+t assert:(numbersA isEqual:{0.2,'wlurk',88,99}).
+numbersA at:indexSet put:'blonk'.
+t assert:(numbersA isEqual:{'blonk','wlurk','blonk', 'blonk'}).
+
+t assertError:[numbersA at:indexSet put:{1,2,3,4}].
+indexSet addIndex:4.
+t assertError:[numbersA at:indexSet put:{1,2,3,4}].
+
+numbersA at:allTrue put:{0,#+,'toto',3}.
+t assert:(numbersA isEqual:{0,#+,'toto',3}).
+
+numbersA at:booleans put:'wlonk'.
+t assert:(numbersA isEqual:{0,'wlonk','toto','wlonk'}).
+numbersA at:booleans put:{1,33}.
+t assert:(numbersA isEqual:{0,1,'toto',33}).
+numbersA at:booleans put:{'a',false}.
+t assert:(numbersA isEqual:{0,'a','toto',false}).
+numbersA at:booleans put:(NSArray arrayWithArray:{1,33}).
+t assert:(numbersA isEqual:{0,1,'toto',33}).
+
+t assertError:[numbersA at:booleans put:{1}].
+t assertError:[numbersA at:booleans put:{1,2,3}].
+t assertError:[numbersA at:booleans put:numbersB].
+t assertError:[numbersA at:booleans put:booleans].
+
+numbersA at:{nil,nil,nil,nil} put:{}.
+t assert:(numbersA isEqual:{0,1,'toto',33}).
+
+t assertError:[numbersA at:{nil,nil,nil} put:{}].
+t assertError:[numbersA at:{nil,nil,nil,nil,nil} put:{}].
+t assertError:[numbersA at:{nil,nil,nil,nil} put:{1}].
+
+numbersA at:empty put:{}.
+t assert:(numbersA isEqual:{0,1,'toto',33}).
+
+t assertError:[numbersA at:empty put:{2}].
+
+numbersA at:{0,1,2,3} put:{0,1,2,3}. "Put back numbersA in its initial state."
+
+"/////////////////// insert:at:"
+t startTest:'insert:at:'.
+numbersA insert:22 at:0 .
+t assert:(numbersA isEqual:{22,0,1,2,3}).
+numbersA insert:33 at:1.
+t assert:(numbersA isEqual:{22,33,0,1,2,3}).
+numbersA insert:44 at:5.
+t assert:(numbersA isEqual:{22,33,0,1,2,44,3}).
+numbersA insert:'toto' at:7.
+t assert:(numbersA isEqual:{22,33,0,1,2,44,3,'toto'}).
+[ |array| 
+  array := {1,3,true}. 
+  array insert:nil at:2.
+  t assert:(array isEqual:{1,3,nil,true}).
+] value.  
+t assertError:[numbersA insert:99 at:nil].
+t assertError:[numbersA insert:99 at:'toto'].
+t assertError:[numbersA insert:99 at:-1].
+t assertError:[numbersA insert:99 at:2.3].
+
+numbersA removeAt:@{7,5,1,0}. "Put back numbersA in its initial state."
+
+"/////////////////// removeAt:"
+t startTest:'removeAt:'.
+t assertError:[numbersA removeAt:4].
+t assertError:[numbersA removeAt:-1].
+t assertError:[numbersA removeAt:2.3].
+t assertError:[numbersA removeAt:nil].
+t assertError:[numbersA removeAt:'toto'].
+
+numbersA removeAt:0.
+t assert:(numbersA isEqual:{1,2,3}).
+numbersA removeAt:1.
+t assert:(numbersA isEqual:{1,3}).
+numbersA removeAt:1.
+t assert:(numbersA isEqual:{1}).
+numbersA removeAt:0.
+t assert:(numbersA isEqual:{}).
+t assertError:[numbersA removeAt:0].
+
+numbersA insert:@{0,1,2,3} at:@{0,1,2,3}. "Put back numbersA in its initial state."
+numbersA removeAt:numbersB.  
+t assert:(numbersA isEqual:{3}).
+numbersA removeAt:0.
+t assert:(numbersA isEqual:{}).
+
+numbersA insert:@{0,1,2,3} at:@{0,1,2,3}. "Put back numbersA in its initial state."  
+t assertError:[numbersA removeAt:{0,4,2,3}].
+t assertError:[numbersA removeAt:{0,-1,2,3}].
+t assertError:[numbersA removeAt:mixed].
+t assertError:[numbersA removeAt:{true,false,1,true}].
+t assertError:[numbersA removeAt:{1,false,2,true}].
+
+numbersA removeAt:allTrue.
+
+t assert:(numbersA isEqual:{}).
+
+numbersA insert:@{0,1,2,3} at:@{0,1,2,3}. "Put back numbersA in its initial state."  
+numbersA removeAt:booleans.
+t assert:(numbersA isEqual:{0,2}).
+numbersA removeAt:{nil,nil}.
+t assert:(numbersA isEqual:{0,2}).
+
+t assertError:[numbersA removeAt:{nil,nil,nil}].
+t assertError:[numbersA removeAt:{nil}].
+
+numbersA removeAt:empty.
+t assert:(numbersA isEqual:{0,2}).
+
+numbersA removeAt:{0,1}.
+t assert:(numbersA isEqual:{}).
+
+numbersA insert:@{0,1,2,3} at:@{0,1,2,3}. "Put back numbersA in its initial state."  
+indexSet := NSMutableIndexSet indexSet.
+indexSet addIndex:0.
+indexSet addIndex:1.
+indexSet addIndex:3.
+numbersA removeAt:indexSet.
+t assert:(numbersA isEqual:{2}).
+
+indexSet := NSMutableIndexSet indexSet.
+indexSet addIndex:0.
+numbersA removeAt:indexSet.
+t assert:(numbersA isEqual:{}).
+
+t assertError:[numbersA removeAt:indexSet].
+
+numbersA insert:@{0,1,2,3} at:@{0,1,2,3}. "Put back numbersA in its initial state."  
+
+"/////////////////// removeWhere:"
+t startTest:'removeWhere:'.
+t assertError:[numbersA removeWhere:true].
+t assertError:[numbersA removeWhere:nil].
+t assertError:[numbersA removeWhere:'toto'].
+t assertError:[numbersA removeWhere:numbersB].  
+t assertError:[numbersA removeWhere:0].
+t assertError:[numbersA removeWhere:{nil,nil}].
+t assertError:[numbersA removeWhere:empty].
+t assertError:[numbersA removeWhere:{0,1,2,3}].
+
+
+numbersA removeWhere:{true, false, false, false}.
+t assert:(numbersA isEqual:{1,2,3}).
+numbersA removeWhere:{false, true, false}.
+t assert:(numbersA isEqual:{1,3}).
+numbersA removeWhere:{false, true}.
+t assert:(numbersA isEqual:{1}).
+numbersA removeWhere:{true}.
+t assert:(numbersA isEqual:{}).
+t assertError:[numbersA removeWhere:{true, false, false, false}].
+
+numbersA insert:@{0,1,2,3} at:@{0,1,2,3}. "Put back numbersA in its initial state."  
+t assertError:[numbersA removeWhere:{true, true, true}].
+t assertError:[numbersA removeWhere:{true, true, true, true, true}].
+t assertError:[numbersA removeWhere:mixed].
+t assertError:[numbersA removeWhere:{true,false,1,true}].
+t assertError:[numbersA removeWhere:{1,false,2,true}].
+
+numbersA removeWhere:allTrue.
+
+t assert:(numbersA isEqual:{}).
+
+numbersA insert:@{0,1,2,3} at:@{0,1,2,3}. "Put back numbersA in its initial state."  
+numbersA removeWhere:booleans.
+t assert:(numbersA isEqual:{0,2}).
+
+numbersA setArray:{0,1,2,3}. "Put back numbersA in its initial state."  
+
+"/////////////////// where:put: "
+t startTest:'where:put:'.
+
+t assertError:[numbersA where:numbersB put:numbersB].  
+t assertError:[numbersA where:numbersB put:booleans].  
+t assertError:[numbersA where:numbersB put:mixed].  
+t assertError:[numbersA where:numbersB put:'wlurk']."  
+t assertError:[numbersA where:{0,4,2,3} put:numbersB]."
+t assertError:[numbersA where:{0,-1,2,3} put:numbersB].
+t assertError:[numbersA where:mixed put:numbersB].
+t assertError:[numbersA where:{0,1,2} put:numbersB].
+t assertError:[numbersA where:{0,1,2,3,2} put:numbersB].
+t assertError:[numbersA where:{true,false,1,true} put:numbersB].
+t assertError:[numbersA where:{1,false,2,true} put:numbersB].
+t assertError:[numbersA where:nil put:numbersB].
+t assertError:[numbersA where:'toto' put:numbersB].
+
+numbersA where:allTrue put:{0,#+,'toto',3}.
+t assert:(numbersA isEqual:{0,#+,'toto',3}).
+
+numbersA where:booleans put:'wlonk'.
+t assert:(numbersA isEqual:{0,'wlonk','toto','wlonk'}).
+numbersA where:booleans put:{1,33}.
+t assert:(numbersA isEqual:{0,1,'toto',33}).
+numbersA where:booleans put:{'a',false}.
+t assert:(numbersA isEqual:{0,'a','toto',false}).
+numbersA where:booleans put:(NSArray arrayWithArray:{1,33}).
+t assert:(numbersA isEqual:{0,1,'toto',33}).
+
+t assertError:[numbersA where:booleans put:{1}].
+t assertError:[numbersA where:booleans put:{1,2,3}].
+t assertError:[numbersA where:booleans put:numbersB].
+t assertError:[numbersA where:booleans put:booleans].
+
+t assert:((numbersA where:{nil,nil,nil,nil} put:{}) isEqual:{}).
+t assertError:[numbersA where:{nil,nil,nil} put:{}].
+t assertError:[numbersA where:{nil,nil,nil,nil,nil} put:{}].
+t assertError:[numbersA where:{nil,nil,nil,nil} put:{1}].
+t assertError:[numbersA where:empty put:{}].
+t assertError:[numbersA where:{true, false, true, flase} put:{2}].
+
+numbersA where:{true,true,true,true} put:{0,1,2,3}. "Put back numbersA in its initial state."
+
+
+"/////////////////// setValue:"
+t startTest:'setValue:'.
+[|numbersACopy|
+  numbersACopy := numbersA mutableCopy autorelease.
+  numbersA setValue:numbersB.
+  t assert:(numbersA isEqual:numbersB).
+  numbersA setValue:booleans.
+  t assert:(numbersA isEqual:booleans).
+  numbersA setValue:empty.
+  t assert:(numbersA isEqual:empty).
+  numbersA setValue:numbersB.
+  t assert:(numbersA isEqual:numbersB).
+  t assertError:[numbersA setValue:nil].
+  t assertError:[numbersA setValue:'toto'].
+  numbersA setValue:numbersACopy. "Put back numbersA in its initial state."
+] value
+
+].
+
+arrayTestBlock4 value:@1{numbersA1, numbersA2, numbersA3 mutableCopy} value:@2{numbersB1, numbersB2, numbersB3} value:@3{booleans1,booleans2,booleans3 mutableCopy} value:@4{allTrue1,allTrue2,allTrue3} value:@5{empty1,empty2,empty3,empty4,empty5} value:@6{mixed1,mixed2}.
+arrayTestBlock4 := nil.
+
+t startTest:'transposedBy:'.
+r := {
+  {
+    {111,112,113,114},
+    {121,122,123,124},
+    {131,132,133,134}
+  },
+  {
+    {211,212,213,214},
+    {221,222,223,224},
+    {231,232,233,234}
+  }
+} 
+transposedBy:{2,1,0}.
+
+t assert:r = {{{111, 211}, {121, 221}, {131, 231}}, {{112, 212}, {122, 222}, {132, 232}}, {{113, 213}, {123, 223}, {133, 233}}, {{114, 214}, {124, 224}, {134, 234}}} @@\#& @\#& \#&.
+
+r := {
+  {
+    {111,112,113,114},
+    {121,122,123,124},
+    {131,132,133,134}
+  },
+  {
+    {211,212,213,214},
+    {221,222,223,224},
+    {231,232,233,234}
+  }
+} 
+transposedBy:{2,1,0}.
+
+t assert:(r isEqual:{{{111, 211}, {121, 221}, {131, 231}}, {{112, 212}, {122, 222}, {132, 232}}, {{113, 213}, {123, 223}, {133, 233}}, {{114, 214}, {124, 224}, {134, 234}}}).
+
+
+sumBlock1 := nil.
+sumBlock2 := nil.
+errorBlock1 := nil.
+errorBlock2 := nil.
+
+
+"/////////////////////////////////// FSNSObject ///////////////////////////////////"
+t startCategory:'FSNSObject'.
+
+"///////////////////"
+
+t startTest:'classOrMetaclass (instance and class method)'.
+b1 := NSBox alloc init.
+b2 := NSBox alloc init.
+t assert:(b1 classOrMetaclass == b1 class) & (b1 classOrMetaclass == NSBox) & (b2 classOrMetaclass == NSBox).
+t assert:(b1 classOrMetaclass superclass == NSView) & (b1 classOrMetaclass superclass superclass == NSResponder) 
+         & (b1 classOrMetaclass superclass superclass superclass == NSObject) 
+         & (b1 classOrMetaclass superclass superclass superclass superclass == nil).
+t assert:b1 classOrMetaclass classOrMetaclass ~~ b1 class class.
+t assert:NSObject classOrMetaclass ~~ NSObject.
+t assert:b1 classOrMetaclass classOrMetaclass classOrMetaclass == NSObject classOrMetaclass.
+t assert:b1 classOrMetaclass classOrMetaclass superclass == b1 classOrMetaclass superclass classOrMetaclass.
+t assert:b1 classOrMetaclass superclass classOrMetaclass == NSView classOrMetaclass.
+t assert:NSObject classOrMetaclass classOrMetaclass == NSObject classOrMetaclass.
+t assert:NSObject classOrMetaclass superclass == NSObject.
+t assert:(NSBox isKindOfClass: NSView classOrMetaclass).
+t assert:(NSBox classOrMetaclass isKindOfClass: NSObject classOrMetaclass).
+t assert:(NSBox classOrMetaclass isKindOfClass:NSObject).
+
+"///////////////////"
+
+t startTest:'+replacementObjectForCoder:'.
+
+repositoryExists ifFalse:
+[
+  t addComment:'F-SCRIPT repository does not exist, so I bypass this test.'
+]
+ifTrue:
+[
+  [
+    NSView save:archivePath.
+    loaded := sys load:archivePath.
+    t assert:loaded == NSView.
+    
+    {1,2,'toto', NSBox, true, FSBoolean} save:archivePath.
+    loaded := sys load:archivePath.
+    t assert:(loaded isEqual:{1,2,'toto', NSBox, true, FSBoolean}).
+  ]  
+  onException: "We check for exception because load: or save: may raise"
+  [:e| 
+    t addComment:e reason. 
+    t assert:false
+  ].
+].
+
+
+"///////////////////"
+
+t startTest:'=, =='.
+
+obj1 := NSObject alloc init autorelease.
+obj2 := NSObject alloc init autorelease.
+obj3 := NSMutableString stringWithString:'hello'.
+obj4 := 'hello'.
+
+t assert:(obj1 == obj2) not.
+t assert:obj1 == obj1.
+t assert:obj1 ~~ obj2.
+t assert:(obj1 ~~ obj1) not.
+
+t assert:(obj3 == obj4) not.
+t assert:obj3 == obj3.
+t assert:obj3 ~~ obj4.
+t assert:(obj3 ~~ obj3) not.
+
+t assert:(obj1 == nil) not.
+t assert:obj1 ~~ nil.
+
+"///////////////////"
+
+t startTest:'enlist, enlist:'.
+
+obj := NSObject alloc init autorelease.
+
+t assert:(obj enlist isEqual:{obj}).
+t assert:(6 enlist isEqual:{6}).
+
+t assert:((obj enlist:5) isEqual:{obj,obj,obj,obj,obj}).
+t assert:((99 enlist:5) isEqual:{99, 99, 99, 99, 99}).
+t assertError:[7 enlist:nil].
+t assertError:[7 enlist:'toto'].
+
+enclosure := obj enlist:2.3.
+t assert:(enclosure isKindOfClass:FSArray).
+t assert:enclosure count = 2.
+t assert:(enclosure at:0) == obj.
+t assert:(enclosure at:1) == obj.
+
+"No longer doable in 64 bit until our F-Script native number representation can represent a number equal to 'FSArray maxCount + 1' "
+"t assertError:[obj enlist:Array maxCount + 1]."
+
+t assertError:[obj enlist:-1].
+
+"///////////////////"
+
+t startTest:'printString'.
+
+obj := NSObject alloc init autorelease.
+
+t assert:(obj printString isKindOfClass:NSString).
+t assert:(obj class printString = 'NSObject').
+t assert:(obj class classOrMetaclass printString = 'NSObject (meta)'). 
+
+
+"///////////////////"
+
+t startTest:'throw'.
+
+t assert:([88 throw] onException:[:ex| ex]) = 88.
+t assert:([[7] throw] onException:[:ex| 'hello']) = 'hello'.
+
+"/////////////////////////////////// FSNSString ///////////////////////////////////"
+t startCategory:'FSNSString'.
+
+"///////////////////"
+
+t startTest:'Literal test'.
+t assert:('foo' isKindOfClass:NSString) & ('foo''bar' isKindOfClass:NSString). 
+
+"///////////////////"
+
+t startTest:'ObjC mapping'.
+
+r1 := 'hello' cString.
+r2 := NSString stringWithCString:'guys' cString.
+
+t assert:(r1 isKindOfClass:FSPointer) & (r2 isKindOfClass:NSString) & ((NSString stringWithCString:r1) = 'hello') & (r2 = 'guys'). 
+
+"///////////////////"
+
+t startTest:'asArray'.
+t assert:('hello' asArray isEqual:{'h', 'e', 'l', 'l', 'o'}).
+"This does not test for composed sequences. We should add that."
+
+"///////////////////"
+
+t startTest:'asArrayOfCharacters'.
+t assert:('hello' asArrayOfCharacters isEqual:{'h', 'e', 'l', 'l', 'o'}).
+
+"///////////////////"
+
+t startTest:'asBlock'.
+
+t assert:('[sys]' asBlock value isKindOfClass:FSSystem) & ('[sys]' asBlock value ~~ sys) & ('[sys]' asBlock value ~~ '[sys]' asBlock value).
+
+bl := [:a| ('[' ++ ((a iota+1) @printString \ [:x :y| x ++ '. ' ++ y]) ++ ']') asBlock value].
+
+t assert:((bl value:@ 30 iota +1) isEqual: 30 iota +1).
+
+bl := nil.
+
+"///////////////////"
+
+t startTest:'asBlockOnError:'.
+
+t assert:(('[sys]' asBlockOnError:[0]) value isKindOfClass:FSSystem) & (('[sys]' asBlockOnError:[0]) value ~~ sys) & (('[sys]' asBlockOnError:[0]) value ~~ ('[sys]' asBlockOnError:[0]) value).
+
+bl := [:a| (('[' ++ ((a iota+1) @printString \ [:x :y| x ++ '. ' ++ y]) ++ ']') asBlockOnError:[0]) value].
+
+t assert:((bl value:@ 30 iota +1) isEqual: 30 iota +1).  
+
+bl := nil.
+
+t assert:(('[+]' asBlockOnError:[:msg :start :end | {msg,start,end}]) isEqual:{'syntax error: symbol "+" not valid here', 
+1, 2}).
+
+result := ['[7]' asBlockOnError:4] onException:[:e| e].
+
+t assert:(result isKindOfClass:NSException).
+
+"///////////////////"
+
+t startTest:'asClass'.
+t assert:'FSNumber' asClass == FSNumber & ('ThisClassDoesNotExistsxxx876470' asClass == nil).
+
+"///////////////////"
+
+t startTest:'asDate'.
+
+date1 := '1999-03-14 06:24:12 +0000' asDate.
+date2 := '1999-03-15' asDate.
+
+t assert:(date1 isKindOfClass:NSDate) & (date2 isKindOfClass:NSDate) & ((date1 max:date2) == date2).
+
+"///////////////////"
+
+t startTest:'at:'.
+
+i  := {1,2,true}.
+i2 := {2<>6, false, false, false, false, false, false, false, false, false, false, false}.
+s := 'hello world'.
+r1 := s at:0.
+r2 := s at:4.
+r3 := s at:s length iota.
+r4 := s at:{0,0,6,7,8}.
+r5 := s at:{}.
+r6 := [s at:i] onException:[:e|e].
+i removeAt:2.
+r7 := s at:i.
+r8 := [s at:'foo'] onException:[:e|e].
+r9 := s at:{true, false, false, false, false, false, false, true, true, true, false}.
+r10 := [s at:[s at:i2]] onException:[:e|e].
+i2 removeAt:0.
+r11 := s at:i2.
+r12 := [s at:-1] onException:[:e|e].
+r13 := [s at:11] onException:[:e|e].
+r14 := [s at:2.1] onException:[:e|e].
+
+t assert: r1 ='h' & (r2 = 'o') & (r3 = 'hello world') & (r4 = 'hhwor') & (r5 = '') & (r6 isKindOfClass:NSException) & (r7 = 'el') 
+          & (r8 isKindOfClass:NSException) & (r9 = 'horl') & (r10 isKindOfClass:NSException) & (r11 = '') 
+          & (r12 isKindOfClass:NSException) & (r13 isKindOfClass:NSException) & (r14 isKindOfClass:NSException).
+
+"///////////////////"
+
+t startTest:'clone'.
+
+s := 'hi man'.
+result := s clone. 
+
+t assert:(s isEqual:result).
+
+"///////////////////"
+
+t startTest:'max:, min:'.
+
+s1 := 'hi man'.
+s2 := 'hi girl'.
+
+r1  := s1 max:s2.
+r2  := s1 min:s2.
+r3  := s2 max:s1.
+r4  := s2 min:s1.
+r5  := s1 max:s1.
+r6  := s1 min:s1.
+
+t assert: (r1 == s1) & (r2 == s2) & (r3 == s1) & (r4 == s2) & (r5 == s1) & (r6 == s1).  
+
+t assertError:[s1 max:nil].
+t assertError:[s1 min:nil].
+t assertError:[s1 max:4].
+t assertError:[s1 min:4].
+
+"///////////////////"
+
+t startTest:'++'.
+
+s1 := 'hello'.
+s2 := ' world'.
+
+r1 := s1 ++ s2.
+r2 := s1 ++ s1.
+r3 := 'Did you said ''' ++ s1 ++ ''' ?'.
+r4 := s1 ++ 8 printString ++ [99] printString ++ (5<>100) printString.
+
+t assert:(r1 = 'hello world') & ((r2 = 'hellohello') and:[r3 = 'Did you said ''hello'' ?']) & (r4 = 'hello8[99](5<>100)') .
+
+"///////////////////"
+
+t startTest:'>, >=, <, <=, =, ~='.
+
+s1 := 'hello'.
+s2 := 'hello world'.
+
+t assert:(s1 > s2) not.
+t assert:(s1 > s1) not.
+t assert:(s1 > s1 clone) not.
+t assertError:[s1 > nil].
+t assertError:[s1 > 5].
+
+t assert:s1 < s2.
+t assert:(s1 < s1) not.
+t assert:(s1 < s1 clone) not.
+t assertError:[s1 < nil].
+t assertError:[s1 < 5].
+
+t assert:(s1 = s2) not.
+t assert:s1 = s1.
+t assert:s1 = s1 copy autorelease.
+t assert:s1 = 'hello'.
+t assert:(s1 = nil) not.
+t assert:(s1 = 5) not.
+
+t assert:s1 ~= s2.
+t assert:(s1 ~= s1) not.
+t assert:(s1 ~= (s1 copy autorelease)) not.
+t assert:(s1 ~= 'hello') not.
+t assert:s1 ~= nil.
+t assert:s1 ~= 5.
+
+t assert:(s1 >= s2) not.
+t assert:s1 >= s1.
+t assert:s1 >= 'hello'.
+t assertError:[s1 >= nil].
+t assertError:[s1 >= 5].
+
+t assert:s1 <= s2.
+t assert:s1 <= s1.
+t assert:s1 <= 'hello'.
+t assertError:[s1 <= nil].
+t assertError:[s1 <= 5].
+
+"///////////////////"
+
+t startTest:'printString'.
+
+t assert:'hello' printString = '''hello'''.
+t assert:'hello' printString printString = '''''hello'''''.
+
+"///////////////////"
+
+t startTest:'reverse'.
+
+t assert:'hello' reverse = 'olleh'.
+t assert:'' reverse = ''.
+
+"///////////////////"
+
+t startTest:'archiving'.
+
+repositoryExists ifFalse:
+[
+  t addComment:'F-SCRIPT repository does not exist, so I bypass this test.'
+]
+ifTrue:
+[
+  [
+    'Hello guys' save:archivePath.
+    loaded := sys load:archivePath.
+    t assert:loaded = 'Hello guys'.
+  ]  
+  onException: "We check for exception because load: or save: may raise"
+  [:e| 
+    t addComment:e reason. 
+    t assert:false
+  ].
+].
+
+"/////////////////////////////////// FSNSMutableString ///////////////////////////////////"
+t startCategory:'FSNSMutableString'.
+
+"///////////////////"
+
+t startTest:'clone'.
+t assert:('foo' clone isKindOfClass:NSMutableString) & ('foo' clone = 'foo'). 
+
+"///////////////////"
+
+t startTest:'insert:at:'.
+
+s := NSMutableString stringWithString:'hello'.
+
+s insert:'pop' at:0.
+s insert:'pop' at:1.
+s insert:'pop' at:11.
+
+t assert:s = 'ppopophellopop'. 
+t assertError:[s insert:'pop' at:1.2].
+t assertError:[s insert:'pop' at:-1].
+t assertError:[s insert:'pop' at:15].
+t assertError:[s insert:'pop' at:false].
+t assertError:[s insert:'pop' at:nil].
+t assertError:[s insert:5 at:1].
+t assertError:[s insert:nil at:1].
+
+"///////////////////"
+
+t startTest:'setValue'.
+
+s := NSMutableString stringWithString:'hello'.
+t assert:s = 'hello'.
+s setValue:'hi'.
+t assert:s = 'hi'.
+s setValue:(NSMutableString stringWithString:'foo').
+t assert:s = 'foo'.
+s setValue:(NSString stringWithString:(NSMutableString stringWithString:'bar')).
+t assert:s = 'bar'.
+t assertError:[s setValue:9].
+
+"///////////////////"
+
+t startTest:'archiving'.
+
+repositoryExists ifFalse:
+[
+  t addComment:'F-SCRIPT repository does not exist, so I bypass this test.'
+]
+ifTrue:
+[
+  [
+    (NSMutableString stringWithString:'Hello guys') save:archivePath.
+    loaded := sys load:archivePath.
+    t assert:(loaded isKindOfClass:NSMutableString) & (loaded = 'Hello guys').
+  ]  
+  onException: "We check for exception because load: or save: may raise"
+  [:e| 
+    t addComment:e reason. 
+    t assert:false
+  ].
+].
+
+"/////////////////////////////////// number support (FSNSNumber, FSNumber) /////////////////////////////////////"
+t startCategory:'number support (FSNSNumber, FSNumber)'.
+
+"/////////////////// literal syntax"
+t startTest:'literal syntax'.
+t assert: -10 = 10 negated.
+t assert: 3.6e2 = 360.
+t assert: -3.6e2 = -360.
+t assert: 3.6e-2 = 0.036.
+t assert: -3.6e-2 = -0.036.
+t assert: 16rFA5B = (11 + (5 * 16) + (10 * 16 * 16) + (15 * 16 * 16 * 16)).
+t assert: -16rFA5B = 16rFA5B negated.
+
+numberTestBlock := 
+[:a :b :c :zero :one|
+
+"/////////////////// +"
+t startTest:'+'.
+t assert:(a+a = -12.2) & (a+b = -5.6) & (a+c between:-2.099999999999 and:-2.10000000001).
+t assert:(b+a = -5.6) & (b+b = 1) & (b+c = 4.5).
+t assert:(c+a between:-2.099999999999 and:-2.10000000001) & (c+b = 4.5) & (c+c = 8).
+t assert:a+true = (-5.1) & (a+false = a) & (b+true = 1.5) & (b+false = b) & (c+true = 5) & (c+false = c).
+t assert:a+zero = a & (b+zero = b) & (c+zero = c).
+t assertError:[a+'toto']. 
+t assertError:[a+nil].
+
+"/////////////////// *"
+t startTest:'*'.
+t assert:(a*a between:37.2099999999 and:37.2100000001) & (a*b = -3.05) & (a*c = -24.4).
+t assert:(b*a = -3.05) & (b*b = 0.25) & (b*c = 2).
+t assert:(c*a = -24.4) & (c*b = 2) & (c*c = 16).
+t assertError:[a*'toto'].
+t assertError:[a*nil].
+
+"/////////////////// -"
+t startTest:'-'.
+t assert:(a-a =  0  ) & (a-b = -6.6) & (a-c = -10.1).
+t assert:(b-a =  6.6) & (b-b = 0) & (b-c = -3.5).
+t assert:(c-a = 10.1) & (c-b = 3.5) & (c-c = 0).
+t assertError:[a-'toto'].
+t assertError:[a-nil].
+
+"/////////////////// <>"
+t startTest:'<>'.
+t assert:(a<>a = (NSValue valueWithPoint:-6.1<> -6.1)) & (a<>b = (NSValue valueWithPoint:-6.1<>0.5)) & (a<>c = (NSValue valueWithPoint:-6.1<>4)).
+t assert:(b<>a = (NSValue valueWithPoint: 0.5<> -6.1)) & (b<>b = (NSValue valueWithPoint: 0.5<>0.5)) & (b<>c = (NSValue valueWithPoint: 0.5<>4)).
+t assert:(c<>a = (NSValue valueWithPoint: 4  <> -6.1)) & (c<>b = (NSValue valueWithPoint: 4  <>0.5)) & (c<>c = (NSValue valueWithPoint: 4  <>4)).
+
+t assertError:[a<>'toto'].
+t assertError:[a<>nil].
+
+"/////////////////// /"
+t startTest:'/'.
+t assertError:[a/zero].
+t assertError:[b/zero].
+t assertError:[c/zero].
+t assert:(a/a =  1) & (a/b = -12.2) & (a/c = -1.525).
+t assert:(b/a between:-0.0819672131147 and:-0.0819672131148) & (b/b = 1) & (b/c = 0.125).
+t assert:(c/a between:-0.6557377049180 and:-0.6557377049181) & (c/b = 8) & (c/c = 1).
+t assert:(a/one = a) & (b/one = b) & (c/one = c).
+t assertError:[a/'toto'].
+t assertError:[a/nil].
+
+"/////////////////// >"
+t startTest:'>'.
+t assert:(a > a) not & (a > b) not & (a > c) not.
+t assert:(b > a) & (b > b) not & (b > c) not.
+t assert:(c > a) & (c > b) & (c > c) not.
+t assertError:[a>'toto'].
+t assertError:[a>nil].
+
+"/////////////////// >="
+t startTest:'>='.
+t assert:(a >= a) & (a >= b) not & (a >= c) not.
+t assert:(b >= a) & (b >= b) & (b >= c) not.
+t assert:(c >= a) & (c >= b) & (c >= c).
+t assertError:[a>='toto'].
+t assertError:[a>=nil].
+
+"/////////////////// <"
+t startTest:'<'.
+t assert:(a < a) not & (a < b) & (a < c).
+t assert:(b < a) not & (b < b) not & (b < c).
+t assert:(c < a) not & (c < b) not & (c < c) not.
+t assertError:[a<'toto'].
+t assertError:[a<nil].
+
+"/////////////////// <="
+t startTest:'<='.
+t assert:(a <= a) & (a <= b) & (a <= c).
+t assert:(b <= a) not & (b <= b) & (b <= c).
+t assert:(c <= a) not & (c <= b) not & (c <= c).
+t assertError:[a<='toto'].
+t assertError:[a<=nil].
+
+"/////////////////// abs"
+t startTest:'abs'.
+t assert:(a abs = 6.1 & (b abs = 0.5) & (c abs = 4)).  
+
+"/////////////////// arcCos"
+t startTest:'arcCos'.
+t assert:(b arcCos between:1.047197551196 and:1.047197551197).
+t assert:one arcCos = zero.
+t assertError:[1.0000000001 arcCos].
+t assertError:[(NSNumber numberWithDouble:1.0000000001) arcCos].
+t assertError:[-1.0000000001 arcCos].
+t assertError:[(NSNumber numberWithDouble:-1.0000000001) arcCos].
+t assertError:[a arcCos].
+t assertError:[c arcCos].
+
+"/////////////////// arcCosh"
+t startTest:'arcCosh'.
+t assert:one arcCosh = zero.
+t assert:(c arcCosh between:2.0633 and:2.0635).
+t assert:({one, c} arcCosh between:{zero, 2.0633} and:{zero, 2.0635}) \ #&.
+t assertError:[0.999999 arcCosh].
+t assertError:[{0.999999} arcCosh].
+t assertError:[(NSNumber numberWithDouble:0.999999) arcCosh].
+t assertError:[a arcCosh].
+t assertError:[{a} arcCosh].
+t assertError:[b arcCosh].
+t assertError:[{b} arcCosh].
+t assertError:[zero arcCosh].
+t assertError:[{zero} arcCosh].
+
+"/////////////////// arcSin"
+t startTest:'arcSin'.
+t assert:(b arcSin between:0.523598775598 and:0.523598775599).
+t assert:zero arcSin = zero.
+t assertError:[1.0000000001 arcSin].
+t assertError:[(NSNumber numberWithDouble:1.0000000001) arcSin].
+t assertError:[-1.0000000001 arcSin].
+t assertError:[(NSNumber numberWithDouble:-1.0000000001) arcSin].
+t assertError:[a arcSin].
+t assertError:[c arcSin].
+
+"/////////////////// arcSinh"
+t startTest:'arcSinh'.
+t assert:(a arcSinh between:-2.5082 and:-2.5080).
+t assert:(b arcSinh between:0.4811 and:0.4813).
+t assert:(c arcSinh between:2.0946 and:2.0948).
+t assert:(zero arcSinh = 0).
+t assert:(one arcSinh between:0.8813 and:0.8815).
+t assert:({a,b,c,zero,one} arcSinh between:{-2.5082, 0.4811, 2.0946, 0, 0.8813} and:{-2.5080, 0.4813, 2.0948, 0, 0.8815})  \ #&.
+
+"/////////////////// arcTan"
+t startTest:'arcTan'.
+t assert:(a arcTan between:-1.408307217577 and:-1.408307217578).
+t assert:(b arcTan between:0.463647609000 and:0.463647609001).
+t assert:(c arcTan between:1.325817663668 and:1.325817663669).
+t assert:zero arcTan = zero.
+
+"/////////////////// arcTanh"
+t startTest:'arcTanh'.
+t assert:(b arcTanh between:0.5492 and:0.5494).
+t assert:zero arcTanh = 0.
+t assert:({b, zero} arcTanh between:{0.5492, 0} and:{0.5494, 0}) \ #&.
+t assertError:[a arcTanh].
+t assertError:[{a} arcTanh].
+t assertError:[c arcTanh].
+t assertError:[{c} arcTanh].
+t assertError:[one arcTanh].
+t assertError:[{one} arcTanh].
+t assertError:[-1 arcTanh].
+t assertError:[{-1} arcTanh].
+
+"/////////////////// asDate"
+t startTest:'asDate'.
+t assert:c asDate = (NSDate dateWithNaturalLanguageString:'2001-01-01 00:00:04').
+
+"/////////////////// between:and:"
+t startTest:'between:and:'.
+t assert:(a between:a and:a) & (a between:a and:b) & (a between:a and:c) & (a between:b and:a) & (a between:b and:b) not & (a between:b and:c) not & (a between:c and:a) & (a between:c and:b) not & (a between:c and:c) not.
+t assert:(b between:a and:a) not & (b between:a and:b) & (b between:a and:c) & (b between:b and:a) & (b between:b and:b) & (b between:b and:c) & (b between:c and:a) & (b between:c and:b) & (b between:c and:c) not.
+t assert:(c between:a and:a) not & (c between:a and:b) not & (c between:a and:c) & (c between:b and:a) not & (c between:b and:b) not & (c between:b and:c) & (c between:c and:a) & (c between:c and:b) & (c between:c and:c).
+t assertError:[b between:'toto' and:c].
+t assertError:[b between:a and:'toto'].
+t assertError:[b between:'toto' and:'toto'].
+t assertError:[b between:nil and:c].
+t assertError:[b between:a and:nil].
+t assertError:[b between:nil and:nil].
+
+"/////////////////// bitAnd:"
+t startTest:'bitAnd:'.
+
+t assertError:[a bitAnd:c].
+t assertError:[b bitAnd:c].
+t assertError:[c bitAnd:a].
+t assertError:[c bitAnd:b].
+t assertError:[t getUINT_MAX + 1 bitAnd:c].
+t assertError:[c bitAnd:t getUINT_MAX + 1].
+
+t assert:(c bitAnd:c) = c.
+t assert:(c bitAnd:zero) = zero.
+t assert:(zero bitAnd:c) = zero.
+t assert:(c bitAnd:one) = zero.
+t assert:(one bitAnd:c) = zero.
+t assert:(4294967295 bitAnd:zero) = zero.
+t assert:(4294967295 bitAnd:34786239) = 34786239.
+t assert:(34786239 bitAnd:4294967295) = 34786239.
+t assert:(19 bitAnd:2) = 2.
+t assert:(19 bitAnd:8) = zero.
+
+"/////////////////// bitOr:"
+t startTest:'bitOr:'.
+
+t assertError:[a bitOr:c].
+t assertError:[b bitOr:c].
+t assertError:[c bitOr:a].
+t assertError:[c bitOr:b].
+t assertError:[t getUINT_MAX + 1 bitOr:c].
+t assertError:[c bitOr:t getUINT_MAX + 1].
+
+t assert:(c bitOr:c) = c.
+t assert:(c bitOr:zero) = c.
+t assert:(zero bitOr:c) = c.
+t assert:(c bitOr:one) = 5.
+t assert:(one bitOr:c) = 5.
+t assert:(4294967295 bitOr:zero) = 4294967295.
+t assert:(4294967295 bitOr:34786239) = 4294967295.
+t assert:(34786239 bitOr:4294967295) = 4294967295.
+t assert:(19 bitOr:2) = 19.
+t assert:(19 bitOr:8) = 27.
+
+"/////////////////// bitXor:"
+t startTest:'bitXor:'.
+
+t assertError:[a bitXor:c].
+t assertError:[b bitXor:c].
+t assertError:[c bitXor:a].
+t assertError:[c bitXor:b].
+t assertError:[t getUINT_MAX + 1 bitXor:c].
+t assertError:[c bitXor:t getUINT_MAX + 1].
+
+t assert:(c bitXor:c) = zero.
+t assert:(c bitXor:zero) = c.
+t assert:(zero bitXor:c) = c.
+t assert:(c bitXor:one) = 5.
+t assert:(one bitXor:c) = 5.
+t assert:(4294967295 bitXor:zero) = 4294967295.
+t assert:(4294967295 bitXor:5) = 4294967290.
+t assert:(5 bitXor:4294967295) = 4294967290.
+t assert:(19 bitXor:2) = 17.
+t assert:(19 bitXor:8) = 27.
+t assert:(19 bitXor:16) = 3.
+t assert:(19 bitXor:24) = 11.
+
+
+"/////////////////// ceiling"
+t startTest:'ceiling'.
+t assert:a ceiling = -6 & (b ceiling = 1) & (c ceiling = 4).
+
+"/////////////////// clone"
+t startTest:'clone'.
+t assert:(a clone = a & (b clone = b) & (c clone = c)).
+
+"/////////////////// copy"
+t startTest:'copy'.
+t assert:a copy = a & (b copy = b) & (c copy = c). 
+
+"/////////////////// cos"
+t startTest:'cos'.
+t assert:(a cos between: 0.9832684384425 and: 0.9832684384426).
+t assert:(b cos between: 0.8775825618903 and: 0.8775825618904).
+t assert:(c cos between:-0.6536436208636 and:-0.6536436208637).
+t assert:zero cos = one. 
+
+"/////////////////// cosh"
+t startTest:'cosh'.
+t assert:(a cosh between: 222.930006475 and: 222.930006476).
+t assert:(b cosh between: 1.12762596520 and: 1.12762596521).
+t assert:(c cosh between: 27.3082328360 and: 27.3082328361).
+t assert:zero cosh = one. 
+
+"/////////////////// doubleValue"
+t startTest:'doubleValue'.
+t assert:a doubleValue = a & (b doubleValue = b) & (c doubleValue = c).
+
+"/////////////////// erf"
+t startTest:'erf'.
+t assert:(a erf between:-0.999999999 and:-1).
+t assert:(b erf between:0.5204 and:0.5206).
+t assert:(c erf between:0.9999999 and:one).
+t assert:zero erf = zero.
+t assert:({a, b, c, zero} erf between:{-0.999999999, 0.5204, 0.9999999, zero} and:{-1, 0.5206, 1, zero}) \ #&.
+ 
+"/////////////////// erfc"
+t startTest:'erfc'.
+t assert:(a erfc between:1.99999999999 and:2).
+t assert:(b erfc between:0.4794 and:0.4796).
+t assert:(c erfc between:0.000001 and:zero).
+t assert:(one erfc between:0.1572 and:0.1574).
+t assert:({a, b, c, one} erfc between:{1.99999999999, 0.4794, 0.000001, 0.1572} and:{2, 0.4796, zero, 0.1574}) \ #&.
+
+"/////////////////// exp"
+t startTest:'exp'.
+t assert:(a exp between:0.00224286771 and:0.00224286772).
+t assert:(b exp between:1.64872127070 and:1.64872127071).
+t assert:(c exp between:54.5981500331 and:54.5981500332).
+t assert:zero exp = one. 
+
+"/////////////////// floor"
+t startTest:'floor'.
+t assert:a floor = -7 & (b floor = 0) & (c floor = 4).
+
+"/////////////////// fractionPart"
+t startTest:'fractionPart'.
+t assert:(a fractionPart between:-0.0999999999999 and:-0.1000000000001).
+t assert:(b fractionPart between:0.499999999999 and:0.500000000001).
+t assert:c fractionPart = 0.
+
+"/////////////////// hash"
+t startTest:'hash'.
+t assert:(a hash = (NSNumber numberWithDouble:a) hash) & (b hash = (NSNumber numberWithDouble:b) hash) & (c hash = (NSNumber numberWithShort:c) hash).
+
+"/////////////////// initWithDouble:"
+t startTest:'initWithDouble:'.
+t assert:(FSNumber alloc initWithDouble:a) autorelease = a & ((FSNumber alloc initWithDouble:b) autorelease = b) & ((FSNumber alloc initWithDouble:c) autorelease = c).
+t assert:(NSNumber alloc initWithDouble:a) autorelease = a & ((NSNumber alloc initWithDouble:b) autorelease = b) & ((NSNumber alloc initWithDouble:c) autorelease = c).
+
+"/////////////////// isEqual:"
+t startTest:'isEqual:'.
+t assert:(a isEqual:-6.1) & (a isEqual:(NSNumber numberWithDouble:-6.1)) & (b isEqual:0.5) & (b isEqual:(NSNumber numberWithDouble:0.5)) & (c isEqual:4) & (c isEqual:(NSNumber numberWithUnsignedChar:4)).
+t assert:(a isEqual:a) & (a isEqual:b) not & (a isEqual:c) not & (b isEqual:a) not & (b isEqual:b) & (b isEqual:c) not & (c isEqual:a) not & (c isEqual:b) not & (c isEqual:c).   
+t assert:(a isEqual:'toto') not.
+t assert:(a isEqual:nil) not.
+
+"/////////////////// ="
+t startTest:'='.
+t assert:(a = -6.1) & (a = (NSNumber numberWithDouble:-6.1)) & (b = 0.5) & (b = (NSNumber numberWithDouble:0.5)) & (c = 4) & (c = (NSNumber numberWithUnsignedChar:4)).
+t assert:(a = a) & (a = b) not & (a = c) not & (b = a) not & (b = b) & (b = c) not & (c = a) not & (c = b) not & (c = c).   
+t assert:(a = 'toto') not.
+t assert:(a = nil) not.
+
+"/////////////////// ~="
+t startTest:'~='.
+t assert:(a ~= -6.1) not & (a ~= (NSNumber numberWithDouble:-6.1)) not & (b ~= 0.5) not & (b ~= (NSNumber numberWithDouble:0.5)) not & (c ~= 4) not & (c ~= (NSNumber numberWithUnsignedChar:4)) not.
+t assert:(a ~= a) not & (a ~= b) & (a ~= c) & (b ~= a) & (b ~= b) not & (b ~= c) & (c ~= a) & (c ~= b) & (c ~= c) not.   
+t assert:a ~= 'toto'.
+t assert:a ~= nil.
+
+"/////////////////// integerPart"
+t startTest:'integerPart'.
+t assert:a integerPart = -6 & (b integerPart = 0) & (c integerPart = 4).
+
+"/////////////////// iota"
+t startTest:'iota'.
+t assertError:[a iota].
+t assert:(b iota isEqual:{}).
+t assert:(c iota isEqual:{0,1,2,3}).
+t assert:(zero iota isEqual:{}) & (one iota isEqual:{0}).
+t assertError:[-0.001 iota].
+t assertError:[(NSNumber numberWithDouble:-0.001) iota].
+t assertError:[(t getUINT_MAX + 1) iota].
+t assertError:[(NSNumber numberWithDouble:t getUINT_MAX + 1) iota].
+
+"/////////////////// ln"
+t startTest:'ln'.
+t assertError:[a ln].
+t assert:(b ln between: -0.693147180560 and:-0.693147180559).
+t assert:(c ln between:1.386294361119 and:1.386294361120).
+t assertError:[zero ln].
+
+"/////////////////// log"
+t startTest:'log'.
+t assertError:[a log].
+t assert:(b log between:-0.301029995664 and:-0.301029995663).
+t assert:(c log between:0.602059991327 and:0.602059991328).
+t assertError:[zero log].
+
+"/////////////////// max:"
+t startTest:'max:'.
+t assert:((a max:b) == b) & ((a max:c) == c) & ((a max:a) == a) & ((b max:a) == b) & ((b max:c) == c) & ((b max:b) == b) & ((c max:a) == c) & ((c max:b) == c) & ((c max:c) == c).
+t assertError:[a max:'toto'].
+t assertError:[a max:nil].
+
+"/////////////////// min:"
+t startTest:'min:'.
+t assert:((a min:b) == a) & ((a min:c) == a) & ((a min:a) == a) & ((b min:a) == a) & ((b min:c) == b) & ((b min:b) == b) & ((c min:a) == a) & ((c min:b) == b) & ((c min:c) == c).
+t assertError:[a min:'toto'].
+t assertError:[a min:nil].
+
+"/////////////////// negated"
+t startTest:'negated'.
+t assert:(a negated = 6.1) & (b negated = -0.5) & (c negated = -4) & (zero negated = 0).
+
+"/////////////////// numberWithDouble:"
+t startTest:'numberWithDouble:'.
+t assert:(FSNumber numberWithDouble:a) = a & ((FSNumber numberWithDouble:b) = b) & ((FSNumber numberWithDouble:c) = c).
+t assert:(NSNumber numberWithDouble:a) = a & ((NSNumber numberWithDouble:b) = b) & ((NSNumber numberWithDouble:c) = c).
+
+"/////////////////// objCType"
+t startTest:'objCType'.
+t assert:(NSString stringWithCString:a objCType) = 'd'. 
+
+"/////////////////// printString"
+t startTest:'printString'.
+t assert:(a printString = '-6.1') & (b printString = '0.5') & (c printString = '4').
+
+"/////////////////// raisedTo:"
+t startTest:'raisedTo:'.
+t assertError:[zero raisedTo:zero].
+t assertError:[zero raisedTo:-1].
+t assertError:[zero raisedTo:(NSNumber numberWithInt:-1)].
+
+t assert:(zero raisedTo:1.1) = 0.
+
+t assertError:[-0.1 raisedTo:1.1].
+t assertError:[(NSNumber numberWithDouble:-0.1) raisedTo:1.1].
+
+t assertError:[a raisedTo:a].
+t assertError:[a raisedTo:b].
+t assert:(a raisedTo:c) = (a*a*a*a).
+
+t assert:((b raisedTo:a) between:68.5935016023 and:68.5935016024).
+t assert:((b raisedTo:b) between:0.707106781186 and:0.707106781187).
+t assert:(b raisedTo:c) = (b*b*b*b).
+
+t assert:((c raisedTo:a) between:0.000212536758 and:0.000212536759).
+t assert:(c raisedTo:b) = 2.
+t assert:(c raisedTo:c) = (c*c*c*c).
+
+t assertError:[a raisedTo:'toto'].
+t assertError:[a raisedTo:nil].
+
+"/////////////////// random"
+t startTest:'random'.
+
+t assertError:[-1 random].
+t assertError:[0 random].
+t assertError:[(NSNumber numberWithDouble:0) random].
+
+t assertError:[(2 raisedTo:31) random].
+t assertError:[(NSNumber numberWithDouble:(2 raisedTo:31)) random].
+
+t assert:1 random = 0.
+t assert:(NSNumber numberWithDouble:1) random = 0.
+
+t assert:(4 random between:0 and:3).
+t assert:((NSNumber numberWithDouble:4) random between:0 and:3).
+
+t assert:((c enlist:20) random between:0 and:3) \#& & ((c enlist:20) random fractionPart = 0 \#&).
+
+"/////////////////// rem:"
+t startTest:'rem:'.
+
+t assertError:[a rem:zero].
+t assertError:[b rem:zero].
+t assertError:[c rem:zero].
+
+t assert:(a rem:a) = 0.
+t assert:((a rem:b) between:-0.1 and:-0.099999999999).
+t assert:((a rem:c) between:-2.09999999999 and:-2.10000000001).
+
+t assert:(b rem:a) = 0.5.
+t assert:(b rem:b) = 0.
+t assert:(b rem:c) = 0.5.
+
+t assert:(c rem:a) = 4.
+t assert:(c rem:b) = 0.
+t assert:(c rem:c) = 0.
+
+t assertError:[a rem:'toto'].
+t assertError:[a rem:nil].
+
+"/////////////////// sin"
+t startTest:'sin'.
+t assert:(a sin between: 0.1821625042720 and: 0.1821625042721).
+t assert:(b sin between: 0.4794255386042 and: 0.4794255386043).
+t assert:(c sin between:-0.7568024953079 and:-0.7568024953080).
+t assert:zero sin = zero. 
+
+"/////////////////// sign"
+t startTest:'sign'.
+t assert:a sign = -1.
+t assert:b sign = 1.
+t assert:c sign = 1.
+t assert:zero sign = zero. 
+t assert:one sign = one.
+
+"/////////////////// sinh"
+t startTest:'sinh'.
+t assert:(a sinh between:-222.927763608 and:-222.927763607).
+t assert:(b sinh between: 0.52109530549 and: 0.52109530550).
+t assert:(c sinh between: 27.2899171971 and: 27.2899171972).
+t assert:zero sinh = zero. 
+
+"/////////////////// sqrt"
+t startTest:'sqrt'.
+t assert:zero sqrt = 0.
+
+t assertError:[a sqrt].
+t assert:(b sqrt between:0.707106781186 and: 0.707106781187). 
+t assert:c sqrt = 2.
+
+"/////////////////// tan"
+t startTest:'tan'.
+t assert:(a tan between: 0.1852622306891 and: 0.1852622306892).
+t assert:(b tan between: 0.5463024898437 and: 0.5463024898438).
+t assert:(c tan between: 1.157821282349  and: 1.157821282350).
+t assert:zero tan = zero. 
+
+"/////////////////// tanh"
+t startTest:'tanh'.
+t assert:(a tanh between:-0.99998993914 and:-0.99998993913).
+t assert:(b tanh between: 0.46211715726 and: 0.46211715727).
+t assert:(c tanh between: 0.99932929973 and: 0.99932929974).
+t assert:zero tanh = zero. 
+
+"/////////////////// to:by:do:"
+t startTest:'to:by:do:'.
+
+t assertError:[a to:b by:c do:[:arg1 :arg2 | nil]].
+t assertError:[a to:b by:0 do:[:arg1 | nil]].
+
+[|x|
+
+  x := 0. a to:a by:a do:[:arg| x:=x+arg].
+  t assert:x = a.
+  x := 0. a to:a by:b do:[:arg| x:=x+arg].
+  t assert:x = a.
+  x := 0. a to:a by:c do:[:arg| x:=x+arg].
+  t assert:x = a.
+  x := 0. a to:b by:a do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x := 0. a to:b by:b do:[:arg| x:=x+arg].
+  t assert:(x between:-39.9000000001 and:-39.9).
+  x := 0. a to:b by:c do:[:arg| x:=x+arg].
+  t assert:(x between:-8.199999999999 and:-8.200000000001).
+  x := 0. a to:c by:a do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x := 0. a to:c by:b do:[:arg| x:=x+arg].
+  t assert:(x between:-23.0999999999 and: -23.1000000001).
+  x := 0. a to:c by:c do:[:arg| x:=x+arg].
+  t assert:(x between:-6.299999999999 and:-6.30000000001).
+
+  x := 0. b to:a by:a do:[:arg| x:=x+arg].
+  t assert:x = -5.1.
+  x := 0. b to:a by:b do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x := 0. b to:a by:c do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x := 0. b to:b by:a do:[:arg| x:=x+arg].
+  t assert:x = b.
+  x := 0. b to:b by:b do:[:arg| x:=x+arg].
+  t assert:x = b.
+  x := 0. b to:b by:c do:[:arg| x:=x+arg].
+  t assert:x = b.
+  x := 0. b to:c by:a do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x := 0. b to:c by:b do:[:arg| x:=x+arg].
+  t assert:x = 18.
+  x := 0. b to:c by:c do:[:arg| x:=x+arg].
+  t assert:x = b.
+
+  x := 0. c to:a by:a do:[:arg| x:=x+arg].
+  t assert:(x between:1.89999999999 and:1.90000000001).
+  x := 0. c to:a by:b do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x := 0. c to:a by:c do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x := 0. c to:b by:a do:[:arg| x:=x+arg].
+  t assert:x = c.
+  x := 0. c to:b by:b do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x := 0. c to:b by:c do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x := 0. c to:c by:a do:[:arg| x:=x+arg].
+  t assert:x = c.
+  x := 0. c to:c by:b do:[:arg| x:=x+arg].
+  t assert:x = c.
+  x := 0. c to:c by:c do:[:arg| x:=x+arg].
+  t assert:x = c.
+
+  x := 0. c to:a by:(b negated) do:[:arg| x:=x+arg].
+  t assert:x = -21.
+  x := 0. c to:a by:(NSNumber numberWithDouble:b negated) do:[:arg| x:=x+arg].
+  t assert:x = -21.
+  
+] value.
+
+t assertError:[a to:c by:b do:'toto'].
+t assertError:[a to:c by:'toto' do:[1]].
+t assertError:[a to:'toto' by:b do:[1]].
+t assertError:[a to:c by:b do:nil].
+t assertError:[a to:c by:nil do:[1]].
+t assertError:[a to:nil by:b do:[1]].
+
+"/////////////////// to:do:"
+t startTest:'to:do:'.
+
+t assertError:[a to:b do:[:arg1 :arg2 | nil]].
+
+[|x|
+  x := 0. a to:a do:[:arg| x:=x+arg].
+  t assert:x = a.
+  x := 0. a to:b do:[:arg| x:=x+arg].
+  t assert:(x between:-21.6999999999 and:-21.7000000001).
+  x := 0. a to:c do:[:arg| x:=x+arg].
+  t assert:(x between:-12.0999999999 and:-12.1000000001). 
+  
+  x := 0. b to:a do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x := 0. b to:b do:[:arg| x:=x+arg].
+  t assert:x = b.
+  x:= 0. b to:c do:[:arg| x:=x+arg].
+  t assert:x = 8.
+
+  x := 0. c to:a do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x := 0. c to:b do:[:arg| x:=x+arg].
+  t assert:x = 0.
+  x:= 0. c to:c do:[:arg| x:=x+arg].
+  t assert:x = c.
+] value.
+
+i := 0. 
+one to:100 do:[:j| i := i+1].
+t assert:i = 100.
+
+[
+  | exception |
+  exception := nil.
+  [one to:3 do:[1/0]] onException:[:e| exception := e ].
+  t assert: exception ~~ nil.
+  t assert: exception name = 'FSExecutionErrorException'. 
+] value.
+
+t assertError:[a to:c do:'toto'].
+t assertError:[a to:'toto' do:[1]].
+t assertError:[a to:c do:nil].
+t assertError:[a to:nil do:[1]].
+
+"/////////////////// truncated"
+t startTest:'truncated'.
+t assert:a truncated = -6.
+t assert:b truncated = 0.
+t assert:c truncated = 4.
+t assert:zero truncated = 0.
+
+"/////////////////// unicharToString"
+t startTest:'unicharToString'.
+t assertError:[-1 unicharToString].
+t assertError:[65536 unicharToString].
+t assert:(zero unicharToString isKindOfClass:NSString) & (65535 unicharToString isKindOfClass:NSString).
+t assertError:[a unicharToString].
+t assert:b unicharToString = 0 unicharToString.
+t assert:65 unicharToString = 'A'.
+t assert:(NSNumber numberWithInt:65) unicharToString = 'A'.
+].
+
+numberTestBlock value:@1{-6.1, NSNumber numberWithDouble:-6.1, NSDecimalNumber numberWithDouble:-6.1}  value:@2{0.5, NSNumber numberWithDouble:0.5, NSDecimalNumber numberWithDouble:0.5} value:@3{4, NSNumber numberWithInt:4, NSDecimalNumber numberWithInt:4} value:@4{0, NSNumber numberWithInt:0, NSDecimalNumber zero} value:@5{1, NSNumber numberWithShort:1, NSDecimalNumber one}.
+
+numberTestBlock := nil.
+
+
+"/////////////////// initWith..."
+t startTest:'initWith...'.
+t assert:(FSNumber alloc initWithChar:-100) autorelease = -100.
+t assert:(FSNumber alloc initWithUnsignedChar:200) autorelease = 200.
+t assert:(FSNumber alloc initWithShort:-4500) autorelease = -4500.
+t assert:(FSNumber alloc initWithUnsignedShort:12500) autorelease = 12500.
+t assert:(FSNumber alloc initWithInt:-450002) autorelease = -450002.
+t assert:(FSNumber alloc initWithUnsignedInt:2111067123) autorelease = 2111067123.
+t assert:(FSNumber alloc initWithLong:-450002) autorelease = -450002.
+t assert:(FSNumber alloc initWithUnsignedLong:2111067123) autorelease = 2111067123.
+t assert:(FSNumber alloc initWithFloat:1234567.125) autorelease = 1234567.125.
+t assert:(FSNumber alloc initWithDouble:1234567.1234567) autorelease = 1234567.1234567.
+t assert:(FSNumber alloc initWithBool:YES) autorelease = 1.
+t assert:(FSNumber alloc initWithBool:NO) autorelease = 0.
+
+"/////////////////// timesRepeat:"
+t startTest:'timesRepeat:'.
+
+[:n | |i| 
+i := 0. 
+n timesRepeat:[i := i + 1]. 
+t assert: i = n.
+n timesRepeat:[i := i - 1].
+t assert: i = 0.
+
+] value:@{352, NSNumber numberWithInt:352}.
+
+[:n| t assertError:[n timesRepeat:[nil]]] value:@{-1, NSNumber numberWithInt:-1, 1.02, NSNumber numberWithDouble:1.02}.
+
+t assertError:[352 timesRepeat:4]. 
+t assertError:[(NSNumber numberWithInt:352) timesRepeat:'foo'].
+t assertError:[352 timesRepeat:[:a| a]].
+t assertError:[(NSNumber numberWithInt:352) timesRepeat:[:a| a]].
+t assertError:[352 timesRepeat:#foo].
+t assertError:[(NSNumber numberWithInt:352) timesRepeat:#foo].
+
+
+"/////////////////// archiving"
+t startTest:'archiving'.
+
+repositoryExists ifFalse:
+[
+  t addComment:'F-SCRIPT repository does not exist, so I bypass this test.'
+]
+ifTrue:
+[
+  [
+    |n|
+    n := (FSNumber numberWithDouble:1400136020.976756744545386565).
+    n save:archivePath.
+    loaded := sys load:archivePath.
+    t assert:(n = loaded).
+  ]  
+  onException: "We check for exception because load: or save: may raise"
+  [:e| 
+    t addComment:e reason. 
+    t assert:false
+  ].
+].
+
+"/////////////////////////////////// FSNSValue ///////////////////////////////////"
+t startCategory:'FSNSValue'.
+
+"/////////////////// NSRange"
+
+t startTest:'NSRange'.
+
+t assertError:[NSRange rangeWithLocation:-1 length:1].
+t assertError:[NSRange rangeWithLocation:-33 length:1].
+t assertError:[NSRange rangeWithLocation:0 length:-1].
+t assertError:[NSRange rangeWithLocation:0 length:-33].
+t assertError:[NSRange rangeWithLocation:-1 length:-1].
+t assertError:[NSRange rangeWithLocation:-33 length:-33].
+t assertError:[NSRange rangeWithLocation:1.2 length:1].
+t assertError:[NSRange rangeWithLocation:1 length:1.2].
+
+v := NSValue rangeWithLocation:0 length:0.
+t assert:v location = 0 & (v length = 0).
+v := NSValue rangeWithLocation:5 length:10.
+t assert:v location = 5 & (v length = 10).
+v := v clone.
+t assert:v location = 5 & (v length = 10).
+
+t assertError:[v corner].
+t assertError:[v corner:1<>1].
+t assertError:[v extent].
+t assertError:[v extent:1<>1].
+t assertError:[v origin].
+t assertError:[v x].
+t assertError:[v y].
+t assertError:[v height].
+t assertError:[v width].
+
+
+"/////////////////// NSPoint"
+t startTest:'NSPoint'.
+
+v := 0<>0.
+t assert:v x = 0 & (v y = 0).
+v := 6 <> -3.
+t assert:v x = 6 & (v y = -3).
+v := v copy autorelease.
+t assert:v x = 6 & (v y = -3).
+v := 6.1 <> -3.7.
+t runsIn64BitsMode ifTrue:
+[
+  t assert:v x = (NSNumber numberWithDouble:6.1) & (v y = (NSNumber numberWithDouble:-3.7)).
+]
+ifFalse:
+[ 
+  t assert:v x = (NSNumber numberWithFloat:6.1) & (v y = (NSNumber numberWithFloat:-3.7)).
+].
+
+t assertError:[v corner:6<>10].
+t assertError:[v corner:7<> -5].
+
+t assertError:[v extent:1<>-1].
+t assertError:[v extent:-1<>1].
+
+t assertError:[v corner].
+t assertError:[v extent].
+t assertError:[v origin].
+t assertError:[v location].
+t assertError:[v length].
+t assertError:[v height].
+t assertError:[v width].
+
+"/////////////////// NSRect"
+t startTest:'NSRect'.
+
+v := 1<>2 extent:10<>20.
+t assert:v origin = (1<>2) & (v extent = (10<>20)) & (v corner =(11<>22)).
+v := v copy autorelease.
+t assert:v origin = (1<>2) & (v extent = (10<>20)) & (v corner =(11<>22)).
+
+v := 1<>2 corner:11<>22.
+t assert:v origin = (1<>2) & (v extent = (10<>20)) & (v corner =(11<>22)).
+v := v copy autorelease.
+t assert:v origin = (1<>2) & (v extent = (10<>20)) & (v corner =(11<>22)).
+
+t assertError:[v x].
+t assertError:[v y].
+t assertError:[v location].
+t assertError:[v length].
+t assertError:[v height].
+t assertError:[v width].
+
+"/////////////////// NSSize"
+
+t startTest:'NSSize'.
+
+t assertError:[NSValue sizeWithWidth:-0.1 height:6].
+t assertError:[NSValue sizeWithWidth:6 height:-0.1].
+t assertError:[NSValue sizeWithWidth:-0.1 height:-0.1].
+
+v := NSValue sizeWithWidth:0 height:0.
+t assert:v width = 0 & (v height = 0).
+v := NSValue sizeWithWidth:5 height:10.
+t assert:v width = 5 & (v height = 10).
+v := v copy autorelease.
+t assert:v width = 5 & (v height = 10).
+
+t assertError:[v corner].
+t assertError:[v corner:1<>1].
+t assertError:[v extent].
+t assertError:[v extent:1<>1].
+t assertError:[v origin].
+t assertError:[v x].
+t assertError:[v y].
+t assertError:[v location].
+t assertError:[v length].
+
+"/////////////////// NSNumber"
+t startTest:'NSNumber'.
+
+v := 7.
+
+t assertError:[v corner].
+t assertError:[v corner:1<>1].
+t assertError:[v extent].
+t assertError:[v extent:1<>1].
+t assertError:[v origin].
+t assertError:[v x].
+t assertError:[v y].
+t assertError:[v location].
+t assertError:[v length].
+
+t assert:v = 7.
+t assert:v = v clone.
+
+"/////////////////////////////////// FSPointer ///////////////////////////////////"
+t startCategory:'FSPointer'.
+
+"/////////////////// = , ~="
+t startTest:'=, ~='.
+
+t assert: t staticIntPointer = t staticIntPointer.
+t assert: (t staticIntPointer ~= t staticIntPointer) not.
+
+p := t staticIntPointer.
+p setType:'v'.
+
+t assert: t staticIntPointer = p.
+t assert: p = t staticIntPointer.
+
+t assert: (t staticIntPointer ~= p) not.
+t assert: (p ~= t staticIntPointer) not.
+
+p2 := t intPointer.
+
+t assert: (t staticIntPointer = p2) not.
+t assert: t staticIntPointer ~= p2.
+
+p2 free.
+
+t assert: (t staticIntPointer = 'toto') not.
+t assert: t staticIntPointer ~= 'toto'.
+
+"/////////////////// at: , at:put:"
+t startTest:'at:, at:put:'.
+
+p := t idPointer.
+t assertError:[p at:nil].
+t assertError:[p at:'toto'].
+t assertError:[p at:-1].
+t assertError:[p at:0.1].
+t assert:(p at:0) == t & ((p at:1) == t class).
+p at:0 put:nil.
+p at:1 put:t.
+t assert:(p at:0) == nil & ((p at:1) == t).
+p free.
+
+p := t ClassPointer.
+t assert:(p at:0) == FSNumber & ((p at:1) == t class).
+p at:0 put:nil.
+p at:1 put:Block.
+t assertError:[p at:1 put:7].
+t assert:(p at:0) == nil & ((p at:1) == Block).
+p free.
+
+p := t charPointer.
+t assert:(p at:0) = -50 & ((p at:1) = 120).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:-129].
+"t assertError:[p at:0 put:128]."
+t assertError:[p at:0 put:'hello'].
+p at:0 put:-128.
+p at:1 put:127.
+t assert:(p at:0) = -128 & ((p at:1) = 127).
+p at:0 put:true.
+p at:1 put:false.
+t assert:(p at:0) = 1 & ((p at:1) = 0).
+p at:0 put:True alloc init autorelease.
+p at:1 put:False alloc init autorelease.
+t assert:(p at:0) = 1 & ((p at:1) = 0).
+p free.
+
+p := t signedCharPointer.
+t assert:(p at:0) = -50 & ((p at:1) = 120).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:-129].
+"t assertError:[p at:0 put:128]."
+t assertError:[p at:0 put:'hello'].
+p at:0 put:-128.
+p at:1 put:127.
+t assert:(p at:0) = -128 & ((p at:1) = 127).
+p at:0 put:true.
+p at:1 put:false.
+t assert:(p at:0) = 1 & ((p at:1) = 0).
+p at:0 put:True alloc init autorelease.
+p at:1 put:False alloc init autorelease.
+t assert:(p at:0) = 1 & ((p at:1) = 0).
+p free.
+
+p := t _BoolPointer.
+t assert:(p at:0) not & (p at:1).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:-1].
+t assertError:[p at:0 put:2].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:YES.
+p at:1 put:NO.
+t assert:(p at:0)  & ((p at:1) not).
+p at:0 put:True alloc init autorelease.
+p at:1 put:False alloc init autorelease.
+t assert:(p at:0) & ((p at:1) not).
+p free.
+
+p := t intPointer.
+t assert:(p at:0) = -50 & ((p at:1) = 120).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:true].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:-5000.
+p at:1 put:27000.
+t assert:(p at:0) = -5000 & ((p at:1) = 27000).
+p free.
+
+p := t shortPointer.
+t assert:(p at:0) = -50 & ((p at:1) = 120).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:-5000.
+p at:1 put:27000.
+t assert:(p at:0) = -5000 & ((p at:1) = 27000).
+p free.
+
+p := t longPointer.
+t assert:(p at:0) = -50 & ((p at:1) = 120).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:-5000.
+p at:1 put:27000.
+t assert:(p at:0) = -5000 & ((p at:1) = 27000).
+p free.
+
+"p := t unsignedCharPointer.
+t assert:(p at:0) = 0 & ((p at:1) = 200).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:-1].
+t assertError:[p at:0 put:128].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:0.
+p at:1 put:127.
+t assert:(p at:0) = 0 & ((p at:1) = 127).
+p free."
+
+p := t unsignedIntPointer.
+t assert:(p at:0) = 0 & ((p at:1) = 200).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:-1].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:0.
+p at:1 put:27000.
+t assert:(p at:0) = 0 & ((p at:1) = 27000).
+p free.
+
+p := t unsignedShortPointer.
+t assert:(p at:0) = 0 & ((p at:1) = 200).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:-1].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:0.
+p at:1 put:27000.
+t assert:(p at:0) = 0 & ((p at:1) = 27000).
+p free.
+
+p := t unsignedLongPointer.
+t assert:(p at:0) = 0 & ((p at:1) = 200).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:-1].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:0.
+p at:1 put:27000.
+t assert:(p at:0) = 0 & ((p at:1) = 27000).
+p free.
+
+p := t floatPointer.
+t assert:(p at:0) = -1000.89 floatValue & ((p at:1) = 200.1 floatValue).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:-234.123456789.
+p at:1 put:56.987643.
+t assert:(p at:0) = -234.123456789 floatValue & ((p at:1) = 56.987643 floatValue).
+p free.
+
+p := t doublePointer.
+t assert:(p at:0) = -1000.89 doubleValue & ((p at:1) = 200.1 doubleValue).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:-234.123456789.
+p at:1 put:56.987643.
+t assert:(p at:0) = -234.123456789 doubleValue & ((p at:1) = 56.987643 doubleValue).
+p free.
+
+p := t longLongPointer.
+t assert:(p at:0) = -50 & ((p at:1) = 120).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:-5000.
+p at:1 put:27000.
+t assert:(p at:0) = -5000 & ((p at:1) = 27000).
+p at:0 put:(NSNumber numberWithLongLong:-5000).
+p at:1 put:(NSNumber numberWithLongLong:27000).
+t assert:(p at:0) = -5000 & ((p at:1) = 27000).
+p at:0 put:(NSNumber numberWithUnsignedLongLong:0).
+p at:1 put:(NSNumber numberWithUnsignedLongLong:30000).
+t assert:(p at:0) = 0 & ((p at:1) = 30000).
+p free.
+
+p := t unsignedLongLongPointer.
+t assert:(p at:0) = 0 & ((p at:1) = 120).
+t assertError:[p at:0 put:nil].
+t assertError:[p at:0 put:'hello'].
+p at:0 put:0.
+p at:1 put:27000.
+t assert:(p at:0) = 0 & ((p at:1) = 27000).
+p at:0 put:(NSNumber numberWithLongLong:0).
+p at:1 put:(NSNumber numberWithLongLong:27000).
+t assert:(p at:0) = 0 & ((p at:1) = 27000).
+p at:0 put:(NSNumber numberWithUnsignedLongLong:0).
+p at:1 put:(NSNumber numberWithUnsignedLongLong:30000).
+t assert:(p at:0) = 0 & ((p at:1) = 30000).
+p free.
+
+p := t charPointerPointer.
+t assert:(NSString stringWithCString:(p at:0) cPointer) = 'hello' & (((p at:1) at:0) unicharToString = 'w').
+t assertError:[p at:0 put:6].
+t assertError:[(p at:0) at:0 put:[8]].
+p at:0 put:nil.
+p at:1 put:'toto' lossyCString.
+t assert:(p at:0) == nil & ((NSString stringWithCString:(p at:1)) = 'toto').
+(p at:1) at:2 put:('g' lossyCString at:0).
+t assert:(NSString stringWithCString:(p at:1) cPointer) = 'togo'.
+(p at:1) at:0 put:true.
+(p at:1) at:1 put:false.
+t assert:((p at:1) at:0) = 1 & (((p at:1) at:1) = 0).
+(p at:1) at:0 put:True alloc init autorelease.
+(p at:1) at:1 put:False alloc init autorelease.
+t assert:((p at:1) at:0) = 1 & (((p at:1) at:1) = 0).
+p free.
+
+p := t SELPointer.
+t assert:(p at:0) = #init & ((p at:1) = #self).
+t assertError:[p at:0 put:6].
+t assertError:[p at:0 put:nil].
+p at:0 put:#alloc.
+p at:1 put:#+.
+t assert:(p at:0) = #alloc & ((p at:1) = #+) & ((p at:1) = #operator_plus:).
+p free.
+
+p := t rangePointer.
+t assert:(p at:0) = (NSValue rangeWithLocation:0 length:10) & ((p at:1) = (NSValue rangeWithLocation:5 length:1)).
+t assertError:[p at:0 put:6].
+t assertError:[p at:0 put:nil].
+t assertError:[p at:1 put:(NSValue sizeWithWidth:2 height:4)].
+p at:0 put:(NSValue rangeWithLocation:2 length:4).
+p at:1 put:(NSValue rangeWithLocation:3 length:4).
+t assert:(p at:0) = (NSValue rangeWithLocation:2 length:4) & ((p at:1) = (NSValue rangeWithLocation:3 length:4)).
+p free.
+
+p := t pointPointer.
+t assert:(p at:0) = (0<>10) & ((p at:1) = (5<>1)).
+t assertError:[p at:0 put:6].
+t assertError:[p at:0 put:nil].
+t assertError:[p at:1 put:(NSValue sizeWithWidth:2 height:4)].
+p at:0 put:(12<>100).
+p at:1 put:(44<>33).
+t assert:(p at:0) = (12<>100) & ((p at:1) = (44<>33)).
+p free.
+
+p := t sizePointer.
+t assert:(p at:0) = (NSValue sizeWithWidth:0 height:10) & ((p at:1) = (NSValue sizeWithWidth:5 height:1)).
+t assertError:[p at:0 put:6].
+t assertError:[p at:0 put:nil].
+p at:0 put:(NSValue sizeWithWidth:12345 height:12345).
+p at:1 put:(NSValue sizeWithWidth:0 height:0).
+t assert:(p at:0) = (NSValue sizeWithWidth:12345 height:12345) & ((p at:1) = (NSValue sizeWithWidth:0 height:0)).
+p free.
+
+p := t rectPointer.
+t assert:(p at:0) = (0<>10 extent:100<>200) & ((p at:1) = (20<>1 extent:10<>10)).
+t assertError:[p at:0 put:6].
+t assertError:[p at:0 put:nil].
+t assertError:[p at:1 put:2<>4].
+p at:0 put:(10<>13 extent:1<>2).
+p at:1 put:(44<>38 extent:13<>95).
+t assert:(p at:0) = (10<>13 extent:1<>2) & ((p at:1) = (44<>38 extent:13<>95)).
+p free.
+
+p := t CGPointPointer.
+t assert:(p at:0) = (0<>10) & ((p at:1) = (5<>1)).
+t assertError:[p at:0 put:6].
+t assertError:[p at:0 put:nil].
+t assertError:[p at:1 put:(NSValue sizeWithWidth:2 height:4)].
+p at:0 put:(12<>100).
+p at:1 put:(44<>33).
+t assert:(p at:0) = (12<>100) & ((p at:1) = (44<>33)).
+p free.
+
+p := t CGSizePointer.
+t assert:(p at:0) = (NSValue sizeWithWidth:0 height:10) & ((p at:1) = (NSValue sizeWithWidth:5 height:1)).
+t assertError:[p at:0 put:6].
+t assertError:[p at:0 put:nil].
+t assertError:[p at:1 put:(NSValue rangeWithLocation:0 length:10)].
+p at:0 put:(NSValue sizeWithWidth:12345 height:12345).
+p at:1 put:(NSValue sizeWithWidth:0 height:0).
+t assert:(p at:0) = (NSValue sizeWithWidth:12345 height:12345) & ((p at:1) = (NSValue sizeWithWidth:0 height:0)).
+p free.
+
+p := t CGRectPointer.
+t assert:(p at:0) = (0<>10 extent:100<>200) & ((p at:1) = (20<>1 extent:10<>10)).
+t assertError:[p at:0 put:6].
+t assertError:[p at:0 put:nil].
+t assertError:[p at:1 put:2<>4].
+p at:0 put:(10<>13 extent:1<>2).
+p at:1 put:(44<>38 extent:13<>95).
+t assert:(p at:0) = (10<>13 extent:1<>2) & ((p at:1) = (44<>38 extent:13<>95)).
+p free.
+
+p := t CGAffineTransformPointer.
+nsatControl1 := NSAffineTransform transform.
+nsatControl1 setM11:1 m12:2 m21:3 m22:4 tX:5 tY:6.
+nsatControl2 := NSAffineTransform transform.
+nsatControl2 setM11:7 m12:8 m21:9 m22:10 tX:11 tY:12.
+t assert:((p at:0) m11 =  0) & ((p at:0) m12 = 10) & ((p at:0) m21 = 100) & ((p at:0) m22 = 200) & ((p at:0) tX = 5) & ((p at:0) tY = 6).
+t assert:((p at:1) m11 = 20) & ((p at:1) m12 =  1) & ((p at:1) m21 =  10) & ((p at:1) m22 =  10) & ((p at:1) tX = 7) & ((p at:1) tY = 8).
+t assertError:[p at:0 put:6].
+t assertError:[p at:0 put:nil].
+t assertError:[p at:1 put:2<>4].
+p at:0 put:nsatControl1.
+p at:1 put:nsatControl2.
+t assert:((p at:0) m11 = 1) & ((p at:0) m12 = 2) & ((p at:0) m21 = 3) & ((p at:0) m22 =  4) & ((p at:0) tX =  5) & ((p at:0) tY =  6).
+t assert:((p at:1) m11 = 7) & ((p at:1) m12 = 8) & ((p at:1) m21 = 9) & ((p at:1) m22 = 10) & ((p at:1) tX = 11) & ((p at:1) tY = 12).
+p free.
+
+p := t intPointerPointer.
+t assert:((p at:0) at:0) = -50 & (((p at:1) at:0) = 120).
+t assertError:[p at:0 put:6].
+t assertError:[(p at:0) at:0 put:[8]].
+(p at:0) free.
+(p at:1) free.
+p at:0 put:nil.
+p at:1 put:t intPointer.
+t assert:(p at:0) == nil & (((p at:1) at:0) = -50) & (((p at:1) at:1) = 120).
+(p at:1) free.
+p free.
+
+p := t voidPointer.
+t assertError:[p at:0].
+t assertError:[p at:0 put:1].
+p free.
+
+
+"/////////////////////////////////// FSSystem /////////////////////////////////////"
+t startCategory:'FSSystem'.
+
+"/////////////////// beep"
+t startTest:'beep'.
+
+sys beep.
+
+"/////////////////// blockFromString:"
+t startTest:'blockFromString:'.
+
+_aTopLevelVariable := 4.
+bl := sys blockFromString:'[:a :b| a + b + _aTopLevelVariable]'.
+ 
+t assert:(bl value:2 value:3) = 9.
+bl := nil.
+          
+"/////////////////// blockFromString:onError: "
+t startTest:'blockFromString:onError:'.
+
+bl := sys blockFromString:'[:a :b| a + b + _aTopLevelVariable]' onError:[9999].
+
+t assert:((bl value:2 value:3) = 9).
+bl := nil.
+
+r1 := sys blockFromString:'[:arg1 :arg1| a + b + _aTopLevelVariable]' 
+                  onError:[:errorStr :first :last| {errorStr, first, last}].
+
+t assert:(r1 isKindOfClass:FSArray) & (r1 isEqual:{'syntax error: identifier "arg1" already defined in this block',8,12}). 
+
+"/////////////////// clear"
+t startTest:'clear'.
+
+[|testManagerLocalReference|
+  testManagerLocalReference := t.
+  sys clear.
+  global_a := 2.
+  global_b := 3.
+  testManagerLocalReference assert: (sys identifiers intersection:{'sys', 'global_a', 'global_b'}) count = (sys identifiers union:{'sys', 'global_a', 'global_b'}) count.
+  sys clear.
+  testManagerLocalReference assert: (sys identifiers isEqual: {'sys'}). 
+  t := testManagerLocalReference.
+] value.
+
+"/////////////////// clear:"
+t startTest:'clear:'.
+
+[|testManagerLocalReference|
+  testManagerLocalReference := t.
+  sys clear.
+  global_a := 2.
+  global_b := 3.
+  testManagerLocalReference assert: (sys identifiers intersection:{'sys', 'global_a', 'global_b'}) count  = (sys identifiers union:{'sys', 'global_a', 'global_b'}) count.
+  sys clear:'global_a'.
+  testManagerLocalReference assert: (sys identifiers intersection:{'sys', 'global_b'}) count = (sys identifiers union:{'sys', 'global_b'}) count.
+  sys clear:'global_b'.
+  testManagerLocalReference assert: (sys identifiers isEqual: {'sys'}). 
+  testManagerLocalReference assertError:[sys clear:'sys'].
+  testManagerLocalReference assertError:[sys clear:'global_b'].
+  t := testManagerLocalReference.
+] value.
+
+"/////////////////// copy"
+t startTest:'copy'.
+
+sys2 := sys copy autorelease.
+
+t assert:(sys2 isKindOfClass:FSSystem).
+
+"/////////////////// userName, fullUserName, homeDirectory, homeDirectoryForUser:"
+t startTest:'userName, fullUserName, homeDirectory, homeDirectoryForUser:'.
+
+name  := sys fullUserName.
+name2 := sys userName.
+home  := sys homeDirectory.
+home2 := sys homeDirectoryForUser:name.
+home3 := sys homeDirectoryForUser:name2.
+home4 := [sys homeDirectoryForUser:nil] onException:[:e| e].
+home5 := [sys homeDirectoryForUser:7] onException:[:e| e].
+
+t assert:(name isKindOfClass:NSMutableString) & (name length > 0) & (name2 isKindOfClass:NSMutableString) & (name2 length > 0) & (home = home2) & (home isKindOfClass:NSMutableString) & (home = home2) & (home4 isKindOfClass:NSException) & (home5 isKindOfClass:NSException).
+
+"/////////////////// installFlightTutorial"
+t startTest:'installFlightTutorial'.
+
+sys installFlightTutorial.
+
+t assert:(F isKindOfClass:FSArray) & ((F @ isKindOfClass:FSFlight) \ #&) & (A isKindOfClass:FSArray) & ((A @ isKindOfClass:FSAirplane) \ #&) & (P isKindOfClass:FSArray) & ((P @ isKindOfClass:FSPilot) \ #&).
+
+
+"/////////////////// load:"
+t startTest:'load:'.
+
+_path :=  sys homeDirectory++'/_fscripttest'. " _path must be defined at the top level (_path is used to test the loading of a block, to see if it is attached to the top level symbol table)"
+
+(NSFileManager defaultManager fileExistsAtPath:_path) ifTrue:
+[
+  t addComment:' Test file used by for the test of FSSystem -load:  already exist (strange !). I bypass the test. '
+]
+ifFalse:
+[
+  a := {NSDate now, nil, {-1,'toto',{{}}}, 12.6789, true, false, 10 iota, {}, {true,true,true,false}, 'key1'->1, 2-> {#abs, 'hello', true}}.
+  a save:_path.
+  
+  " Normal use "
+  a2 := sys load:_path.
+  NSFileManager defaultManager removeFileAtPath:_path handler:nil.
+  t assert:(a isEqual:a2).
+  
+  " The file no longer exists "
+  r := [sys load:_path] onException:[:e| e].
+  t assert:(r isKindOfClass:NSException).
+  
+  " The file is not readable (permission modified) "
+  " todo "
+  
+  " The file is not a valid archive "
+  " todo "
+].
+
+
+"/////////////////// loadSpace: & saveSpace:"
+
+" Can't test it in a block due to the semantic of loadSpace:. Should be tested manualy (see the sample script in the 'manual tests' section)  "
+
+
+"/////////////////// log:"
+
+sys log:'ktest: testing the -log: method on class FSSystem'.
+sys log:7.
+
+"/////////////////// identifiers"
+t startTest:'identifiers'.
+
+r := sys identifiers.
+
+t assert:(r ! 'sys' ~= r count).  "Verify that the identifier 'sys' is defined"
+
+( sys blockFromString:@(('[' ++ @r) @ ++ ']') ) @value.   " Evaluate all the identifiers"
+
+"/////////////////////////////////// DO support /////////////////////////////////////"
+
+doTest := 
+[:doServerPath :do1Name :do2Name| (doServerPath == nil) ifTrue:
+  [
+    t addComment:'DO server application not available. I bypass this test.'.
+  ] 
+  ifFalse:
+  [
+    t startTest:'Basic support'.
+    appLaunched := NSWorkspace sharedWorkspace launchApplication:doServerPath. 
+    "Note that the intent of this instruction is not to lauch the DO server, but just to check if it is already
+    running. The real launch happens at the begining of ktest, in order to give time to the DO server to vend
+    its objects."
+    appLaunched ifFalse:
+    [
+      t addComment:'For an unknown reason, I am unable to launch the DO server application.'.
+      t assert:false. 
+    ]
+    ifTrue:
+    [
+      |l enclosure pa ps pn|
+    
+      p1 := do1Name connect.
+      p2 := do2Name connect.
+      
+      t assert:p1 = 'hello'.
+      t assert:p1 isProxy not. "Because, by default, NSStrings are passed by value"
+      t assert:(nil == p2) not.
+      t assert:p2 isProxy.
+      
+      t assert:p2 getValue = 0.
+      p2 incr. p2 incr. p2 incr.
+      t assert:p2 getValue = 3.
+      
+      t assert:(p2 echoInt:7867) = 7867.
+      t assertError:[p2 echoInt:'foo'].
+      
+      t assertError:[p2 ___thisMethodDoesNotExists___].
+      
+      p2 perform:#value: on:[:arg| l := arg] with:'good morning'. "test callback"
+      t assert:l = 'good morning'.
+      
+      "//////////////////"
+      t startTest:'-classOrMetaclass, +classOrMetaclass'.
+      t assert:(t testFSNSDistantObjectClassOrMetaclass:p2).
+      
+      "///////////////////"
+      t startTest:'isEqual:' .
+      
+      localDOCustom := DOCustom alloc init.
+      localDOCustom setValue:9.
+      p2 setValue:9.
+      
+      t assert:(p2 isEqual:localDOCustom).
+      t assert:(localDOCustom isEqual:p2).
+      
+      p2 setValue:10.
+      
+      t assert:(p2 isEqual:localDOCustom) not.
+      t assert:(localDOCustom isEqual:p2) not.
+      
+      "///////////////////"
+      t startTest:'==, ~~'.
+      
+      t assert:p2 == p2. 
+      t assert:(p2 ~~ p2) not.
+      t assert:(p2 == 8) not.
+      t assert:p2 ~~ 8.
+      t assert:(p2 == nil) not.
+      t assert:(nil == p2) not.
+      t assert:p2 ~~ nil.
+      
+      "///////////////////"
+      t startTest:'->'.
+      t assert: (p2 -> p2 isKindOfClass:FSAssociation).
+      t assert: p2 -> p2 = (p2 -> p2).
+
+      "///////////////////"
+      t startTest:'enlist'.
+  
+      enclosure := p2 enlist.
+      t assert:(enclosure isKindOfClass:FSArray).
+      t assert:(enclosure at:0) == p2.
+      
+      "///////////////////"
+      t startTest:'enlist:'.
+  
+      enclosure := p2 enlist:3.
+      t assert:(enclosure isKindOfClass:FSArray).
+      t assert:enclosure count = 3.
+      t assert:(enclosure at:0) == p2.
+      t assert:(enclosure at:1) == p2.
+      t assert:(enclosure at:2) == p2.
+  
+      enclosure := p2 enlist:2.3.
+      t assert:(enclosure isKindOfClass:FSArray).
+      t assert:enclosure count = 2.
+      t assert:(enclosure at:0) == p2.
+      t assert:(enclosure at:1) == p2.
+  
+      "No longer doable in 64 bit until our F-Script native number representation can represent a number equal to 'FSArray maxCount + 1' "  
+      "assertError:[p2 enlist:Array maxCount + 1]."
+      
+      t assertError:[p2 enlist:-1].
+      t assertError:[p2 enlist:nil].
+      t assertError:[p2 enlist:'hello'].
+  
+      "///////////////////"
+      t startTest:'printString'.
+      
+      t assert:p2 printString = ('a proxy for ' ++ p2 description).   
+  
+      "///////////////////"
+      t startTest:'byref'.
+      
+      pa := p2 getNSArrayByRef.
+      t assert:pa isProxy.
+      t assert:(pa isKindOfClass:NSArray).
+      
+      p2 quit.
+    ]
+  ]
+].
+
+FSTest1DOServerPath := NSBundle mainBundle pathForResource:'FSTest1' ofType:'app'.
+FSTest2DOServerPath := NSBundle mainBundle pathForResource:'FSTest2' ofType:'app'.
+
+t startCategory:'DO support with DOserver not linked to FScriptFramework'.
+doTest value:FSTest1DOServerPath value:'FSTest1_o1' value:'FSTest1_o2'.
+
+t startCategory:'DO support with DOserver linked to FScriptFramework'.
+doTest value:FSTest2DOServerPath value:'FSTest2_o1' value:'FSTest2_o2'.
+
+doTest := nil.
+
+"////////////////////////////////////////////////////////////////////////"
+
+t finish. 
+t report.
+]
+
+
+

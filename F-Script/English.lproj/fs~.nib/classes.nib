@@ -1,0 +1,48 @@
+{
+    IBClasses = (
+        {CLASS = FSInterpreterView; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {
+                myAction = id; 
+                newBigBrowser = id; 
+                newKVBrowser = id; 
+                showConsole = id; 
+                showInfoPanel = id; 
+                showPreferencePanel = id; 
+                updatePreference = id; 
+            }; 
+            CLASS = FScriptAppControler; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                confirmWhenQuittingUI = NSButton; 
+                displayObjectBrowserAtLaunchTimeUI = NSButton; 
+                fontSizeUI = NSTextField; 
+                infoPanel = NSPanel; 
+                interpreterView = FSInterpreterView; 
+                preferencePanel = NSPanel; 
+                shouldJournalUI = NSButton; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                enterSelection = id; 
+                findNext = id; 
+                findPrevious = id; 
+                newBigBrowser = id; 
+                orderFrontFindPanel = id; 
+            }; 
+            CLASS = FirstResponder; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {test = id; }; 
+            CLASS = Test; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {field = id; }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

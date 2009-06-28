@@ -1,0 +1,13 @@
+{
+    IBClasses = (
+        {
+            CLASS = FSMovieInspector; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {movieView = QTMovieView; window = NSWindow; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = NSMovie; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}
