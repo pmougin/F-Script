@@ -1,4 +1,4 @@
-/*   FSAutoreleasePool.m Copyright (c) 2008 Philippe Mougin. */
+/*   FSAutoreleasePool.m Copyright (c) 2008-2009 Philippe Mougin. */
 /*   This software is open source. See the license.   */
 
 #import "FSAutoreleasePool.h"

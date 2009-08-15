@@ -1,4 +1,4 @@
-/* FSInterpreterView.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/* FSInterpreterView.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "build_config.h"
@@ -89,12 +89,12 @@ static BOOL isEmpty(NSString *str)
   }
   else if ([execResult isSyntaxError])
   {
-    [sender showError:[execResult errorRange]]; 
+    [sender showErrorRange:[execResult errorRange]]; 
     [sender putText:[NSString stringWithFormat:@"\n%@, character %lu\n\n",[execResult errorMessage],(unsigned long)([execResult errorRange].location)]];
   }
   else // [execresult isExecutionError]
   {    
-    [sender showError:[execResult errorRange]];
+    [sender showErrorRange:[execResult errorRange]];
     [sender putText:@"\n"];
     [sender putText:[execResult errorMessage]];
     [sender putText:@"\n\n"];

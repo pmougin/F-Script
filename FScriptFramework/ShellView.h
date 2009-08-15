@@ -1,4 +1,4 @@
-/* ShellView.h Copyright (c) 1998-2006 Philippe Mougin.  */
+/* ShellView.h Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import <AppKit/AppKit.h>
@@ -12,7 +12,7 @@ typedef enum {DECOMPOSE,NO_DECOMPOSE} T_parser_mode;
 - (void)command:(NSString *)command from:(id)sender;
 @end
 
-@interface ShellView : FScriptTextView
+@interface ShellView : FScriptTextView /* <NSTextViewDelegate> */
 {
   NSString *prompt;                              
   NSUInteger start;                   // The start of the current command (i.e. the command beign edited) 
@@ -63,7 +63,7 @@ typedef enum {DECOMPOSE,NO_DECOMPOSE} T_parser_mode;
 - (void)setCommandHandler:handler;
 - (void)setShouldRetainCommandHandler:(BOOL)shouldRetain;
 - (BOOL)shouldRetainCommandHandler; 
-- (void)showError:(NSRange)range;
+- (void)showErrorRange:(NSRange)range;
 - (BOOL)textView:(NSTextView *)aTextView shouldChangeTextInRange:(NSRange)affectedCharRange replacementString:(NSString *)replacementString;
 
 @end

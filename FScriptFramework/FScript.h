@@ -1,4 +1,4 @@
-/* FScript.h Copyright (c) 1998-2006 Philippe Mougin.  */
+/* FScript.h Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 // This file import all F-Script public headers you need 

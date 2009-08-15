@@ -11,7 +11,7 @@ NSInteger FSCompareClassNamesForAlphabeticalOrder(NSString *className1, NSString
 
 const int FSObjectBrowserBottomBarHeight;
 
-@interface FSObjectBrowserView : NSView 
+@interface FSObjectBrowserView : NSView /*<NSBrowserDelegate, NSToolbarDelegate>*/
 {
   id rootObject;
   FSInterpreter *interpreter;

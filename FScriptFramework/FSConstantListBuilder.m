@@ -1,4 +1,4 @@
-/* FSConstantListBuilder.m Copyright (c) 2002-2006 Philippe Mougin.  */
+/* FSConstantListBuilder.m Copyright (c) 2002-2009 Philippe Mougin.  */
 /*   This software is open source. See the licence.  */  
 
 
@@ -85,7 +85,7 @@ b constantsInitializerString.
   
   if (!url) FSExecError([NSString stringWithFormat:@"Can't create an URL from file %@.", path]);
   
-  xmlDoc = [[NSXMLDocument alloc] initWithContentsOfURL:url options:(NSXMLNodePreserveWhitespace|NSXMLNodePreserveCDATA) error:&err];
+  xmlDoc = [[[NSXMLDocument alloc] initWithContentsOfURL:url options:(NSXMLNodePreserveWhitespace|NSXMLNodePreserveCDATA) error:&err] autorelease];
     
   if (err) FSExecError([err localizedDescription]);
   

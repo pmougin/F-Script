@@ -1,11 +1,10 @@
-/* FSObjectFormatter.m Copyright (c) 2002-2006 Philippe Mougin.  */
+/* FSObjectFormatter.m Copyright (c) 2002-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import <AppKit/AppKit.h>
 #import "FSObjectFormatter.h"
 #import "FSNSObject.h"
 #import "FSMiscTools.h"
-#import "FSError.h"
 #import "Number.h"
 
 

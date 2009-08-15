@@ -1616,7 +1616,7 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
     {
       unsigned int i, count;
       objc_property_t *properties = class_copyPropertyList(cls, &count);
-      if (properties != NULL && !(cls == [NSView class] && count <= 1) )  // Second part of condition is a quick fix to avoid bloating display for the NSView class with a "one property" section (10.5.0). TODO: revise this as more properties are added to NSView. 
+      if (properties != NULL && !(cls == [NSView class]) )  // Second part of condition is a quick fix to avoid bloating display for the NSView class with a "one property" section (10.5.0) or spurious properties (10.6). TODO: revise this. 
       {
         classLabel = [NSString stringWithFormat:@"%@ Properties", [cls printString]]; 
         [self addClassLabel:classLabel toMatrix:m color:[NSColor magentaColor]];

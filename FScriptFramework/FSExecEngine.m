@@ -1,5 +1,4 @@
-
-/*   FSExecEngine.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/*   FSExecEngine.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "build_config.h"
@@ -490,7 +489,7 @@ id sendMsgNoPattern(id receiver, SEL selector, NSUInteger argumentCount, id *arg
       NSString *warning = [NSString stringWithFormat:@"Warning: message \"=\" sent to %@. In the future, \"=\" will not be automatically provided for all objects. Change your code to use \"isEqual:\".", descriptionForFSMessage(receiver)];
       if (![issuedWarnings containsObject:warning])
       {
-        NSLog(warning);
+        NSLog(@"%@", warning);
         [issuedWarnings addObject:warning];
       }  
       return [receiver isEqual:args[2]] ? fsTrue : fsFalse;
@@ -500,7 +499,7 @@ id sendMsgNoPattern(id receiver, SEL selector, NSUInteger argumentCount, id *arg
       NSString *warning =[NSString stringWithFormat:@"Warning: message \"~=\" sent to %@. In the future, \"~=\" will not be automatically provided for all objects. Change your code to use \"isEqual:\".", descriptionForFSMessage(receiver)];
       if (![issuedWarnings containsObject:warning])
       {
-        NSLog(warning);
+        NSLog(@"%@", warning);
         [issuedWarnings addObject:warning];
       }      
       return [receiver isEqual:args[2]] ? fsFalse : fsTrue ;
@@ -985,7 +984,6 @@ id sendMsgPattern(id receiver, SEL selector, NSUInteger argumentCount, id *args,
   for (i = 0, currentDeep = patternDeep; i <= currentDeep; i++)
     r_tab[i] = [FSArray arrayWithCapacity:r_size_tab[i]];   
     
-  ready = NO;
   is_void = !empty;        
         
   while(1)

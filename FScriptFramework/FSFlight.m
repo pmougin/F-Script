@@ -1,4 +1,4 @@
-/* FSFlight.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/* FSFlight.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "FSFlight.h"

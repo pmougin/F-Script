@@ -286,7 +286,7 @@
 + (void) addCustomBlockMenuIdentifier:(NSString *)blockIdentifier
 {
   NSMenu *menu=[self customBlockMenu];
-  NSMenuItem *item=[[NSMenuItem alloc] initWithTitle:blockIdentifier action:@selector(customBlockMenuAction:) keyEquivalent:@""];
+  NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:blockIdentifier action:@selector(customBlockMenuAction:) keyEquivalent:@""] autorelease];
   [menu addItem:item];
 }
 + (void) removeCustomBlockMenuIdentifier:(NSString *)blockIdentifier

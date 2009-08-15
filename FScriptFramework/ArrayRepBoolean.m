@@ -1,4 +1,4 @@
-/* ArrayRepBoolean.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/* ArrayRepBoolean.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "build_config.h" 
@@ -139,7 +139,7 @@
   char *resTab;  
   NSUInteger i; 
 
-  //NSLog(@"simpleLoop_operator_not");
+  //NSLog(@"simpleLoop_operator_not"); 
 
   resTab = malloc(count*sizeof(char));
   for(i=0;i<count;i++) resTab[i] = !t[i];

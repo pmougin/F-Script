@@ -82,7 +82,6 @@
 		8F0CBC290BDB94AD002B0AD7 /* FSObjectBrowserButtonsInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F9569502B272FB0121B3BA /* FSObjectBrowserButtonsInspector.m */; };
 		8F0CBC2B0BDB94AD002B0AD7 /* FSObjectBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E32500D7DFE17BE9C1BD /* FSObjectBrowserView.m */; };
 		8F0CBC2C0BDB94AD002B0AD7 /* Pointer.m in Sources */ = {isa = PBXBuildFile; fileRef = F505647F02DF417501FE0326 /* Pointer.m */; };
-		8F0CBC2D0BDB94AD002B0AD7 /* FSError.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B0AC1F0339F51F014790F3 /* FSError.m */; };
 		8F0CBC2E0BDB94AD002B0AD7 /* FSObjectFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EBBE810321029601CA10C6 /* FSObjectFormatter.m */; };
 		8F0CBC2F0BDB94AD002B0AD7 /* FSIdentifierFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5073A2002FC5400013656B0 /* FSIdentifierFormatter.m */; };
 		8F0CBC310BDB94AD002B0AD7 /* FSKeyedUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = F55D44C50358A88801B9E934 /* FSKeyedUnarchiver.m */; };
@@ -390,7 +389,6 @@
 		8F6DA63D055FC6980050409A /* FSInterpreterPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F54CA17602FB2CAF01C25A35 /* FSInterpreterPrivate.h */; };
 		8F6DA63E055FC6980050409A /* FSIdentifierFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5073A2102FC5400013656B0 /* FSIdentifierFormatter.h */; };
 		8F6DA63F055FC6980050409A /* FSObjectFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EBBE820321029601CA10C6 /* FSObjectFormatter.h */; };
-		8F6DA640055FC6980050409A /* FSError.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B0AC1E0339F51F014790F3 /* FSError.h */; };
 		8F6DA642055FC6980050409A /* FSSystemPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5A25E260357B373011A39F8 /* FSSystemPrivate.h */; };
 		8F6DA643055FC6980050409A /* FSKeyedUnarchiver.h in Headers */ = {isa = PBXBuildFile; fileRef = F55D44C40358A88801B9E934 /* FSKeyedUnarchiver.h */; };
 		8F6DA644055FC6980050409A /* FSKeyedArchiver.h in Headers */ = {isa = PBXBuildFile; fileRef = F55D44CE0358B5D201B9E934 /* FSKeyedArchiver.h */; };
@@ -482,7 +480,6 @@
 		8F6DA6B2055FC6980050409A /* Pointer.m in Sources */ = {isa = PBXBuildFile; fileRef = F505647F02DF417501FE0326 /* Pointer.m */; };
 		8F6DA6B3055FC6980050409A /* FSIdentifierFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5073A2002FC5400013656B0 /* FSIdentifierFormatter.m */; };
 		8F6DA6B4055FC6980050409A /* FSObjectFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EBBE810321029601CA10C6 /* FSObjectFormatter.m */; };
-		8F6DA6B5055FC6980050409A /* FSError.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B0AC1F0339F51F014790F3 /* FSError.m */; };
 		8F6DA6B7055FC6980050409A /* FSKeyedUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = F55D44C50358A88801B9E934 /* FSKeyedUnarchiver.m */; };
 		8F6DA6B8055FC6980050409A /* FSKeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = F55D44CF0358B5D201B9E934 /* FSKeyedArchiver.m */; };
 		8F6DA6B9055FC6980050409A /* FSConstantListBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = F52EECA7036210E2016141BB /* FSConstantListBuilder.m */; };
@@ -583,7 +580,6 @@
 		8F6DA850055FC70C0050409A /* FSInterpreterPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F54CA17602FB2CAF01C25A35 /* FSInterpreterPrivate.h */; };
 		8F6DA851055FC70C0050409A /* FSIdentifierFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5073A2102FC5400013656B0 /* FSIdentifierFormatter.h */; };
 		8F6DA852055FC70C0050409A /* FSObjectFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EBBE820321029601CA10C6 /* FSObjectFormatter.h */; };
-		8F6DA853055FC70C0050409A /* FSError.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B0AC1E0339F51F014790F3 /* FSError.h */; };
 		8F6DA855055FC70C0050409A /* FSSystemPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5A25E260357B373011A39F8 /* FSSystemPrivate.h */; };
 		8F6DA856055FC70C0050409A /* FSKeyedUnarchiver.h in Headers */ = {isa = PBXBuildFile; fileRef = F55D44C40358A88801B9E934 /* FSKeyedUnarchiver.h */; };
 		8F6DA857055FC70C0050409A /* FSKeyedArchiver.h in Headers */ = {isa = PBXBuildFile; fileRef = F55D44CE0358B5D201B9E934 /* FSKeyedArchiver.h */; };
@@ -679,7 +675,6 @@
 		8F6DA8CD055FC70C0050409A /* Pointer.m in Sources */ = {isa = PBXBuildFile; fileRef = F505647F02DF417501FE0326 /* Pointer.m */; };
 		8F6DA8CE055FC70C0050409A /* FSIdentifierFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5073A2002FC5400013656B0 /* FSIdentifierFormatter.m */; };
 		8F6DA8CF055FC70C0050409A /* FSObjectFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EBBE810321029601CA10C6 /* FSObjectFormatter.m */; };
-		8F6DA8D0055FC70C0050409A /* FSError.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B0AC1F0339F51F014790F3 /* FSError.m */; };
 		8F6DA8D2055FC70C0050409A /* FSKeyedUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = F55D44C50358A88801B9E934 /* FSKeyedUnarchiver.m */; };
 		8F6DA8D3055FC70C0050409A /* FSKeyedArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = F55D44CF0358B5D201B9E934 /* FSKeyedArchiver.m */; };
 		8F6DA8D4055FC70C0050409A /* FSConstantListBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = F52EECA7036210E2016141BB /* FSConstantListBuilder.m */; };
@@ -772,7 +767,6 @@
 		8F6DA94E055FC71F0050409A /* FSObjectBrowserView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E32400D7DFE17BE9C1BD /* FSObjectBrowserView.h */; };
 		8F6DA94F055FC71F0050409A /* PointerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F856C002EB281C01F7E6F0 /* PointerPrivate.h */; };
 		8F6DA950055FC71F0050409A /* FSInterpreterPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F54CA17602FB2CAF01C25A35 /* FSInterpreterPrivate.h */; };
-		8F6DA951055FC71F0050409A /* FSError.h in Headers */ = {isa = PBXBuildFile; fileRef = F5B0AC1E0339F51F014790F3 /* FSError.h */; };
 		8F6DA952055FC71F0050409A /* FSObjectFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5EBBE820321029601CA10C6 /* FSObjectFormatter.h */; };
 		8F6DA953055FC71F0050409A /* FSIdentifierFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = F5073A2102FC5400013656B0 /* FSIdentifierFormatter.h */; };
 		8F6DA955055FC71F0050409A /* FSSystemPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F5A25E260357B373011A39F8 /* FSSystemPrivate.h */; };
@@ -864,7 +858,6 @@
 		8F6DA9C2055FC71F0050409A /* FSObjectBrowserButtonsInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = F5F9569502B272FB0121B3BA /* FSObjectBrowserButtonsInspector.m */; };
 		8F6DA9C4055FC71F0050409A /* FSObjectBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E32500D7DFE17BE9C1BD /* FSObjectBrowserView.m */; };
 		8F6DA9C5055FC71F0050409A /* Pointer.m in Sources */ = {isa = PBXBuildFile; fileRef = F505647F02DF417501FE0326 /* Pointer.m */; };
-		8F6DA9C6055FC71F0050409A /* FSError.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B0AC1F0339F51F014790F3 /* FSError.m */; };
 		8F6DA9C7055FC71F0050409A /* FSObjectFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5EBBE810321029601CA10C6 /* FSObjectFormatter.m */; };
 		8F6DA9C8055FC71F0050409A /* FSIdentifierFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = F5073A2002FC5400013656B0 /* FSIdentifierFormatter.m */; };
 		8F6DA9CA055FC71F0050409A /* FSKeyedUnarchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = F55D44C50358A88801B9E934 /* FSKeyedUnarchiver.m */; };
@@ -1587,8 +1580,6 @@
 		F58090FC03756D2401AED2EF /* ArrayTableView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = ArrayTableView.nib; sourceTree = "<group>"; };
 		F598CDB8025CF7E5011B2E41 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = "F-Script/English.lproj/fs.nib"; sourceTree = "<group>"; };
 		F5A25E260357B373011A39F8 /* FSSystemPrivate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FSSystemPrivate.h; sourceTree = "<group>"; };
-		F5B0AC1E0339F51F014790F3 /* FSError.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FSError.h; sourceTree = "<group>"; };
-		F5B0AC1F0339F51F014790F3 /* FSError.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FSError.m; sourceTree = "<group>"; };
 		F5D4BE29038511FF01461810 /* ArrayRepBoolean.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ArrayRepBoolean.h; sourceTree = "<group>"; };
 		F5D4BE2A038511FF01461810 /* ArrayRepBoolean.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ArrayRepBoolean.m; sourceTree = "<group>"; };
 		F5EBBE810321029601CA10C6 /* FSObjectFormatter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FSObjectFormatter.m; sourceTree = "<group>"; };
@@ -1915,8 +1906,6 @@
 				8F0B664F05C557A40099180D /* FScriptPreferences.nib */,
 				F5FBEF2802149D32018C0134 /* FScriptTextView.h */,
 				F501AF7B021497C401A75EC5 /* FScriptTextView.m */,
-				F5B0AC1E0339F51F014790F3 /* FSError.h */,
-				F5B0AC1F0339F51F014790F3 /* FSError.m */,
 				0CD4E33D00D7DFE17BE9C1BD /* FSExecEngine.h */,
 				0CD4E33E00D7DFE17BE9C1BD /* FSExecEngine.m */,
 				0CD4E33F00D7DFE17BE9C1BD /* FSExecutor.h */,
@@ -2265,7 +2254,6 @@
 				8F6DA63D055FC6980050409A /* FSInterpreterPrivate.h in Headers */,
 				8F6DA63E055FC6980050409A /* FSIdentifierFormatter.h in Headers */,
 				8F6DA63F055FC6980050409A /* FSObjectFormatter.h in Headers */,
-				8F6DA640055FC6980050409A /* FSError.h in Headers */,
 				8F6DA642055FC6980050409A /* FSSystemPrivate.h in Headers */,
 				8F6DA643055FC6980050409A /* FSKeyedUnarchiver.h in Headers */,
 				8F6DA644055FC6980050409A /* FSKeyedArchiver.h in Headers */,
@@ -2435,7 +2423,6 @@
 				8F6DA850055FC70C0050409A /* FSInterpreterPrivate.h in Headers */,
 				8F6DA851055FC70C0050409A /* FSIdentifierFormatter.h in Headers */,
 				8F6DA852055FC70C0050409A /* FSObjectFormatter.h in Headers */,
-				8F6DA853055FC70C0050409A /* FSError.h in Headers */,
 				8F6DA855055FC70C0050409A /* FSSystemPrivate.h in Headers */,
 				8F6DA856055FC70C0050409A /* FSKeyedUnarchiver.h in Headers */,
 				8F6DA857055FC70C0050409A /* FSKeyedArchiver.h in Headers */,
@@ -2602,7 +2589,6 @@
 				8F6DA94E055FC71F0050409A /* FSObjectBrowserView.h in Headers */,
 				8F6DA94F055FC71F0050409A /* PointerPrivate.h in Headers */,
 				8F6DA950055FC71F0050409A /* FSInterpreterPrivate.h in Headers */,
-				8F6DA951055FC71F0050409A /* FSError.h in Headers */,
 				8F6DA952055FC71F0050409A /* FSObjectFormatter.h in Headers */,
 				8F6DA953055FC71F0050409A /* FSIdentifierFormatter.h in Headers */,
 				8F6DA955055FC71F0050409A /* FSSystemPrivate.h in Headers */,
@@ -3045,7 +3031,6 @@
 				8F0CBC290BDB94AD002B0AD7 /* FSObjectBrowserButtonsInspector.m in Sources */,
 				8F0CBC2B0BDB94AD002B0AD7 /* FSObjectBrowserView.m in Sources */,
 				8F0CBC2C0BDB94AD002B0AD7 /* Pointer.m in Sources */,
-				8F0CBC2D0BDB94AD002B0AD7 /* FSError.m in Sources */,
 				8F0CBC2E0BDB94AD002B0AD7 /* FSObjectFormatter.m in Sources */,
 				8F0CBC2F0BDB94AD002B0AD7 /* FSIdentifierFormatter.m in Sources */,
 				8F0CBC310BDB94AD002B0AD7 /* FSKeyedUnarchiver.m in Sources */,
@@ -3195,7 +3180,6 @@
 				8F6DA6B2055FC6980050409A /* Pointer.m in Sources */,
 				8F6DA6B3055FC6980050409A /* FSIdentifierFormatter.m in Sources */,
 				8F6DA6B4055FC6980050409A /* FSObjectFormatter.m in Sources */,
-				8F6DA6B5055FC6980050409A /* FSError.m in Sources */,
 				8F6DA6B7055FC6980050409A /* FSKeyedUnarchiver.m in Sources */,
 				8F6DA6B8055FC6980050409A /* FSKeyedArchiver.m in Sources */,
 				8F6DA6B9055FC6980050409A /* FSConstantListBuilder.m in Sources */,
@@ -3349,7 +3333,6 @@
 				8F6DA8CD055FC70C0050409A /* Pointer.m in Sources */,
 				8F6DA8CE055FC70C0050409A /* FSIdentifierFormatter.m in Sources */,
 				8F6DA8CF055FC70C0050409A /* FSObjectFormatter.m in Sources */,
-				8F6DA8D0055FC70C0050409A /* FSError.m in Sources */,
 				8F6DA8D2055FC70C0050409A /* FSKeyedUnarchiver.m in Sources */,
 				8F6DA8D3055FC70C0050409A /* FSKeyedArchiver.m in Sources */,
 				8F6DA8D4055FC70C0050409A /* FSConstantListBuilder.m in Sources */,
@@ -3495,7 +3478,6 @@
 				8F6DA9C2055FC71F0050409A /* FSObjectBrowserButtonsInspector.m in Sources */,
 				8F6DA9C4055FC71F0050409A /* FSObjectBrowserView.m in Sources */,
 				8F6DA9C5055FC71F0050409A /* Pointer.m in Sources */,
-				8F6DA9C6055FC71F0050409A /* FSError.m in Sources */,
 				8F6DA9C7055FC71F0050409A /* FSObjectFormatter.m in Sources */,
 				8F6DA9C8055FC71F0050409A /* FSIdentifierFormatter.m in Sources */,
 				8F6DA9CA055FC71F0050409A /* FSKeyedUnarchiver.m in Sources */,
@@ -3931,7 +3913,7 @@
 				INSTALL_OWNER = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_LDFLAGS = "";
-				SDKROOT = "";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 			};
 			name = Deployment;
 		};

@@ -1,4 +1,4 @@
-/* FSKeyedArchiver.m Copyright (c) 2002-2006 Philippe Mougin.  */
+/* FSKeyedArchiver.m Copyright (c) 2002-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.       */
 
 #import "FSKeyedArchiver.h"
@@ -21,7 +21,7 @@
     }
     else
     {
-      NSLog([NSString stringWithFormat:@"Can't archive an instance of %@ because this class doesn't support archiving (NSCoding protocol). Archiving an NSNull instance instead.", [object class]]); // the case of archiving a class is managed elsewhere
+      NSLog(@"Can't archive an instance of %@ because this class doesn't support archiving (NSCoding protocol). Archiving an NSNull instance instead.", [object class]); // the case of archiving a class is managed elsewhere
       [super encodeObject:[NSNull null] forKey:key];
     }  
   }     
@@ -43,7 +43,7 @@
     }
     else
     {
-      NSLog([NSString stringWithFormat:@"Can't archive an instance of %@ because this class doesn't support archiving (NSCoding protocol). Archiving an NSNull instance instead.", [object class]]); // the case of archiving a class is managed elsewhere
+      NSLog(@"Can't archive an instance of %@ because this class doesn't support archiving (NSCoding protocol). Archiving an NSNull instance instead.", [object class]); // the case of archiving a class is managed elsewhere
       [super encodeObject:[NSNull null]];
     }  
   }     
@@ -74,7 +74,7 @@
     else
     {
       objectToEncode = [NSNull null];
-      NSLog([NSString stringWithFormat:@"Can't archive an instance of %@ because this class doesn't support archiving (NSCoding protocol). Archiving an NSNull instance instead.", [*(id*)address class]]); // the case of archiving a class is managed elsewhere
+      NSLog(@"Can't archive an instance of %@ because this class doesn't support archiving (NSCoding protocol). Archiving an NSNull instance instead.", [*(id*)address class]); // the case of archiving a class is managed elsewhere
       [super encodeValueOfObjCType:valueType at:&objectToEncode];
     }
   }

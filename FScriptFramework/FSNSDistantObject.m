@@ -1,4 +1,4 @@
-/*   FSNSDistantObject.m Copyright (c) 2001-2006 Philippe Mougin.  */
+/*   FSNSDistantObject.m Copyright (c) 2001-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "FSNSDistantObject.h"
@@ -146,7 +146,7 @@
   theConnection = [[NSConnection alloc] init];
   [theConnection setRootObject:self];
   if ([theConnection registerName:operand] == NO) return nil;
-  else                                             return theConnection;
+  else                                            return theConnection;
 }
 
 

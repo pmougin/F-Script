@@ -1,4 +1,4 @@
-/* FSNSStringPrivate.h Copyright (c) 2000-2006 Philippe Mougin.  */
+/* FSNSStringPrivate.h Copyright (c) 2000-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 //////////////  MACROS

@@ -1,4 +1,4 @@
-/* ShellView.m Copyright (c) 1998-2006 Philippe Mougin.     */
+/* ShellView.m Copyright (c) 1998-2009 Philippe Mougin.     */
 /* This software is open source. See the license.           */  
 /* This file includes contributions from Stephen C. Gilardi */
 
@@ -121,7 +121,7 @@ static BOOL useMaxSize;
     [self setSelectedRange:NSMakeRange([[self string] length],0)];
     [super insertText:prompt];
     start = [[self string] length];
-    [self setDelegate:self];   // A CLIView is its own delegate! (see the section implementing delegate methods)
+    [self setDelegate:self];   // A ShellView is its own delegate! (see the section implementing delegate methods)
     maxSize = 900000;
     [self setAllowsUndo:YES];
     return self;
@@ -448,7 +448,7 @@ static BOOL useMaxSize;
 
 - (BOOL)shouldRetainCommandHandler { return shouldRetainCommandHandler;}
 
-- (void)showError:(NSRange)range
+- (void)showErrorRange:(NSRange)range
 {
   NSTextStorage *theTextStore = [self textStorage];
  

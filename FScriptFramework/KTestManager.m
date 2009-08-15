@@ -1,4 +1,4 @@
-/*   KTestManager.m Copyright (c) 2001-2006 Philippe Mougin.     */
+/*   KTestManager.m Copyright (c) 2001-2009 Philippe Mougin.     */
 /*   This software is open source. See the license.  */  
 
 #import "KTestManager.h"
@@ -255,7 +255,7 @@
 
 -(void) startCategory:(NSString *)categoryName
 {
-  if (shouldLog) NSLog([@"Start category " stringByAppendingString:categoryName]);
+  if (shouldLog) NSLog(@"Start category %@", categoryName);
   [categoryName retain];
   [currentCategory release];
   currentCategory = categoryName;
@@ -272,7 +272,7 @@
   [startDate release];
   startDate = [[NSDate alloc] init];
   
-  if (shouldLog) NSLog([@"    Start test " stringByAppendingString:testName]);
+  if (shouldLog) NSLog(@"    Start test %@", testName);
 }
 
 @end

@@ -1,4 +1,4 @@
-/* FSCollectionInspectorView.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/* FSCollectionInspectorView.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "FSCollectionInspectorView.h"
@@ -10,7 +10,6 @@
 #import "FSArray.h"
 #import "FSNSArray.h" 
 //#import "FSObjectFormatter.h"
-#import "FSError.h"
 #import "FSNumber.h"
 #import "FSNSString.h"
 #import "FSCollectionInspector.h"
@@ -35,6 +34,7 @@ static NSString *headerCellStringForBlock(FSBlock *block)
 - (void)setSortedModelArray:(NSArray *)newSortedModelArray;
 - (void)sortOnColumn:(NSTableColumn *)column;
 - (void)sortOnColumn:(NSTableColumn *)column signalError:(BOOL)signalError;
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex;
 @end
 
 @implementation FSCollectionInspectorView

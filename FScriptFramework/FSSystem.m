@@ -335,8 +335,8 @@ static BOOL loadNonKeyedArchives;
 
 - (void)log:(id)object;
 {
-  if ([object isKindOfClass:[NSString class]]) NSLog(object);
-  else                                         NSLog(printString(object));
+  if ([object isKindOfClass:[NSString class]]) NSLog(@"%@", object);
+  else                                         NSLog(@"%@", printString(object));
 }
 
 - (void)saveSpace

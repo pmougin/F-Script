@@ -1,5 +1,5 @@
 
-/*   BlockRep.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/*   BlockRep.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "build_config.h"
@@ -443,10 +443,10 @@
 
 - (void)newSource:(NSString *)theNewSource
 {
+  NSString *oldSource = source; 
+  source = [theNewSource copy];
+  [oldSource release];
   is_compiled = NO;
-  [theNewSource retain];
-  [source release];
-  source = theNewSource;
 }
 
 - (FSBlock *)newBlockWithParentSymbolTable:(FSSymbolTable *)parent

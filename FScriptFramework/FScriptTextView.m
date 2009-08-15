@@ -1,4 +1,4 @@
-/* FScriptTextView.m Copyright (c) 2002-2006 Philippe Mougin.  */
+/* FScriptTextView.m Copyright (c) 2002-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */ 
 #import "FScriptTextView.h"
 #import "FSMiscTools.h"
@@ -178,7 +178,7 @@ static NSMutableCharacterSet *letterDigitUnderscoreCharacterSet;
   
   const unichar placeHolderCharacter = 8226;
   NSString *placeHolderString = [NSString stringWithCharacters:&placeHolderCharacter length:1];
-  NSMutableString *stringToDisplay = [word mutableCopy];
+  NSMutableString *stringToDisplay = [[word mutableCopy] autorelease];
   NSUInteger replacedCount = [stringToDisplay replaceOccurrencesOfString:@":" withString:[NSString stringWithFormat:@":%@ ", placeHolderString] options:NSLiteralSearch range:NSMakeRange(0, [stringToDisplay length])]; 
    
   if (flag && movement != NSCancelTextMovement && replacedCount > 1)

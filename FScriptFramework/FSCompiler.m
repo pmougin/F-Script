@@ -1,4 +1,4 @@
-/*   FSCompiler.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/*   FSCompiler.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "FSCompiler.h"
@@ -906,7 +906,6 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   NSMutableString *selectorString;
   id pattern_elt_next; // pattern_elt_next may be an NSArray or [NSNull null]
   struct codeNodePatternElementPair exp2_res;
-  NSString *op_symb;
   long firstCharIndex, lastCharIndex;
   
   [self checkToken:OPERATOR :@"operator expected"];
@@ -916,7 +915,6 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   selectorString = operator_name(rs.value);
   [selectorString insertString:@"operator" atIndex:0];
   [selectorString appendString:@":"];
-  op_symb = rs.value;
   [self scan];
   pattern_elt_next = [self patternElt];
    
@@ -1672,7 +1670,6 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   NSMutableArray *methodNodes = [NSMutableArray array];
   FSCNClassDefinition *r;
   int32_t firstCharIndex = token_first_char_index;
-  int32_t lastCharIndex;
   
   [self checkToken:NAME :@"class name expected"];
   className = rs.value;
@@ -1695,9 +1692,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   else superclassName = @"NSObject";
   
   [self checkToken:OPEN_BRACE :@"\"{\" expected"];
-  
-  lastCharIndex = token_first_char_index-1;
-  
+    
   [self scan];
   
   // Instance variables and class instance variables

@@ -1,4 +1,4 @@
-/* Gnuplot.m Copyright (c) 2003-2006 Philippe Mougin.  */
+/* Gnuplot.m Copyright (c) 2003-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "Gnuplot.h"
@@ -16,7 +16,7 @@ void plotFileAtPath(NSString *path, NSString *options)
   [command appendString:@"\\\" "];
   [command appendString:options];
   [command appendString:@"\"\n end tell"];
-  as = [[NSAppleScript alloc] initWithSource:command];
+  as = [[[NSAppleScript alloc] initWithSource:command] autorelease];
   if ([as executeAndReturnError:&errorInfo] == nil)
   {
     FSExecError([errorInfo objectForKey:NSAppleScriptErrorMessage]);
@@ -116,7 +116,7 @@ void plotFileAtPath(NSString *path, NSString *options)
   command = [NSMutableString stringWithString:@"tell application \"gnuplot-3.7.1d\"\n activate\n exec \"set surface; splot \\\""];
   [command appendString:[NSString stringWithCString:path]];  
   [command appendString:@"\\\"with linespoints\"\n end tell"];
-  as = [[NSAppleScript alloc] initWithSource:command];
+  as = [[[NSAppleScript alloc] initWithSource:command] autorelease];
   if ([as executeAndReturnError:&errorInfo] == nil)
   {
     FSExecError([errorInfo objectForKey:NSAppleScriptErrorMessage]);
@@ -131,7 +131,7 @@ void plotFileAtPath(NSString *path, NSString *options)
   command = [NSMutableString stringWithString:@"tell application \"gnuplot-3.7.1d\"\n activate\n exec \""];
   [command appendString:gnuplotCommand];  
   [command appendString:@"\"\n end tell"];
-  as = [[NSAppleScript alloc] initWithSource:command];
+  as = [[[NSAppleScript alloc] initWithSource:command] autorelease];
   if ([as executeAndReturnError:&errorInfo] == nil)
   {
     FSExecError([errorInfo objectForKey:NSAppleScriptErrorMessage]);

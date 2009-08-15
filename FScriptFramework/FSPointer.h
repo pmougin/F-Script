@@ -1,4 +1,4 @@
-/*   FSPointer.h Copyright (c) 2004-2006 Philippe Mougin.   */
+/*   FSPointer.h Copyright (c) 2004-2009 Philippe Mougin.   */
 /*   This software is open source. See the license.         */  
 
 #import <Foundation/Foundation.h>

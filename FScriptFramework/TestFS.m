@@ -378,10 +378,10 @@ extern FSNumber *numberWithDouble(double val);
 static NSInteger p = 362; 
 
 + (NSInteger *)pointer
-{ NSLog([NSString stringWithFormat:@"TestFS return %p", &p]); return &p;}
+{ NSLog(@"TestFS return %p", &p); return &p;}
 
 + (NSInteger *)pointerWith:object with:(NSInteger)i
-{ NSLog([NSString stringWithFormat:@"object received: %@, int received:%d . TestFS return %p",object, i, &p]); return &p;}
+{ NSLog(@"object received: %@, int received:%d . TestFS return %p",object, i, &p); return &p;}
 
 + (void) setPValue:(NSInteger)new
 { p = new; }
@@ -565,7 +565,7 @@ directory within the User domain. "*/
 
   while(nil == result && (nil != (candidate = [pathEnumerator nextObject])))
   {
-    NSLog(candidate);
+    NSLog(@"%@", candidate);
   }
 }
 
@@ -1030,7 +1030,7 @@ directory within the User domain. "*/
   if ([interpreterResult isOK])
     NSLog(@"Execution OK. Result = %@", [interpreterResult result]);
   else
-    NSLog([interpreterResult errorMessage]);
+    NSLog(@"%@", [interpreterResult errorMessage]);
 }
 
 - (void)finalize 
@@ -1060,7 +1060,7 @@ directory within the User domain. "*/
     
   for (id e in a)
   {
-    NSLog(printString(e));
+    NSLog(@"%@", printString(e));
   }
 }  
 

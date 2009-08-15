@@ -1,4 +1,4 @@
-/*   FSArray.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/*   FSArray.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "build_config.h"
@@ -150,11 +150,12 @@ typedef struct fs_objc_object {
   {
     if (anObject && ((struct {Class isa;} *)anObject)->isa == FSNumberClass)   // anObject is casted to avoid the warning "static access to object of type id"
       [(ArrayRepDouble *)rep addDouble:((FSNumber *)anObject)->value ];
-    else if (isNSNumberWithLosslessConversionToDouble(anObject)) 
+    else if (anObject && isNSNumberWithLosslessConversionToDouble(anObject)) 
       [(ArrayRepDouble *)rep addDouble:[(NSNumber *)anObject doubleValue]];
     else
     {                                          
-      [self becomeArrayOfId]; [(ArrayRepId *)rep addObject:anObject];
+      [self becomeArrayOfId]; 
+      [(ArrayRepId *)rep addObject:anObject];
     }
     break;
   }
@@ -393,9 +394,10 @@ typedef struct fs_objc_object {
     NSUInteger i = range.location;
     NSUInteger end = (range.location + range.length -1);
     id elem = [self objectAtIndex:i];
-    while ( i <= end && !( identical ? [self objectAtIndex:i] == anObject : ([(elem = [self objectAtIndex:i]) isEqual:anObject] || (elem == nil && anObject == nil)) ) )
+    while ( i <= end && !( identical ? elem == anObject : ([elem isEqual:anObject] || (elem == nil && anObject == nil)) ) )
     {
       i++;
+      elem = [self objectAtIndex:i];
     }   
     return (i > end) ? NSNotFound : i;
   }    
@@ -627,7 +629,7 @@ typedef struct fs_objc_object {
   {
     if (anObject && ((struct {Class isa;} *)anObject)->isa == FSNumberClass)   // anObject is casted to avoid the warning "static access to object of type id"
       [(ArrayRepDouble *)rep replaceDoubleAtIndex:index withDouble:((FSNumber *)anObject)->value];
-    else if (isNSNumberWithLosslessConversionToDouble(anObject)) 
+    else if (anObject && isNSNumberWithLosslessConversionToDouble(anObject)) 
       [(ArrayRepDouble *)rep replaceDoubleAtIndex:index withDouble:[anObject doubleValue]];
     else
     {

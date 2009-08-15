@@ -1,4 +1,4 @@
-/* CLIView.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/* CLIView.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 /*
@@ -158,7 +158,7 @@ the commands entered by the user and the results of those commands etc.
 
 - (BOOL)shouldRetainCommandHandler { return [[self shellView] shouldRetainCommandHandler]; }
 
-- (void)showError:(NSRange)range { [[self shellView] showError:range];}
+- (void)showErrorRange:(NSRange)range { [[self shellView] showErrorRange:range];}
 
 
 // Private

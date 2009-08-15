@@ -1,4 +1,4 @@
-/*   Executor.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/*   Executor.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.   */  
 
 #import "build_config.h"
@@ -256,7 +256,7 @@ void __attribute__ ((constructor)) initializeFSExecutor(void)
   
   fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filename error:NULL];
   
-  if ([[[[NSFileManager defaultManager] attributesOfItemAtPath:filename error:NULL] objectForKey:NSFileSize] unsignedLongLongValue] > maxLength)
+  if ([[fileAttributes objectForKey:NSFileSize] unsignedLongLongValue] > maxLength)
   {
     NSData *journalData = [NSData dataWithContentsOfFile:filename];
     NSData *truncatedJournalData = [journalData subdataWithRange:NSMakeRange([journalData length]-(maxLength/2), (maxLength/2))];

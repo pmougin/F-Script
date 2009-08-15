@@ -1,10 +1,5 @@
-//
-//  FScriptIBPluginInspector.m
-//  FScriptIBPlugin
-//
-//  Created by Philippe Mougin on 4/20/07.
-//  Copyright __MyCompanyName__ 2007 . All rights reserved.
-//
+/*   FScriptIBPluginInspector.m Copyright (c) 2007-2009 Philippe Mougin.  */
+/*   This software is open source. See the license.  */  
 
 #import "FScriptIBPluginInspector.h"
 

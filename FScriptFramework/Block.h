@@ -1,9 +1,9 @@
-/*   Block.h Copyright (c) 1998-2006 Philippe Mougin.         */
+/*   Block.h Copyright (c) 1998-2009 Philippe Mougin.         */
 /*   This software is open source. See the license.       */
 
 #import "FSNSObject.h"
 
-@class BlockInspector, FSMsgContext, BlockRep, FSSymbolTable, FSCNBase, FSInterpreter, FSInterpreterResult;
+@class BlockInspector, FSBoolean, FSMsgContext, BlockRep, FSSymbolTable, FSCNBase, FSInterpreter, FSInterpreterResult;
 
 @interface Block:NSObject <NSCopying , NSCoding>
 {

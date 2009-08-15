@@ -1,4 +1,4 @@
-/* FSNSArray.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/* FSNSArray.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "FSNSArrayPrivate.h"
@@ -222,12 +222,12 @@ static int comp(const void *a,const void *b)
   BOOL no_nil1 = YES;
   BOOL no_nil2 = YES;
   NSMutableSet *set = [NSMutableSet set];
-  FSArray *r = [FSArray array];
+  FSArray *r;
   NSUInteger count = [self count];
 
   VERIF_OP_NSARRAY(@"difference:");
 
-  for (i=0; i < count; i++)
+  for (i = 0; i < count; i++)
   {
     id elem = [self objectAtIndex:i];
     if (elem) [set addObject:elem];
@@ -236,7 +236,7 @@ static int comp(const void *a,const void *b)
 
   op_count = [operand count];
 
-  for (i=0; i < op_count; i++)
+  for (i = 0; i < op_count; i++)
   {
     id elem = [operand objectAtIndex:i];
     if (elem) [set removeObject:elem];

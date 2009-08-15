@@ -1,5 +1,5 @@
 
-/*   BlockInspector.m Copyright (c) 1998-2006 Philippe Mougin.  */
+/*   BlockInspector.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "build_config.h"
@@ -326,7 +326,7 @@ static NSPoint topLeftPoint = {0,0}; // Used for cascading windows.
             
 - (NSString*)source
 {
-  return [[[[sourceView documentView] textStorage] mutableString] mutableCopy];
+  return [[[sourceView documentView] textStorage] string];
 }  
  
 - update

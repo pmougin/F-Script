@@ -1,4 +1,4 @@
-/* CLIView.h Copyright (c) 1998-2006 Philippe Mougin.    */
+/* CLIView.h Copyright (c) 1998-2009 Philippe Mougin.    */
 /*   This software is open source. See the license.  */  
 
 /* CLIView is the public API for a Command Line Interface component.*/
@@ -26,7 +26,7 @@
 - (void)setFontSize:(CGFloat)theSize;              // Set the font size. 
 - (BOOL)shouldRetainCommandHandler;                // Return YES if the command handler is retained, NO otherwise.
 
-- (void)showError:(NSRange)range;                  // Highlights a part of the last command entered by the user. The range is relative
+- (void)showErrorRange:(NSRange)range;             // Highlights a part of the last command entered by the user. The range is relative
                                                    // to the start of the considered command. You must call this method before putting
                                                    // any text (with -putText:) after the user entered his command. 
 

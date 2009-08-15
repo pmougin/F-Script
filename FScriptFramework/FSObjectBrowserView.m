@@ -175,7 +175,7 @@ static NSString *humanReadableFScriptTypeDescriptionFromEncodedObjCType(const ch
     ptr++;
     while (isalnum(*ptr) || *ptr == '_')
     {
-      [structName appendString:[[NSString alloc] initWithBytes:ptr length:1 encoding:NSASCIIStringEncoding]];
+      [structName appendString:[[[NSString alloc] initWithBytes:ptr length:1 encoding:NSASCIIStringEncoding] autorelease]];
       ptr++;
     }
     if (*ptr == '=' && ![structName isEqualToString:@""])
@@ -289,7 +289,7 @@ static NSMutableArray *customButtons = nil;
         }
         @catch (id exception)
         {
-          NSLog([NSString stringWithFormat:@"Problem while loading a block for an F-Script object browser custom button: %@", FSErrorMessageFromException(exception)]);
+          NSLog(@"Problem while loading a block for an F-Script object browser custom button: %@", FSErrorMessageFromException(exception));
           block = nil; // We will fall back to the default block template
         }
       }

@@ -1,4 +1,4 @@
-/* FSDemoController.m Copyright (c) 2007 Philippe Mougin.  */
+/* FSDemoController.m Copyright (c) 2007-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */ 
 
 #import "FSDemoAssistant.h"

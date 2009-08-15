@@ -1,4 +1,4 @@
-/*   BlockStackElem.m Copyright (c) 2001-2006 Philippe Mougin.  */
+/*   BlockStackElem.m Copyright (c) 2001-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.    */  
 
 #import "BlockStackElem.h"
