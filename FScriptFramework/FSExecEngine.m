@@ -886,7 +886,7 @@ id sendMsgPattern(id receiver, SEL selector, NSUInteger argumentCount, id *args,
         subArgs[0] = t1[i];
         res_sub_msg = sendMsgNoPattern(subArgs[0], selector, argumentCount, subArgs, msgContext, nil);
         is_void = is_void && res_sub_msg == fsVoid;
-        [r addObject:res_sub_msg];
+        [r addObject:res_sub_msg]; 
       } 
       return is_void ? (id)fsVoid : (id)r;
     }

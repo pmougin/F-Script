@@ -6,9 +6,9 @@
 #import "FSInterpreterView.h"
 
 @implementation FScriptMenuItem
-
+ 
 + (void)initialize
-{ 
+{  
   NSMutableDictionary *registrationDict = [NSMutableDictionary dictionary];
 
   [registrationDict setObject:[NSNumber numberWithDouble:[[NSFont userFixedPitchFontOfSize:-1] pointSize]] forKey:@"FScriptFontSize"];
@@ -16,6 +16,12 @@
  
   [[NSUserDefaults standardUserDefaults] registerDefaults:registrationDict];
 }
+
++ (void)insertInMainMenu
+{
+  [[[NSApplication sharedApplication] mainMenu] addItem:[[[self alloc] init] autorelease]];
+}
+
 
 - (id)init
 {

@@ -50,10 +50,10 @@
 - (id)load;
 - (id)load:(NSString *)fileName;
 - (void)loadSpace __attribute__((deprecated));
-- (void)loadSpace:(NSString *)fileName __attribute__((deprecated));
+- (void)loadSpace:(NSString *)fileName ;
 - (void)log:(id)object __attribute__((deprecated));
 - (void)saveSpace __attribute__((deprecated));
-- (void)saveSpace:(NSString *)fileName __attribute__((deprecated));
+- (void)saveSpace:(NSString *)fileName;
 - (void)setValue:(FSSystem *)operand ;
 - (NSString *)userName;
 

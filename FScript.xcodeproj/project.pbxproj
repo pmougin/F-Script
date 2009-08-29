@@ -923,7 +923,6 @@
 		8F85274907F6016900E706F5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F85274707F6016900E706F5 /* Cocoa.framework */; };
 		8F85274B07F6016900E706F5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F85274707F6016900E706F5 /* Cocoa.framework */; };
 		8F8607E50CF9827600D2DC99 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6584F80C484A5100C8A3FC /* ScriptingBridge.framework */; };
-		8F8608690CF9F08C00D2DC99 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6584F80C484A5100C8A3FC /* ScriptingBridge.framework */; };
 		8F86086C0CF9F0AB00D2DC99 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6584F80C484A5100C8A3FC /* ScriptingBridge.framework */; };
 		8F86923A07F19BA8000D20A4 /* FSObjectBrowserNamedObjectWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F86923607F19BA8000D20A4 /* FSObjectBrowserNamedObjectWrapper.h */; };
 		8F86923B07F19BA8000D20A4 /* FSObjectBrowserNamedObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F86923707F19BA8000D20A4 /* FSObjectBrowserNamedObjectWrapper.m */; };
@@ -1697,7 +1696,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F8608690CF9F08C00D2DC99 /* ScriptingBridge.framework in Frameworks */,
 				8F42D4100A0F8CC30032461E /* Cocoa.framework in Frameworks */,
 				8F6DA9D9055FC71F0050409A /* ExceptionHandling.framework in Frameworks */,
 			);
