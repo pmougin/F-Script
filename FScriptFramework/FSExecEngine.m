@@ -1460,7 +1460,7 @@ id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *e
     //--------------------------------------------------------------------------------
 
     // -------------------- We make sure we won't try to replace an existing method with a new one with another signature; Objective-C doesn't support this (10.5.2) 
-    unsigned int instanceMethodCount,classMethodCount;;     
+    unsigned int instanceMethodCount, classMethodCount;     
     Method *instanceMethods = class_copyMethodList(class, &instanceMethodCount);
     Method *classMethods    = class_copyMethodList(object_getClass(class), &classMethodCount);
     
@@ -1507,7 +1507,7 @@ id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *e
       FSMethod *method = methodNode->method;
       
       if (methodNode->isClassMethod) ok = [method addToClass:object_getClass(class)];
-      else                           ok = [method addToClass:class];
+      else                           ok = [method addToClass:class]; 
       
       if (ok) [FScriptTextView registerMethodNameForCompletion:NSStringFromSelector(method->selector)];
       

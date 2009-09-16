@@ -236,11 +236,11 @@ ifFalse:
   w setMinSize:(NSValue sizeWithWidth:130 height:90).
   w orderFront:nil.
 
-  button := NSButton alloc initWithFrame:(baseWidth/2-60<>10 extent:110<>30).
+  button := (NSButton alloc initWithFrame:(baseWidth/2-60<>10 extent:110<>30)) autorelease.
   button setBezelStyle:NSRoundedBezelStyle.
   button setTitle:'Send message'.   
 
-  f := NSForm alloc initWithFrame:(10<>55 extent: baseWidth-20<>(baseHeight-65)).
+  f := (NSForm alloc initWithFrame:(10<>55 extent: baseWidth-20<>(baseHeight-65))) autorelease.
   f setAutoresizingMask:NSViewWidthSizable + NSViewHeightSizable.
 
   w contentView addSubview:f.
@@ -306,7 +306,7 @@ window orderFront:nil.
 window setTitle:'Currency Converter'.
 
 "Instantiate a form object"                         
-form := NSForm alloc initWithFrame:(60<>90 extent:320<>85).
+form := (NSForm alloc initWithFrame:(60<>90 extent:320<>85)) autorelease.
 
 "Put the form into the window"
 window contentView addSubview:form.
@@ -319,11 +319,11 @@ form setInterlineSpacing:7.
 form setAutosizesCells:YES.
 
 "Instantiate a decorative line and put it in the window"
-line := NSBox alloc initWithFrame:(15<>70 extent:370<>2).
+line := (NSBox alloc initWithFrame:(15<>70 extent:370<>2)) autorelease.
 window contentView addSubview:line.
 
 "Instantiate a button, put it in the window and configure it"
-button := NSButton alloc initWithFrame:(250<>20 extent:90<>30).
+button := (NSButton alloc initWithFrame:(250<>20 extent:90<>30)) autorelease.
 window contentView addSubview:button.
 button setBezelStyle:NSRoundedBezelStyle.
 button setTitle:'Convert'. 

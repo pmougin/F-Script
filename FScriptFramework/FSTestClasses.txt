@@ -51,14 +51,13 @@ FSTestClass3 : FSTestObjCClass2
   iv_a 
   iv_b
   iv_c
-  
-  "Not yet supported"
-  "
+    
   - (void) dealloc
   {
     deallocationProof appendString:' FSTestObjCClass3 '.
+    super dealloc.
   }
-  "
+  
   
   - myVoidPtr
   {
@@ -345,10 +344,10 @@ t startTest:'deallocation'.
 [
   "We are not running with GC"
   
-  pool := FSAutoreleasePool alloc init.
+  poolHolder := NSValue valueWithNonretainedObject:NSAutoreleasePool alloc init.
 
-  o1 := FSTestClass4 alloc init autorelease.
-  o2 := FSTestClass4 alloc init autorelease.
+  o1 := FSTestClass4 alloc init autorelease. 
+  o2 := FSTestClass4 alloc init autorelease. 
 
   proof1 := NSMutableString string.
   proof2 := NSMutableString string.
@@ -361,11 +360,10 @@ t startTest:'deallocation'.
   o1 := nil.
   o2 := nil.  
 
-  pool release.
-  pool := nil.  "Should lead to deallocation of o1 and o2 "
+  poolHolder nonretainedObjectValue release. "Should lead to deallocation of o1 and o2 "
 
-  t assert: proof1 = ' FSTestObjCClass2  FSTestObjCClass1 '.
-  t assert: proof2 = ' FSTestObjCClass2  FSTestObjCClass1 '.
+  t assert: proof1 = ' FSTestObjCClass3  FSTestObjCClass2  FSTestObjCClass1 '.
+  t assert: proof2 = ' FSTestObjCClass3  FSTestObjCClass2  FSTestObjCClass1 '.
 ].
 
 

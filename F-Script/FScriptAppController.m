@@ -235,7 +235,7 @@ directory within the System domain. "*/
   }
   else if (!(b && [fileManager isWritableFileAtPath:repositoryPath]))  // partial consistency check
   {
-    NSLog([NSString stringWithFormat:@"fatal problem: the repository file \"%@\" is not a directory or is not writable", repositoryPath]);
+    NSLog(@"fatal problem: the repository file \"%@\" is not a directory or is not writable", repositoryPath);
     exit(1);
   }
   

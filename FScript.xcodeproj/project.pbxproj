@@ -1179,13 +1179,6 @@
 		8FE9AE9407807269005B2CC4 /* FSObjectPointerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE9AE8207807269005B2CC4 /* FSObjectPointerPrivate.h */; };
 		8FF5AEFA0961E56400A3BEA9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FF5AEF80961E56400A3BEA9 /* WebKit.framework */; };
 		8FF5AEFC0961E56400A3BEA9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FF5AEF80961E56400A3BEA9 /* WebKit.framework */; };
-		8FFCB2860E3DBF1400AB9632 /* FSAutoreleasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FFCB2850E3DBF1400AB9632 /* FSAutoreleasePool.m */; };
-		8FFCB2870E3DBF1400AB9632 /* FSAutoreleasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FFCB2840E3DBF1400AB9632 /* FSAutoreleasePool.h */; };
-		8FFCB2880E3DBF1400AB9632 /* FSAutoreleasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FFCB2850E3DBF1400AB9632 /* FSAutoreleasePool.m */; };
-		8FFCB2890E3DBF1400AB9632 /* FSAutoreleasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FFCB2840E3DBF1400AB9632 /* FSAutoreleasePool.h */; };
-		8FFCB28A0E3DBF1400AB9632 /* FSAutoreleasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FFCB2850E3DBF1400AB9632 /* FSAutoreleasePool.m */; };
-		8FFCB28B0E3DBF1400AB9632 /* FSAutoreleasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FFCB2840E3DBF1400AB9632 /* FSAutoreleasePool.h */; };
-		8FFCB28C0E3DBF1400AB9632 /* FSAutoreleasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FFCB2850E3DBF1400AB9632 /* FSAutoreleasePool.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1537,8 +1530,6 @@
 		8FE9AE1F078071CC005B2CC4 /* FSObjectPointer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSObjectPointer.m; sourceTree = "<group>"; };
 		8FE9AE8207807269005B2CC4 /* FSObjectPointerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSObjectPointerPrivate.h; sourceTree = "<group>"; };
 		8FF5AEF80961E56400A3BEA9 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		8FFCB2840E3DBF1400AB9632 /* FSAutoreleasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSAutoreleasePool.h; sourceTree = "<group>"; };
-		8FFCB2850E3DBF1400AB9632 /* FSAutoreleasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSAutoreleasePool.m; sourceTree = "<group>"; };
 		F501AF7B021497C401A75EC5 /* FScriptTextView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FScriptTextView.m; sourceTree = "<group>"; };
 		F505647F02DF417501FE0326 /* Pointer.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Pointer.m; sourceTree = "<group>"; };
 		F505648002DF417501FE0326 /* Pointer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Pointer.h; sourceTree = "<group>"; };
@@ -1830,8 +1821,6 @@
 				8FDCCD4E05C09F8200747C0A /* FSAttributedStringInspector.h */,
 				8FDCCD4F05C09F8200747C0A /* FSAttributedStringInspector.m */,
 				8FDCCD7A05C0A0A000747C0A /* FSAttributedStringInspector.nib */,
-				8FFCB2840E3DBF1400AB9632 /* FSAutoreleasePool.h */,
-				8FFCB2850E3DBF1400AB9632 /* FSAutoreleasePool.m */,
 				0CD4E32600D7DFE17BE9C1BD /* FSBlock.h */,
 				0CD4E32700D7DFE17BE9C1BD /* FSBlock.m */,
 				8F90A2EF096DB0660064F4BC /* FSBlockCompilationResult.h */,
@@ -2313,7 +2302,6 @@
 				8F45CBC40DA813F200AFA8C8 /* FSCNMethod.h in Headers */,
 				8FD0A3190DD7276000E47459 /* FSCNReturn.h in Headers */,
 				8F8949D70DE08B110094EC14 /* FSClassDefinition.h in Headers */,
-				8FFCB2890E3DBF1400AB9632 /* FSAutoreleasePool.h in Headers */,
 				8F2DE6600E57254700CF83CB /* FSTranscript.h in Headers */,
 				8FE6AD960EC740650096019D /* FSArray.h in Headers */,
 				8F31A4C70EC74A2E00D1B8E8 /* Array.h in Headers */,
@@ -2489,7 +2477,6 @@
 				8F45CBC20DA813F200AFA8C8 /* FSCNMethod.h in Headers */,
 				8FD0A3170DD7276000E47459 /* FSCNReturn.h in Headers */,
 				8F8949D90DE08B110094EC14 /* FSClassDefinition.h in Headers */,
-				8FFCB28B0E3DBF1400AB9632 /* FSAutoreleasePool.h in Headers */,
 				8F2DE65D0E57254700CF83CB /* FSTranscript.h in Headers */,
 				8FE6AD930EC740650096019D /* FSArray.h in Headers */,
 				8F31A4C40EC74A2E00D1B8E8 /* Array.h in Headers */,
@@ -2653,7 +2640,6 @@
 				8F45CBC00DA813F200AFA8C8 /* FSCNMethod.h in Headers */,
 				8FD0A3150DD7276000E47459 /* FSCNReturn.h in Headers */,
 				8F8949DC0DE08B110094EC14 /* FSClassDefinition.h in Headers */,
-				8FFCB2870E3DBF1400AB9632 /* FSAutoreleasePool.h in Headers */,
 				8F2DE65B0E57254700CF83CB /* FSTranscript.h in Headers */,
 				8FE6AD910EC740650096019D /* FSArray.h in Headers */,
 				8F31A4C20EC74A2E00D1B8E8 /* Array.h in Headers */,
@@ -3091,7 +3077,6 @@
 				8F45CBBF0DA813F200AFA8C8 /* FSCNMethod.m in Sources */,
 				8FD0A3140DD7276000E47459 /* FSCNReturn.m in Sources */,
 				8F8949DB0DE08B110094EC14 /* FSClassDefinition.m in Sources */,
-				8FFCB2860E3DBF1400AB9632 /* FSAutoreleasePool.m in Sources */,
 				8F2DE65F0E57254700CF83CB /* FSTranscript.m in Sources */,
 				8FE6AD950EC740650096019D /* FSArray.m in Sources */,
 				8F31A4C60EC74A2E00D1B8E8 /* Array.m in Sources */,
@@ -3236,7 +3221,6 @@
 				8F45CBC50DA813F200AFA8C8 /* FSCNMethod.m in Sources */,
 				8FD0A31A0DD7276000E47459 /* FSCNReturn.m in Sources */,
 				8F8949D80DE08B110094EC14 /* FSClassDefinition.m in Sources */,
-				8FFCB28A0E3DBF1400AB9632 /* FSAutoreleasePool.m in Sources */,
 				8F2DE6610E57254700CF83CB /* FSTranscript.m in Sources */,
 				8FE6AD970EC740650096019D /* FSArray.m in Sources */,
 				8F31A4C80EC74A2E00D1B8E8 /* Array.m in Sources */,
@@ -3393,7 +3377,6 @@
 				8F45CBC30DA813F200AFA8C8 /* FSCNMethod.m in Sources */,
 				8FD0A3180DD7276000E47459 /* FSCNReturn.m in Sources */,
 				8F8949DA0DE08B110094EC14 /* FSClassDefinition.m in Sources */,
-				8FFCB28C0E3DBF1400AB9632 /* FSAutoreleasePool.m in Sources */,
 				8F2DE65E0E57254700CF83CB /* FSTranscript.m in Sources */,
 				8FE6AD940EC740650096019D /* FSArray.m in Sources */,
 				8F31A4C50EC74A2E00D1B8E8 /* Array.m in Sources */,
@@ -3536,7 +3519,6 @@
 				8F45CBC10DA813F200AFA8C8 /* FSCNMethod.m in Sources */,
 				8FD0A3160DD7276000E47459 /* FSCNReturn.m in Sources */,
 				8F8949DD0DE08B110094EC14 /* FSClassDefinition.m in Sources */,
-				8FFCB2880E3DBF1400AB9632 /* FSAutoreleasePool.m in Sources */,
 				8F2DE65C0E57254700CF83CB /* FSTranscript.m in Sources */,
 				8FE6AD920EC740650096019D /* FSArray.m in Sources */,
 				8F31A4C30EC74A2E00D1B8E8 /* Array.m in Sources */,
@@ -3796,7 +3778,8 @@
 		8F2881F508F9C040005B3C5A /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = x86_64;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				AUTO_SHADOW = YES;
 				COPY_PHASE_STRIP = "$(value) NO";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3868,7 +3851,7 @@
 		8F2881FD08F9C040005B3C5A /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = supported;

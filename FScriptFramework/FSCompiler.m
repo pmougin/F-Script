@@ -278,6 +278,8 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
 
 - init
 {
+  // NSLog(@"FSCompiler init");
+  
   if ((self = [super init]))
   {
     return self;
@@ -287,6 +289,8 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
 
 - (void)dealloc
 {
+  // NSLog(@"FSCompiler dealloc");
+  
   [errorStr release];
   [super dealloc];
 }
@@ -1233,8 +1237,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
                                isCompiled:YES
                                 isCompact:YES
                                       sel:[FSCompiler selectorFromString:selectorString]
-                                   selStr:selectorString]
-           autorelease];
+                                   selStr:selectorString] autorelease];
            
     r = [[[FSCNBlock alloc] initWithBlockRep:blr] autorelease];                          
     [r setFirstCharIndex:token_first_char_index lastCharIndex:string_index-1];   
