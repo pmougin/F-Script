@@ -22,6 +22,7 @@
 #import "FSInterpreterResultPrivate.h"
 #import "FSReturnSignal.h"
 
+@class Block;
 
 void __attribute__ ((constructor)) initializeFSBlock(void) 
 {
@@ -255,6 +256,23 @@ NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *s)
     @catch (id exception) {}
   }
   return r;
+}
+
+
+- (BOOL)isKindOfClass:(Class)aClass // For backward compatibility with code referencing the old Block class, we pretend to be a Block
+{
+  if (aClass == [Block class]) 
+    return YES;
+  else
+    return [super isKindOfClass:aClass];
+}
+
+- (BOOL)isMemberOfClass:(Class)aClass // For backward compatibility with code referencing the old Block class, we pretend to be a Block
+{
+  if (aClass == [Block class]) 
+    return YES;
+  else
+    return [super isMemberOfClass:aClass];
 }
 
 - (FSMsgContext *)msgContext 

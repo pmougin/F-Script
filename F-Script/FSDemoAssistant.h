@@ -15,6 +15,11 @@
   NSTextView *hueAdjust;
   NSTextView *bump;
   NSTextView *bumpAnimate;
+  
+  NSTextView *horloge;
+  
+  NSTextView *connectToITunes;
+  NSTextView *volumeRamp;
 } 
 
 @property (retain) IBOutlet NSTextView *loadImage;
@@ -24,6 +29,11 @@
 @property (retain) IBOutlet NSTextView *hueAdjust;
 @property (retain) IBOutlet NSTextView *bump;
 @property (retain) IBOutlet NSTextView *bumpAnimate;
+
+@property (retain) IBOutlet NSTextView *horloge;
+
+@property (retain) IBOutlet NSTextView *connectToITunes;
+@property (retain) IBOutlet NSTextView *volumeRamp;
 
 - (void)activate;
 - (id)initWithInterpreterView:(FSInterpreterView *)theInterpreterView;

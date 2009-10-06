@@ -267,6 +267,7 @@ static NSPoint topLeftPoint = {0,0}; // Used for cascading windows.
       [cancelButton setTitle:@"Cancel"];   
       [cancelButton setAction:@selector(cancelArgumentsSheetAction:)];
       [cancelButton setTarget:self];
+      [cancelButton setKeyEquivalent:@"\e"]; 
       [[argumentsWindow contentView] addSubview:cancelButton];
       
       argumentsNames = [inspectedObject argumentsNames];

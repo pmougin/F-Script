@@ -158,8 +158,35 @@ directory within the System domain. "*/
   [registrationDict setObject:@"YES" forKey:@"FScriptDisplayObjectBrowserAtLaunchTime"];
   [registrationDict setObject:@"YES" forKey:@"FScriptRunWithObjCAutomaticGarbageCollection"]; 
   [registrationDict setObject:@"YES" forKey:@"FScriptAutomaticallyIntrospectDeclaredProperties"];  
+  
+  [registrationDict setObject:@"NO"  forKey:@"FScriptShowDemoAssistant"];
+  
+  [registrationDict setObject:@"NO"  forKey:@"FScriptLoadPrivateSystemFrameworks"];
+  [registrationDict setObject:@"NO"  forKey:@"FScriptLoadSystemFrameworks"];
  
   [[NSUserDefaults standardUserDefaults] registerDefaults:registrationDict];
+}
+
+- (void)loadSystemFrameworks  // Contributed by Cedric Luthi
+{
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  
+  NSMutableArray *systemFrameworksPaths = [NSMutableArray arrayWithObject:@"/System/Library/Frameworks"];
+  
+  if ([[NSUserDefaults standardUserDefaults] boolForKey:@"FScriptLoadPrivateSystemFrameworks"])
+    [systemFrameworksPaths addObject:@"/System/Library/PrivateFrameworks"];
+  
+  for (NSString *systemFrameworksPath in systemFrameworksPaths)
+  {
+    for (NSString *framework in [[NSFileManager defaultManager] directoryContentsAtPath:systemFrameworksPath])
+    {
+      NSBundle *frameworkBundle = [NSBundle bundleWithPath:[systemFrameworksPath stringByAppendingPathComponent:framework]];
+      if ([frameworkBundle preflightAndReturnError:nil])
+        [frameworkBundle load];
+    }
+  }
+  
+  [pool drain];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -171,6 +198,8 @@ directory within the System domain. "*/
   NSString *repositoryPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"FScriptRepositoryPath"];
   FSServicesProvider *servicesProvider;
     
+  [self loadSystemFrameworks];
+  
   if (!repositoryPath || ![fileManager fileExistsAtPath:repositoryPath isDirectory:&b])
   {
     NSString *applicationSupportDirectoryPath = findPathToFileInLibraryWithinUserDomain(@"Application Support");
@@ -258,24 +287,34 @@ directory within the System domain. "*/
   // Latent block processing 
   latentPath = [[[NSUserDefaults standardUserDefaults] stringForKey:@"FScriptRepositoryPath"] stringByAppendingPathComponent:@"fs_latent"];
 
-  if (latentPath && [[NSFileManager defaultManager] fileExistsAtPath:latentPath] && (latent = [NSString stringWithContentsOfFile:latentPath]))
+  if (latentPath && [[NSFileManager defaultManager] fileExistsAtPath:latentPath])
   {
-    BOOL found;
-    FSInterpreter *interpreter = [interpreterView interpreter];
-    FSSystem *sys = [interpreter objectForIdentifier:@"sys" found:&found];
-    FSBlock *bl;
+    NSStringEncoding usedEncoding;
+    NSError *error;
+    latent = [NSString stringWithContentsOfFile:latentPath usedEncoding:&usedEncoding error:&error]; 
+    if (!latent)
+    {
+      NSLog(@"Unable to read the latent block: %@", [error localizedDescription]);
+    }
+    else
+    {
+      BOOL found;
+      FSInterpreter *interpreter = [interpreterView interpreter];
+      FSSystem *sys = [interpreter objectForIdentifier:@"sys" found:&found];
+      FSBlock *bl;
 
-    NSAssert(found,@"F-Script internal error: symbol \"sys\" not defined");
+      NSAssert(found,@"F-Script internal error: symbol \"sys\" not defined");
     
-    @try
-    {
-      bl = [sys blockFromString:latent];
-      [bl value];
-    }
-    @catch (id exception)
-    {
-      [interpreterView notifyUser:[NSString stringWithFormat:@"Error in the latent block (file %@): %@",latentPath, FSErrorMessageFromException(exception)]];
-    }
+      @try
+      {
+        bl = [sys blockFromString:latent];
+        [bl value];
+      }
+      @catch (id exception)
+      {
+        [interpreterView notifyUser:[NSString stringWithFormat:@"Error in the latent block (file %@): %@",latentPath, FSErrorMessageFromException(exception)]];
+      }
+    }  
   }
   //----------
     
@@ -283,6 +322,9 @@ directory within the System domain. "*/
   
   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"FScriptDisplayObjectBrowserAtLaunchTime"])
     [[interpreterView interpreter] browse];
+    
+  if ([[NSUserDefaults standardUserDefaults] boolForKey:@"FScriptShowDemoAssistant"])
+    [[[FSDemoAssistant alloc] initWithInterpreterView:interpreterView] activate];
 }
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename

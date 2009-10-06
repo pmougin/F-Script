@@ -919,6 +919,7 @@ static NSMutableArray *customButtons = nil;
       [cancelButton setTitle:@"Cancel"];   
       [cancelButton setAction:@selector(cancelArgumentsSheetAction:)];
       [cancelButton setTarget:self];
+      [cancelButton setKeyEquivalent:@"\e"];
       [[argumentsWindow contentView] addSubview:cancelButton];
       
       if (nbarg == 1 && [[selectorComponents objectAtIndex:0] hasPrefix:@"operator_"]) 
@@ -1536,6 +1537,7 @@ static NSMutableArray *customButtons = nil;
   [cancelButton setTitle:@"Cancel"];   
   [cancelButton setAction:@selector(cancelNameSheetAction:)];
   [cancelButton setTarget:self];
+  [cancelButton setKeyEquivalent:@"\e"];
   [[nameSheet contentView] addSubview:cancelButton];
    
   [NSApp beginSheet:nameSheet modalForWindow:[self window] modalDelegate:self didEndSelector:NULL contextInfo:NULL];

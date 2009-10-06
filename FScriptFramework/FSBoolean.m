@@ -116,7 +116,7 @@ BOOL BooleanSetupTooLate = NO;
   return fsTrue;
 }
 
-- (NSString *)description  { return @"true"; }
+- (NSString *)description  { return @"YES"; }
 
 - (double) doubleValue  { return 1; }
 
@@ -216,7 +216,7 @@ BOOL BooleanSetupTooLate = NO;
   return fsFalse;
 }
 
-- (NSString *)description { return @"false"; }
+- (NSString *)description { return @"NO"; }
 
 - (double) doubleValue { return 0;}
 

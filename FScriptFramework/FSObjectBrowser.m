@@ -100,7 +100,7 @@ static NSPoint topLeftPoint = {0,0}; // Used for cascading windows.
 
 - (BOOL)worksWhenModal
 {
-  // Since the object browser is often used as a debugging tool, we want it to 
+  // Since F-Script is often used as a debugging tool, we want it to 
   // continue working even when some other window is being run modally
   return YES;
 }

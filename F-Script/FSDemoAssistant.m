@@ -15,6 +15,11 @@
 @synthesize bump;
 @synthesize bumpAnimate;
 
+@synthesize horloge;
+
+@synthesize connectToITunes;
+@synthesize volumeRamp;
+
 - (void)activate
 {
   if (![NSBundle loadNibNamed:@"DemoAssistant" owner:self])  
@@ -40,8 +45,6 @@
   }
   return self;
 }
-
-
 
 - (IBAction)loadCode:sender
 {
