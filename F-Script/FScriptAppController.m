@@ -161,8 +161,8 @@ directory within the System domain. "*/
   
   [registrationDict setObject:@"NO"  forKey:@"FScriptShowDemoAssistant"];
   
-  [registrationDict setObject:@"NO"  forKey:@"FScriptLoadPrivateSystemFrameworks"];
   [registrationDict setObject:@"NO"  forKey:@"FScriptLoadSystemFrameworks"];
+  [registrationDict setObject:@"NO"  forKey:@"FScriptLoadPrivateSystemFrameworks"];
  
   [[NSUserDefaults standardUserDefaults] registerDefaults:registrationDict];
 }
@@ -198,7 +198,8 @@ directory within the System domain. "*/
   NSString *repositoryPath = [[NSUserDefaults standardUserDefaults] stringForKey:@"FScriptRepositoryPath"];
   FSServicesProvider *servicesProvider;
     
-  [self loadSystemFrameworks];
+  if ([[NSUserDefaults standardUserDefaults] boolForKey:@"FScriptLoadSystemFrameworks"])
+    [self loadSystemFrameworks];
   
   if (!repositoryPath || ![fileManager fileExistsAtPath:repositoryPath isDirectory:&b])
   {
