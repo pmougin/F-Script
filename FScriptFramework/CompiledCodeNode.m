@@ -35,6 +35,7 @@
   return self;
 }  
 
+
 - (NSString *)description
 {
   NSMutableString *r;
@@ -104,34 +105,6 @@
 - copyWithZone:(NSZone *)zone
 {
   return [self retain];
-  /*
-  unsigned int i,nb;
-  CompiledCodeNode *r = [[CompiledCodeNode allocWithZone:zone] init];
-  
-  switch (nodeType)
-  {
-  case IDENTIFIER:
-    [r setFSIdentifier:identifier];
-    break;
-    
-  case MESSAGE:
-    [r setMessageWithReceiver:[[receiver copyWithZone:zone] autorelease] selector:[[selector copyWithZone:zone] autorelease] operatorSymbols:[[operator copyWithZone:zone] autorelease]];break;
-    
-  case BLOCK:
-    [r setBlockRep:[[object copyWithZone:zone] autorelease]];break;
-            
-  case OBJECT:
-    [r setobject:[[object copyWithZone:zone] autorelease]];break;
-  }
-  
-  [r setFirstCharIndex:firstCharIndex last:lastCharIndex];
-  [r setNodeType:nodeType];
-  
-  for (i = 0, nb = [subnodes count]; i < nb; i++)
-    [r addSubnode:[[[subnodes objectAtIndex:i] copy] autorelease]];
-    
-  return r;
-  */
 }           
 
 -(void)dealloc
@@ -515,7 +488,7 @@
   return self;
 }          
 
--(void)translateCharRange:(long)translation
+-(void)translateCharRange:(int32_t)translation
 {
   long nb,i;
   

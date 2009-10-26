@@ -57,7 +57,7 @@
   return [NSArray arrayWithObjects:statements count:statementCount];
 }
 
-- (void)translateCharRange:(long)translation
+- (void)translateCharRange:(int32_t)translation
 {
   [super translateCharRange:translation];
   

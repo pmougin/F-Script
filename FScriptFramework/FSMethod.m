@@ -75,6 +75,11 @@ static id executeMethod(FSMethod *method, FSSymbolTable *symbolTable, id receive
       // The receiver has been deallocated. Therefore, we must ensure that when symbolTable gets deallocated, it does not send a release message to this deallocated object.  
       symbolTable->locals[0].value = nil;      
     }
+    else if (! symbolTable->receiverRetained)
+    {
+      [symbolTable->locals[0].value retain];
+      symbolTable->receiverRetained = YES;
+    }
   } 
   
   if (method->selector == @selector(dealloc))
@@ -95,8 +100,9 @@ static void dispatch(ffi_cif *cif, void *result, void **args, void *userdata)
   FSMethod      *method      = ((FSMethodHolder *)userdata)->method;
   
   FSSymbolTable *symbolTable = [[method->symbolTable copyWithZone:NULL] autorelease];
+  
   symbolTable->locals[0].value  = receiver; 
-  if (method->selector != @selector(dealloc)) [receiver retain];
+  symbolTable->receiverRetained = NO;
   symbolTable->locals[0].status = DEFINED;
   
   for (NSUInteger i = 2; i < method->argumentCount; i++)

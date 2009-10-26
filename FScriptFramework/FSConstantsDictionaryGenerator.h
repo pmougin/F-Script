@@ -4,7 +4,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface ConstantsDictionaryGenerator : NSObject {
+@interface FSConstantsDictionaryGenerator : NSObject {
 
 }
 

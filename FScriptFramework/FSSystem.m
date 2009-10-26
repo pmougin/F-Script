@@ -93,12 +93,10 @@ static BOOL loadNonKeyedArchives;
   return [NSString stringWithFormat:@"<%@>",descriptionForFSMessage(self)];
 }
 
-/*- (void)encodeWithCoder:(NSCoder *)coder 
-{
-}*/
-
-- (id)replacementObjectForArchiver:(NSArchiver *)anArchiver
-{ return [NSNull null];}
+- (id)replacementObjectForCoder:(NSCoder *)aCoder
+{ 
+  return [NSNull null];
+}
 
 - init:(id)theExecutor
 {
@@ -229,7 +227,18 @@ static BOOL loadNonKeyedArchives;
 
   if ((path = [bundle pathForResource:testSuiteFileName ofType:@"txt"]))
   {
-    return [(FSBlock *)[self blockFromString:[NSString stringWithContentsOfFile:path]] value];    
+    NSStringEncoding usedEncoding;
+    NSError *error;
+    
+    NSString *ktestString = [NSString stringWithContentsOfFile:path usedEncoding:&usedEncoding error:&error];
+    if (!ktestString)
+    {
+      NSString *errorMessage = [NSString stringWithFormat:@"Unable to read the ktest file: %@", [error localizedDescription]];
+      NSLog(@"%@", errorMessage);
+      return errorMessage;
+    }
+    
+    return [(FSBlock *)[self blockFromString:ktestString] value];    
   }
   return nil;
 }

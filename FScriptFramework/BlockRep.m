@@ -289,7 +289,7 @@
       {
         FSSymbolTable *oldst = [(FSKeyedUnarchiver*)coder symbolTableForCompiledCodeNode];
         NSString *oldSource = [(FSKeyedUnarchiver*)coder source];
-        if (oldst != nil) // if it's not a top-level block (because this case is already managed in FSSymbolTable::initWithCoder:). As a side note: in this method, we use the fact that only an "F-Script instanciated" block, wich is not in an compiled code node, can have a binding to another block. If it was not the case, the problem would be that a bound block would be decoded in the symbolTable context of the block that has a binding to it...
+        if (oldst != nil) // if it's not a top-level block (because this case is already managed in FSSymbolTable::initWithCoder:). As a side note: in this method, we use the fact that only an "F-Script instanciated" block, wich is not in a compiled code node, can have a binding to another block. If it was not the case, the problem would be that a bound block would be decoded in the symbolTable context of the block that has a binding to it...
         {
           if (signature.hasLocals) [symbol_table setParent:oldst];
           else 

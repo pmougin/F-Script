@@ -14,6 +14,6 @@
 - (void)encodeWithCoder:(NSCoder *)coder;
 - (id)initWithCoder:(NSCoder *)coder;
 - (id)initWithReceiver:(FSCNBase *)theReceiver selectorString:(NSString *)theSelectorString pattern:(FSPattern *)thePattern arguments:(NSArray *)args;
-- (void)translateCharRange:(long)translation;
+- (void)translateCharRange:(int32_t)translation;
 
 @end

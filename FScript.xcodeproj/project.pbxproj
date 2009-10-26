@@ -34,7 +34,7 @@
 		8F0CBBF40BDB94AD002B0AD7 /* FSCompilationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33600D7DFE17BE9C1BD /* FSCompilationResult.m */; };
 		8F0CBBF50BDB94AD002B0AD7 /* CompiledCodeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33800D7DFE17BE9C1BD /* CompiledCodeNode.m */; };
 		8F0CBBF60BDB94AD002B0AD7 /* FSCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33A00D7DFE17BE9C1BD /* FSCompiler.m */; };
-		8F0CBBF70BDB94AD002B0AD7 /* ConstantsInitialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33C00D7DFE17BE9C1BD /* ConstantsInitialization.m */; };
+		8F0CBBF70BDB94AD002B0AD7 /* FSConstantsInitialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33C00D7DFE17BE9C1BD /* FSConstantsInitialization.m */; };
 		8F0CBBF80BDB94AD002B0AD7 /* FSExecEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33E00D7DFE17BE9C1BD /* FSExecEngine.m */; };
 		8F0CBBF90BDB94AD002B0AD7 /* FSExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E34000D7DFE17BE9C1BD /* FSExecutor.m */; };
 		8F0CBBFA0BDB94AD002B0AD7 /* FSFlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E34300D7DFE17BE9C1BD /* FSFlight.m */; };
@@ -93,7 +93,6 @@
 		8F0CBC370BDB94AD002B0AD7 /* ArrayRepBoolean.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D4BE2A038511FF01461810 /* ArrayRepBoolean.m */; };
 		8F0CBC380BDB94AD002B0AD7 /* FSArrayEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA3AE56044D4D6700CF7A3A /* FSArrayEnumerator.m */; };
 		8F0CBC390BDB94AD002B0AD7 /* FSNSMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F66F85504666E8100AFC811 /* FSNSMutableArray.m */; };
-		8F0CBC3A0BDB94AD002B0AD7 /* Gnuplot.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FAA9531047D92390098F943 /* Gnuplot.m */; };
 		8F0CBC3C0BDB94AD002B0AD7 /* FSNSValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F553BF80585222700A92293 /* FSNSValue.m */; };
 		8F0CBC3D0BDB94AD002B0AD7 /* FSReplacementForCoderForNilInArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7D7DB8058E32CD00F1B8A8 /* FSReplacementForCoderForNilInArray.m */; };
 		8F0CBC3E0BDB94AD002B0AD7 /* FSNamedNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0E3B7F059F3DBB003F6CE9 /* FSNamedNumber.m */; };
@@ -303,8 +302,8 @@
 		8F6631D50C4A270200FA798A /* FSMovieInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 8F7472BE056B7ACE00E87339 /* FSMovieInspector.nib */; };
 		8F6632170C4A292D00FA798A /* FSInspectorUniquier.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7F4F9C07FB274C008E42F4 /* FSInspectorUniquier.h */; };
 		8F6632490C4A2BA300FA798A /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FDF6FCF082BD9560044FD86 /* QTKit.framework */; };
-		8F67A7860C4978F600A707A7 /* ConstantsDictionaryGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F92F0340463F03300F4C61F /* ConstantsDictionaryGenerator.h */; };
-		8F67A7A10C497C4600A707A7 /* ConstantsDictionaryGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F92F0350463F03300F4C61F /* ConstantsDictionaryGenerator.m */; };
+		8F67A7860C4978F600A707A7 /* FSConstantsDictionaryGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F92F0340463F03300F4C61F /* FSConstantsDictionaryGenerator.h */; };
+		8F67A7A10C497C4600A707A7 /* FSConstantsDictionaryGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F92F0350463F03300F4C61F /* FSConstantsDictionaryGenerator.m */; };
 		8F6937F206B6E03D00AEAC6A /* TestFS.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FBB10A4044E28FD00181279 /* TestFS.h */; };
 		8F69972F0C55ECC0007C6A9B /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CD4E46900D7E1F17BE9C1BD /* JavaVM.framework */; };
 		8F6B34B206E27E4600B3943E /* TestFS.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E3A000D7DFE17BE9C1BD /* TestFS.m */; };
@@ -331,7 +330,7 @@
 		8F6DA5F5055FC6980050409A /* FSCompilationResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33500D7DFE17BE9C1BD /* FSCompilationResult.h */; };
 		8F6DA5F6055FC6980050409A /* CompiledCodeNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33700D7DFE17BE9C1BD /* CompiledCodeNode.h */; };
 		8F6DA5F7055FC6980050409A /* FSCompiler.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33900D7DFE17BE9C1BD /* FSCompiler.h */; };
-		8F6DA5F8055FC6980050409A /* ConstantsInitialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33B00D7DFE17BE9C1BD /* ConstantsInitialization.h */; };
+		8F6DA5F8055FC6980050409A /* FSConstantsInitialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33B00D7DFE17BE9C1BD /* FSConstantsInitialization.h */; };
 		8F6DA5F9055FC6980050409A /* FSExecEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33D00D7DFE17BE9C1BD /* FSExecEngine.h */; };
 		8F6DA5FA055FC6980050409A /* FSExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33F00D7DFE17BE9C1BD /* FSExecutor.h */; };
 		8F6DA5FB055FC6980050409A /* FSArchiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E34500D7DFE17BE9C1BD /* FSArchiver.h */; };
@@ -399,7 +398,6 @@
 		8F6DA649055FC6980050409A /* ArrayRepBoolean.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D4BE29038511FF01461810 /* ArrayRepBoolean.h */; };
 		8F6DA64A055FC6980050409A /* FSArrayEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FA3AE55044D4D6700CF7A3A /* FSArrayEnumerator.h */; };
 		8F6DA64B055FC6980050409A /* FSNSMutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F66F85404666E8100AFC811 /* FSNSMutableArray.h */; };
-		8F6DA64C055FC6980050409A /* Gnuplot.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FAA9530047D92390098F943 /* Gnuplot.h */; };
 		8F6DA64F055FC6980050409A /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = F5F1AABA022E9E90011160FE /* MainMenu.nib */; };
 		8F6DA650055FC6980050409A /* FSCollectionInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD4E31F00D7DFE17BE9C1BD /* FSCollectionInspector.nib */; };
 		8F6DA651055FC6980050409A /* blockInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD4E32A00D7DFE17BE9C1BD /* blockInspector.nib */; };
@@ -432,7 +430,7 @@
 		8F6DA673055FC6980050409A /* CompiledCodeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33800D7DFE17BE9C1BD /* CompiledCodeNode.m */; };
 		8F6DA674055FC6980050409A /* FSCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33A00D7DFE17BE9C1BD /* FSCompiler.m */; };
 		8F6DA675055FC6980050409A /* FSExecEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33E00D7DFE17BE9C1BD /* FSExecEngine.m */; };
-		8F6DA676055FC6980050409A /* ConstantsInitialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33C00D7DFE17BE9C1BD /* ConstantsInitialization.m */; };
+		8F6DA676055FC6980050409A /* FSConstantsInitialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33C00D7DFE17BE9C1BD /* FSConstantsInitialization.m */; };
 		8F6DA677055FC6980050409A /* FSExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E34000D7DFE17BE9C1BD /* FSExecutor.m */; };
 		8F6DA678055FC6980050409A /* FSArchiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E34600D7DFE17BE9C1BD /* FSArchiver.m */; };
 		8F6DA679055FC6980050409A /* FSFlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E34300D7DFE17BE9C1BD /* FSFlight.m */; };
@@ -489,7 +487,6 @@
 		8F6DA6BD055FC6980050409A /* ArrayRepBoolean.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D4BE2A038511FF01461810 /* ArrayRepBoolean.m */; };
 		8F6DA6BE055FC6980050409A /* FSArrayEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA3AE56044D4D6700CF7A3A /* FSArrayEnumerator.m */; };
 		8F6DA6BF055FC6980050409A /* FSNSMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F66F85504666E8100AFC811 /* FSNSMutableArray.m */; };
-		8F6DA6C0055FC6980050409A /* Gnuplot.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FAA9531047D92390098F943 /* Gnuplot.m */; };
 		8F6DA6C4055FC6980050409A /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CD4E46900D7E1F17BE9C1BD /* JavaVM.framework */; };
 		8F6DA6C5055FC6980050409A /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F51B24640271980D01DB4759 /* ExceptionHandling.framework */; };
 		8F6DA6C8055FC6980050409A /* DiscRecording.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F55D42D903583F2601B9E934 /* DiscRecording.framework */; };
@@ -523,7 +520,7 @@
 		8F6DA807055FC70C0050409A /* FSCompilationResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33500D7DFE17BE9C1BD /* FSCompilationResult.h */; };
 		8F6DA808055FC70C0050409A /* CompiledCodeNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33700D7DFE17BE9C1BD /* CompiledCodeNode.h */; };
 		8F6DA809055FC70C0050409A /* FSCompiler.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33900D7DFE17BE9C1BD /* FSCompiler.h */; };
-		8F6DA80A055FC70C0050409A /* ConstantsInitialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33B00D7DFE17BE9C1BD /* ConstantsInitialization.h */; };
+		8F6DA80A055FC70C0050409A /* FSConstantsInitialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33B00D7DFE17BE9C1BD /* FSConstantsInitialization.h */; };
 		8F6DA80B055FC70C0050409A /* FSExecEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33D00D7DFE17BE9C1BD /* FSExecEngine.h */; };
 		8F6DA80C055FC70C0050409A /* FSExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33F00D7DFE17BE9C1BD /* FSExecutor.h */; };
 		8F6DA80D055FC70C0050409A /* FSFlight.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E34200D7DFE17BE9C1BD /* FSFlight.h */; };
@@ -590,7 +587,6 @@
 		8F6DA85C055FC70C0050409A /* FSNSObjectPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F63CC08044B95DB00B84480 /* FSNSObjectPrivate.h */; };
 		8F6DA85D055FC70C0050409A /* FSArrayEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FA3AE55044D4D6700CF7A3A /* FSArrayEnumerator.h */; };
 		8F6DA85F055FC70C0050409A /* FSNSMutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F66F85404666E8100AFC811 /* FSNSMutableArray.h */; };
-		8F6DA860055FC70C0050409A /* Gnuplot.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FAA9530047D92390098F943 /* Gnuplot.h */; };
 		8F6DA861055FC70C0050409A /* FSObjectBrowserButtonsInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = F5F9569602B272FB0121B3BA /* FSObjectBrowserButtonsInspector.h */; };
 		8F6DA862055FC70C0050409A /* ArrayRepBoolean.h in Headers */ = {isa = PBXBuildFile; fileRef = F5D4BE29038511FF01461810 /* ArrayRepBoolean.h */; };
 		8F6DA865055FC70C0050409A /* FSCollectionInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD4E31F00D7DFE17BE9C1BD /* FSCollectionInspector.nib */; };
@@ -625,7 +621,7 @@
 		8F6DA88A055FC70C0050409A /* FSCompilationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33600D7DFE17BE9C1BD /* FSCompilationResult.m */; };
 		8F6DA88B055FC70C0050409A /* CompiledCodeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33800D7DFE17BE9C1BD /* CompiledCodeNode.m */; };
 		8F6DA88C055FC70C0050409A /* FSCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33A00D7DFE17BE9C1BD /* FSCompiler.m */; };
-		8F6DA88D055FC70C0050409A /* ConstantsInitialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33C00D7DFE17BE9C1BD /* ConstantsInitialization.m */; };
+		8F6DA88D055FC70C0050409A /* FSConstantsInitialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33C00D7DFE17BE9C1BD /* FSConstantsInitialization.m */; };
 		8F6DA88E055FC70C0050409A /* FSExecEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33E00D7DFE17BE9C1BD /* FSExecEngine.m */; };
 		8F6DA88F055FC70C0050409A /* FSExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E34000D7DFE17BE9C1BD /* FSExecutor.m */; };
 		8F6DA890055FC70C0050409A /* FSFlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E34300D7DFE17BE9C1BD /* FSFlight.m */; };
@@ -683,7 +679,6 @@
 		8F6DA8D7055FC70C0050409A /* FSObjectBrowserToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F58090D003755FC701AED2EF /* FSObjectBrowserToolbarItem.m */; };
 		8F6DA8D8055FC70C0050409A /* FSArrayEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA3AE56044D4D6700CF7A3A /* FSArrayEnumerator.m */; };
 		8F6DA8D9055FC70C0050409A /* FSNSMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F66F85504666E8100AFC811 /* FSNSMutableArray.m */; };
-		8F6DA8DA055FC70C0050409A /* Gnuplot.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FAA9531047D92390098F943 /* Gnuplot.m */; };
 		8F6DA8DB055FC70C0050409A /* ArrayRepBoolean.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D4BE2A038511FF01461810 /* ArrayRepBoolean.m */; };
 		8F6DA8E0055FC70C0050409A /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F51B24640271980D01DB4759 /* ExceptionHandling.framework */; };
 		8F6DA8E3055FC70C0050409A /* DiscRecording.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F55D42D903583F2601B9E934 /* DiscRecording.framework */; };
@@ -709,7 +704,7 @@
 		8F6DA906055FC71F0050409A /* FSCompilationResult.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33500D7DFE17BE9C1BD /* FSCompilationResult.h */; };
 		8F6DA907055FC71F0050409A /* CompiledCodeNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33700D7DFE17BE9C1BD /* CompiledCodeNode.h */; };
 		8F6DA908055FC71F0050409A /* FSCompiler.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33900D7DFE17BE9C1BD /* FSCompiler.h */; };
-		8F6DA909055FC71F0050409A /* ConstantsInitialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33B00D7DFE17BE9C1BD /* ConstantsInitialization.h */; };
+		8F6DA909055FC71F0050409A /* FSConstantsInitialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33B00D7DFE17BE9C1BD /* FSConstantsInitialization.h */; };
 		8F6DA90A055FC71F0050409A /* FSExecEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33D00D7DFE17BE9C1BD /* FSExecEngine.h */; };
 		8F6DA90B055FC71F0050409A /* FSExecutor.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33F00D7DFE17BE9C1BD /* FSExecutor.h */; };
 		8F6DA90C055FC71F0050409A /* FSFlight.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E34200D7DFE17BE9C1BD /* FSFlight.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -781,7 +776,6 @@
 		8F6DA95E055FC71F0050409A /* FSArrayEnumerator.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FA3AE55044D4D6700CF7A3A /* FSArrayEnumerator.h */; };
 		8F6DA95F055FC71F0050409A /* TestFS.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FBB10A4044E28FD00181279 /* TestFS.h */; };
 		8F6DA960055FC71F0050409A /* FSNSMutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F66F85404666E8100AFC811 /* FSNSMutableArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8F6DA961055FC71F0050409A /* Gnuplot.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FAA9530047D92390098F943 /* Gnuplot.h */; };
 		8F6DA964055FC71F0050409A /* FSCollectionInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD4E31F00D7DFE17BE9C1BD /* FSCollectionInspector.nib */; };
 		8F6DA965055FC71F0050409A /* blockInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 0CD4E32A00D7DFE17BE9C1BD /* blockInspector.nib */; };
 		8F6DA968055FC71F0050409A /* FlightTutorial.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0CD4E34400D7DFE17BE9C1BD /* FlightTutorial.txt */; };
@@ -810,7 +804,7 @@
 		8F6DA984055FC71F0050409A /* FSCompilationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33600D7DFE17BE9C1BD /* FSCompilationResult.m */; };
 		8F6DA985055FC71F0050409A /* CompiledCodeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33800D7DFE17BE9C1BD /* CompiledCodeNode.m */; };
 		8F6DA986055FC71F0050409A /* FSCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33A00D7DFE17BE9C1BD /* FSCompiler.m */; };
-		8F6DA987055FC71F0050409A /* ConstantsInitialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33C00D7DFE17BE9C1BD /* ConstantsInitialization.m */; };
+		8F6DA987055FC71F0050409A /* FSConstantsInitialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33C00D7DFE17BE9C1BD /* FSConstantsInitialization.m */; };
 		8F6DA988055FC71F0050409A /* FSExecEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E33E00D7DFE17BE9C1BD /* FSExecEngine.m */; };
 		8F6DA989055FC71F0050409A /* FSExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E34000D7DFE17BE9C1BD /* FSExecutor.m */; };
 		8F6DA98A055FC71F0050409A /* FSFlight.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CD4E34300D7DFE17BE9C1BD /* FSFlight.m */; };
@@ -869,7 +863,6 @@
 		8F6DA9D0055FC71F0050409A /* ArrayRepBoolean.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D4BE2A038511FF01461810 /* ArrayRepBoolean.m */; };
 		8F6DA9D1055FC71F0050409A /* FSArrayEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA3AE56044D4D6700CF7A3A /* FSArrayEnumerator.m */; };
 		8F6DA9D2055FC71F0050409A /* FSNSMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F66F85504666E8100AFC811 /* FSNSMutableArray.m */; };
-		8F6DA9D3055FC71F0050409A /* Gnuplot.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FAA9531047D92390098F943 /* Gnuplot.m */; };
 		8F6DA9D9055FC71F0050409A /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F51B24640271980D01DB4759 /* ExceptionHandling.framework */; };
 		8F71F72405C43A7D00C34794 /* FSInterpreterViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F71F72205C43A7D00C34794 /* FSInterpreterViewPrivate.h */; };
 		8F71F72505C43A7D00C34794 /* FSInterpreterViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F71F72205C43A7D00C34794 /* FSInterpreterViewPrivate.h */; };
@@ -1099,6 +1092,13 @@
 		8FCA00C70EEAF34300B10420 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA00C20EEAF34300B10420 /* Block.m */; };
 		8FCA00C80EEAF34300B10420 /* Block.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FCA00C10EEAF34300B10420 /* Block.h */; };
 		8FCA00C90EEAF34300B10420 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA00C20EEAF34300B10420 /* Block.m */; };
+		8FCA593310883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA593210883B0100F67841 /* FSNewlyAllocatedObject.m */; };
+		8FCA593410883B0100F67841 /* FSNewlyAllocatedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FCA593110883B0100F67841 /* FSNewlyAllocatedObject.h */; };
+		8FCA593510883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA593210883B0100F67841 /* FSNewlyAllocatedObject.m */; };
+		8FCA593610883B0100F67841 /* FSNewlyAllocatedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FCA593110883B0100F67841 /* FSNewlyAllocatedObject.h */; };
+		8FCA593710883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA593210883B0100F67841 /* FSNewlyAllocatedObject.m */; };
+		8FCA593810883B0100F67841 /* FSNewlyAllocatedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FCA593110883B0100F67841 /* FSNewlyAllocatedObject.h */; };
+		8FCA593910883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA593210883B0100F67841 /* FSNewlyAllocatedObject.m */; };
 		8FCA6B88078E0E4F005FC6B2 /* FSManagedObjectContextInspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 8FCA6B79078E0E4F005FC6B2 /* FSManagedObjectContextInspector.nib */; };
 		8FCFCF08094F711900FF7406 /* FSTest1.app in Resources */ = {isa = PBXBuildFile; fileRef = 8FD37BA108472E0F00524B98 /* FSTest1.app */; };
 		8FCFCF19094F712400FF7406 /* FSTest2.app in Resources */ = {isa = PBXBuildFile; fileRef = 8FD37B9F08472E0F00524B98 /* FSTest2.app */; };
@@ -1245,8 +1245,8 @@
 		0CD4E33800D7DFE17BE9C1BD /* CompiledCodeNode.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = CompiledCodeNode.m; sourceTree = "<group>"; };
 		0CD4E33900D7DFE17BE9C1BD /* FSCompiler.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FSCompiler.h; sourceTree = "<group>"; };
 		0CD4E33A00D7DFE17BE9C1BD /* FSCompiler.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FSCompiler.m; sourceTree = "<group>"; };
-		0CD4E33B00D7DFE17BE9C1BD /* ConstantsInitialization.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ConstantsInitialization.h; sourceTree = "<group>"; };
-		0CD4E33C00D7DFE17BE9C1BD /* ConstantsInitialization.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ConstantsInitialization.m; sourceTree = "<group>"; };
+		0CD4E33B00D7DFE17BE9C1BD /* FSConstantsInitialization.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FSConstantsInitialization.h; sourceTree = "<group>"; };
+		0CD4E33C00D7DFE17BE9C1BD /* FSConstantsInitialization.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FSConstantsInitialization.m; sourceTree = "<group>"; };
 		0CD4E33D00D7DFE17BE9C1BD /* FSExecEngine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FSExecEngine.h; sourceTree = "<group>"; };
 		0CD4E33E00D7DFE17BE9C1BD /* FSExecEngine.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FSExecEngine.m; sourceTree = "<group>"; };
 		0CD4E33F00D7DFE17BE9C1BD /* FSExecutor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FSExecutor.h; sourceTree = "<group>"; };
@@ -1441,8 +1441,8 @@
 		8F913FD50BDB92FC001685EA /* FScriptIBPluginInspector.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = FScriptIBPluginInspector.m; path = FScriptIBPlugin/FScriptIBPluginInspector.m; sourceTree = "<group>"; };
 		8F913FD90BDB92FC001685EA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; name = Info.plist; path = FScriptIBPlugin/Info.plist; sourceTree = "<group>"; };
 		8F913FDA0BDB92FC001685EA /* version.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; name = version.plist; path = FScriptIBPlugin/version.plist; sourceTree = "<group>"; };
-		8F92F0340463F03300F4C61F /* ConstantsDictionaryGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstantsDictionaryGenerator.h; sourceTree = "<group>"; };
-		8F92F0350463F03300F4C61F /* ConstantsDictionaryGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConstantsDictionaryGenerator.m; sourceTree = "<group>"; };
+		8F92F0340463F03300F4C61F /* FSConstantsDictionaryGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSConstantsDictionaryGenerator.h; sourceTree = "<group>"; };
+		8F92F0350463F03300F4C61F /* FSConstantsDictionaryGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSConstantsDictionaryGenerator.m; sourceTree = "<group>"; };
 		8F92F0380463F2A400F4C61F /* constantsDictionary */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = constantsDictionary; sourceTree = "<group>"; };
 		8F940B810F2393B0004525E1 /* FSAssociation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSAssociation.h; sourceTree = "<group>"; };
 		8F940B820F2393B0004525E1 /* FSAssociation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSAssociation.m; sourceTree = "<group>"; };
@@ -1463,8 +1463,6 @@
 		8FA8EDC607735B3B001BEC7B /* FSCollectionInspectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCollectionInspectorView.h; sourceTree = "<group>"; };
 		8FA8EDD307735B3B001BEC7B /* FSCollectionInspectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCollectionInspectorView.m; sourceTree = "<group>"; };
 		8FA8EF9107739FD4001BEC7B /* FSCollectionInspectorView.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = FSCollectionInspectorView.nib; sourceTree = "<group>"; };
-		8FAA9530047D92390098F943 /* Gnuplot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gnuplot.h; sourceTree = "<group>"; };
-		8FAA9531047D92390098F943 /* Gnuplot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Gnuplot.m; sourceTree = "<group>"; };
 		8FAE79AA0DA0ED5D00CB6E14 /* FSCNBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCNBlock.h; sourceTree = "<group>"; };
 		8FAE79AB0DA0ED5D00CB6E14 /* FSCNBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCNBlock.m; sourceTree = "<group>"; };
 		8FAE79F10DA109C500CB6E14 /* FSCNAssignment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCNAssignment.h; sourceTree = "<group>"; };
@@ -1498,6 +1496,8 @@
 		8FC291A80C4A83A50071E9CC /* XgridFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XgridFoundation.framework; path = /System/Library/Frameworks/XgridFoundation.framework; sourceTree = "<absolute>"; };
 		8FCA00C10EEAF34300B10420 /* Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Block.h; sourceTree = "<group>"; };
 		8FCA00C20EEAF34300B10420 /* Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Block.m; sourceTree = "<group>"; };
+		8FCA593110883B0100F67841 /* FSNewlyAllocatedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FSNewlyAllocatedObject.h; path = "../F-Script/FSNewlyAllocatedObject.h"; sourceTree = "<group>"; };
+		8FCA593210883B0100F67841 /* FSNewlyAllocatedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FSNewlyAllocatedObject.m; path = "../F-Script/FSNewlyAllocatedObject.m"; sourceTree = "<group>"; };
 		8FCA6B79078E0E4F005FC6B2 /* FSManagedObjectContextInspector.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = FSManagedObjectContextInspector.nib; sourceTree = "<group>"; };
 		8FD0A3120DD7276000E47459 /* FSCNReturn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCNReturn.h; sourceTree = "<group>"; };
 		8FD0A3130DD7276000E47459 /* FSCNReturn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCNReturn.m; sourceTree = "<group>"; };
@@ -1800,10 +1800,10 @@
 				0CD4E33700D7DFE17BE9C1BD /* CompiledCodeNode.h */,
 				0CD4E33800D7DFE17BE9C1BD /* CompiledCodeNode.m */,
 				8F92F0380463F2A400F4C61F /* constantsDictionary */,
-				8F92F0340463F03300F4C61F /* ConstantsDictionaryGenerator.h */,
-				8F92F0350463F03300F4C61F /* ConstantsDictionaryGenerator.m */,
-				0CD4E33B00D7DFE17BE9C1BD /* ConstantsInitialization.h */,
-				0CD4E33C00D7DFE17BE9C1BD /* ConstantsInitialization.m */,
+				8F92F0340463F03300F4C61F /* FSConstantsDictionaryGenerator.h */,
+				8F92F0350463F03300F4C61F /* FSConstantsDictionaryGenerator.m */,
+				0CD4E33B00D7DFE17BE9C1BD /* FSConstantsInitialization.h */,
+				0CD4E33C00D7DFE17BE9C1BD /* FSConstantsInitialization.m */,
 				F5F13B4701C8BE3401CB6DF7 /* DOTest.h */,
 				F5F13B4801C8BE3401CB6DF7 /* DOTest.m */,
 				8FE99A49082CF1C1005BD642 /* Employee.xcdatamodel */,
@@ -1941,6 +1941,8 @@
 				0CD4E38400D7DFE17BE9C1BD /* FSMsgContext.m */,
 				8F0E3B7E059F3DBB003F6CE9 /* FSNamedNumber.h */,
 				8F0E3B7F059F3DBB003F6CE9 /* FSNamedNumber.m */,
+				8FCA593110883B0100F67841 /* FSNewlyAllocatedObject.h */,
+				8FCA593210883B0100F67841 /* FSNewlyAllocatedObject.m */,
 				0CD4E38700D7DFE17BE9C1BD /* FSNewlyAllocatedObjectHolder.h */,
 				0CD4E38800D7DFE17BE9C1BD /* FSNewlyAllocatedObjectHolder.m */,
 				8F2D72090F6BD9B100F0862A /* FSNSAffineTransform.h */,
@@ -2053,8 +2055,6 @@
 				0CD4E37500D7DFE17BE9C1BD /* FSVoid.m */,
 				0CD4E37600D7DFE17BE9C1BD /* FSVoidPrivate.h */,
 				0CD4E37900D7DFE17BE9C1BD /* genObjInspector.nib */,
-				8FAA9530047D92390098F943 /* Gnuplot.h */,
-				8FAA9531047D92390098F943 /* Gnuplot.m */,
 				0CD4E37D00D7DFE17BE9C1BD /* KTest.txt */,
 				66029E580161E0650055708C /* KTestManager.h */,
 				66029E590161E0650055708C /* KTestManager.m */,
@@ -2183,7 +2183,7 @@
 				8F6DA5F5055FC6980050409A /* FSCompilationResult.h in Headers */,
 				8F6DA5F6055FC6980050409A /* CompiledCodeNode.h in Headers */,
 				8F6DA5F7055FC6980050409A /* FSCompiler.h in Headers */,
-				8F6DA5F8055FC6980050409A /* ConstantsInitialization.h in Headers */,
+				8F6DA5F8055FC6980050409A /* FSConstantsInitialization.h in Headers */,
 				8F6DA5F9055FC6980050409A /* FSExecEngine.h in Headers */,
 				8F6DA5FA055FC6980050409A /* FSExecutor.h in Headers */,
 				8F6DA5FB055FC6980050409A /* FSArchiver.h in Headers */,
@@ -2251,7 +2251,6 @@
 				8F6DA649055FC6980050409A /* ArrayRepBoolean.h in Headers */,
 				8F6DA64A055FC6980050409A /* FSArrayEnumerator.h in Headers */,
 				8F6DA64B055FC6980050409A /* FSNSMutableArray.h in Headers */,
-				8F6DA64C055FC6980050409A /* Gnuplot.h in Headers */,
 				8F553BFF0585222700A92293 /* FSNSValue.h in Headers */,
 				8F7D7DBD058E32CD00F1B8A8 /* FSReplacementForCoderForNilInArray.h in Headers */,
 				8F0E3B84059F3DBB003F6CE9 /* FSNamedNumber.h in Headers */,
@@ -2313,6 +2312,7 @@
 				8F940C700F23BC2E004525E1 /* FSCNDictionary.h in Headers */,
 				8F7A712D0F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.h in Headers */,
 				8F2D720E0F6BD9B100F0862A /* FSNSAffineTransform.h in Headers */,
+				8FCA593610883B0100F67841 /* FSNewlyAllocatedObject.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2352,7 +2352,7 @@
 				8F6DA807055FC70C0050409A /* FSCompilationResult.h in Headers */,
 				8F6DA808055FC70C0050409A /* CompiledCodeNode.h in Headers */,
 				8F6DA809055FC70C0050409A /* FSCompiler.h in Headers */,
-				8F6DA80A055FC70C0050409A /* ConstantsInitialization.h in Headers */,
+				8F6DA80A055FC70C0050409A /* FSConstantsInitialization.h in Headers */,
 				8F6DA80B055FC70C0050409A /* FSExecEngine.h in Headers */,
 				8F6DA80C055FC70C0050409A /* FSExecutor.h in Headers */,
 				8F6DA80D055FC70C0050409A /* FSFlight.h in Headers */,
@@ -2419,7 +2419,6 @@
 				8F6DA85C055FC70C0050409A /* FSNSObjectPrivate.h in Headers */,
 				8F6DA85D055FC70C0050409A /* FSArrayEnumerator.h in Headers */,
 				8F6DA85F055FC70C0050409A /* FSNSMutableArray.h in Headers */,
-				8F6DA860055FC70C0050409A /* Gnuplot.h in Headers */,
 				8F6DA861055FC70C0050409A /* FSObjectBrowserButtonsInspector.h in Headers */,
 				8F6DA862055FC70C0050409A /* ArrayRepBoolean.h in Headers */,
 				8F553BFB0585222700A92293 /* FSNSValue.h in Headers */,
@@ -2455,7 +2454,7 @@
 				8F917E28095F5DE5000932D0 /* FSObjectBrowserSearchField.h in Headers */,
 				8F90A2F7096DB0660064F4BC /* FSBlockCompilationResult.h in Headers */,
 				8FD7D4A80975B377009B2685 /* FSReturnSignal.h in Headers */,
-				8F67A7860C4978F600A707A7 /* ConstantsDictionaryGenerator.h in Headers */,
+				8F67A7860C4978F600A707A7 /* FSConstantsDictionaryGenerator.h in Headers */,
 				8F3C139D0C65E66400948776 /* FSMethod.h in Headers */,
 				8F5AD3250D05CFFE000CEAC6 /* FSCNClassDefinition.h in Headers */,
 				8FE639800D09C0F400255EBA /* FSCNBase.h in Headers */,
@@ -2489,6 +2488,7 @@
 				8F7A71300F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.h in Headers */,
 				8F2D72100F6BD9B100F0862A /* FSNSAffineTransform.h in Headers */,
 				8F9636440F8DF6AB00A70F39 /* FSDemoAssistant.h in Headers */,
+				8FCA593410883B0100F67841 /* FSNewlyAllocatedObject.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2516,7 +2516,7 @@
 				8F6DA906055FC71F0050409A /* FSCompilationResult.h in Headers */,
 				8F6DA907055FC71F0050409A /* CompiledCodeNode.h in Headers */,
 				8F6DA908055FC71F0050409A /* FSCompiler.h in Headers */,
-				8F6DA909055FC71F0050409A /* ConstantsInitialization.h in Headers */,
+				8F6DA909055FC71F0050409A /* FSConstantsInitialization.h in Headers */,
 				8F6DA90A055FC71F0050409A /* FSExecEngine.h in Headers */,
 				8F6DA90B055FC71F0050409A /* FSExecutor.h in Headers */,
 				8F6DA90C055FC71F0050409A /* FSFlight.h in Headers */,
@@ -2588,7 +2588,6 @@
 				8F6DA95E055FC71F0050409A /* FSArrayEnumerator.h in Headers */,
 				8F6DA95F055FC71F0050409A /* TestFS.h in Headers */,
 				8F6DA960055FC71F0050409A /* FSNSMutableArray.h in Headers */,
-				8F6DA961055FC71F0050409A /* Gnuplot.h in Headers */,
 				8F553BF90585222700A92293 /* FSNSValue.h in Headers */,
 				8F7D7DBF058E32CD00F1B8A8 /* FSReplacementForCoderForNilInArray.h in Headers */,
 				8F0E3B82059F3DBB003F6CE9 /* FSNamedNumber.h in Headers */,
@@ -2651,6 +2650,7 @@
 				8F940C730F23BC2E004525E1 /* FSCNDictionary.h in Headers */,
 				8F7A712B0F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.h in Headers */,
 				8F2D720C0F6BD9B100F0862A /* FSNSAffineTransform.h in Headers */,
+				8FCA593810883B0100F67841 /* FSNewlyAllocatedObject.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2967,7 +2967,7 @@
 				8F0CBBF40BDB94AD002B0AD7 /* FSCompilationResult.m in Sources */,
 				8F0CBBF50BDB94AD002B0AD7 /* CompiledCodeNode.m in Sources */,
 				8F0CBBF60BDB94AD002B0AD7 /* FSCompiler.m in Sources */,
-				8F0CBBF70BDB94AD002B0AD7 /* ConstantsInitialization.m in Sources */,
+				8F0CBBF70BDB94AD002B0AD7 /* FSConstantsInitialization.m in Sources */,
 				8F0CBBF80BDB94AD002B0AD7 /* FSExecEngine.m in Sources */,
 				8F0CBBF90BDB94AD002B0AD7 /* FSExecutor.m in Sources */,
 				8F0CBBFA0BDB94AD002B0AD7 /* FSFlight.m in Sources */,
@@ -3026,7 +3026,6 @@
 				8F0CBC370BDB94AD002B0AD7 /* ArrayRepBoolean.m in Sources */,
 				8F0CBC380BDB94AD002B0AD7 /* FSArrayEnumerator.m in Sources */,
 				8F0CBC390BDB94AD002B0AD7 /* FSNSMutableArray.m in Sources */,
-				8F0CBC3A0BDB94AD002B0AD7 /* Gnuplot.m in Sources */,
 				8F0CBC3C0BDB94AD002B0AD7 /* FSNSValue.m in Sources */,
 				8F0CBC3D0BDB94AD002B0AD7 /* FSReplacementForCoderForNilInArray.m in Sources */,
 				8F0CBC3E0BDB94AD002B0AD7 /* FSNamedNumber.m in Sources */,
@@ -3088,6 +3087,7 @@
 				8F940C720F23BC2E004525E1 /* FSCNDictionary.m in Sources */,
 				8F7A712F0F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.m in Sources */,
 				8F2D720B0F6BD9B100F0862A /* FSNSAffineTransform.m in Sources */,
+				8FCA593310883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3115,7 +3115,7 @@
 				8F6DA673055FC6980050409A /* CompiledCodeNode.m in Sources */,
 				8F6DA674055FC6980050409A /* FSCompiler.m in Sources */,
 				8F6DA675055FC6980050409A /* FSExecEngine.m in Sources */,
-				8F6DA676055FC6980050409A /* ConstantsInitialization.m in Sources */,
+				8F6DA676055FC6980050409A /* FSConstantsInitialization.m in Sources */,
 				8F6DA677055FC6980050409A /* FSExecutor.m in Sources */,
 				8F6DA678055FC6980050409A /* FSArchiver.m in Sources */,
 				8F6DA679055FC6980050409A /* FSFlight.m in Sources */,
@@ -3172,7 +3172,6 @@
 				8F6DA6BD055FC6980050409A /* ArrayRepBoolean.m in Sources */,
 				8F6DA6BE055FC6980050409A /* FSArrayEnumerator.m in Sources */,
 				8F6DA6BF055FC6980050409A /* FSNSMutableArray.m in Sources */,
-				8F6DA6C0055FC6980050409A /* Gnuplot.m in Sources */,
 				8F553C000585222700A92293 /* FSNSValue.m in Sources */,
 				8F7D7DBE058E32CD00F1B8A8 /* FSReplacementForCoderForNilInArray.m in Sources */,
 				8F0E3B85059F3DBB003F6CE9 /* FSNamedNumber.m in Sources */,
@@ -3232,6 +3231,7 @@
 				8F940C710F23BC2E004525E1 /* FSCNDictionary.m in Sources */,
 				8F7A712E0F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.m in Sources */,
 				8F2D720F0F6BD9B100F0862A /* FSNSAffineTransform.m in Sources */,
+				8FCA593710883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3265,7 +3265,7 @@
 				8F6DA88A055FC70C0050409A /* FSCompilationResult.m in Sources */,
 				8F6DA88B055FC70C0050409A /* CompiledCodeNode.m in Sources */,
 				8F6DA88C055FC70C0050409A /* FSCompiler.m in Sources */,
-				8F6DA88D055FC70C0050409A /* ConstantsInitialization.m in Sources */,
+				8F6DA88D055FC70C0050409A /* FSConstantsInitialization.m in Sources */,
 				8F6DA88E055FC70C0050409A /* FSExecEngine.m in Sources */,
 				8F6DA88F055FC70C0050409A /* FSExecutor.m in Sources */,
 				8F6DA890055FC70C0050409A /* FSFlight.m in Sources */,
@@ -3323,7 +3323,6 @@
 				8F6DA8D7055FC70C0050409A /* FSObjectBrowserToolbarItem.m in Sources */,
 				8F6DA8D8055FC70C0050409A /* FSArrayEnumerator.m in Sources */,
 				8F6DA8D9055FC70C0050409A /* FSNSMutableArray.m in Sources */,
-				8F6DA8DA055FC70C0050409A /* Gnuplot.m in Sources */,
 				8F6DA8DB055FC70C0050409A /* ArrayRepBoolean.m in Sources */,
 				8F553BFC0585222700A92293 /* FSNSValue.m in Sources */,
 				8F7D7DBA058E32CD00F1B8A8 /* FSReplacementForCoderForNilInArray.m in Sources */,
@@ -3353,7 +3352,7 @@
 				8F917E29095F5DE5000932D0 /* FSObjectBrowserSearchField.m in Sources */,
 				8F90A2F8096DB0660064F4BC /* FSBlockCompilationResult.m in Sources */,
 				8FD7D4A90975B377009B2685 /* FSReturnSignal.m in Sources */,
-				8F67A7A10C497C4600A707A7 /* ConstantsDictionaryGenerator.m in Sources */,
+				8F67A7A10C497C4600A707A7 /* FSConstantsDictionaryGenerator.m in Sources */,
 				8F6631CC0C4A26E600FA798A /* FSQTMovie.m in Sources */,
 				8F6631D00C4A26F600FA798A /* FSMovieInspector.m in Sources */,
 				8F3C139E0C65E66400948776 /* FSMethod.m in Sources */,
@@ -3389,6 +3388,7 @@
 				8F7A71310F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.m in Sources */,
 				8F2D72110F6BD9B100F0862A /* FSNSAffineTransform.m in Sources */,
 				8F9636420F8DF69F00A70F39 /* FSDemoAssistant.m in Sources */,
+				8FCA593510883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3411,7 +3411,7 @@
 				8F6DA984055FC71F0050409A /* FSCompilationResult.m in Sources */,
 				8F6DA985055FC71F0050409A /* CompiledCodeNode.m in Sources */,
 				8F6DA986055FC71F0050409A /* FSCompiler.m in Sources */,
-				8F6DA987055FC71F0050409A /* ConstantsInitialization.m in Sources */,
+				8F6DA987055FC71F0050409A /* FSConstantsInitialization.m in Sources */,
 				8F6DA988055FC71F0050409A /* FSExecEngine.m in Sources */,
 				8F6DA989055FC71F0050409A /* FSExecutor.m in Sources */,
 				8F6DA98A055FC71F0050409A /* FSFlight.m in Sources */,
@@ -3470,7 +3470,6 @@
 				8F6DA9D0055FC71F0050409A /* ArrayRepBoolean.m in Sources */,
 				8F6DA9D1055FC71F0050409A /* FSArrayEnumerator.m in Sources */,
 				8F6DA9D2055FC71F0050409A /* FSNSMutableArray.m in Sources */,
-				8F6DA9D3055FC71F0050409A /* Gnuplot.m in Sources */,
 				8F553BFA0585222700A92293 /* FSNSValue.m in Sources */,
 				8F7D7DC0058E32CD00F1B8A8 /* FSReplacementForCoderForNilInArray.m in Sources */,
 				8F0E3B83059F3DBB003F6CE9 /* FSNamedNumber.m in Sources */,
@@ -3530,6 +3529,7 @@
 				8F940C740F23BC2E004525E1 /* FSCNDictionary.m in Sources */,
 				8F7A712C0F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.m in Sources */,
 				8F2D720D0F6BD9B100F0862A /* FSNSAffineTransform.m in Sources */,
+				8FCA593910883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3612,6 +3612,7 @@
 				PREBINDING = NO;
 				PRINCIPAL_CLASS = "";
 				PRODUCT_NAME = FScript;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				SECTORDER_FLAGS = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wmost";
@@ -3624,7 +3625,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "ppc i386 ppc64 x86_64";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				COPY_PHASE_STRIP = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -3662,7 +3663,8 @@
 		8F2881ED08F9C040005B3C5A /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1 = x86_64;
 				COPY_PHASE_STRIP = "$(value) NO";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -3680,6 +3682,7 @@
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = FSTest1;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost";
 				WRAPPER_EXTENSION = app;
@@ -3690,6 +3693,8 @@
 		8F2881EE08F9C040005B3C5A /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -3716,7 +3721,8 @@
 		8F2881F108F9C040005B3C5A /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1 = x86_64;
 				COPY_PHASE_STRIP = "$(value) NO";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -3735,6 +3741,7 @@
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = FSTest2;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost";
 				WRAPPER_EXTENSION = app;
@@ -3778,8 +3785,8 @@
 		8F2881F508F9C040005B3C5A /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1 = x86_64;
 				AUTO_SHADOW = YES;
 				COPY_PHASE_STRIP = "$(value) NO";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3805,6 +3812,7 @@
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "F-Script";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				SECTORDER_FLAGS = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -3815,7 +3823,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "ppc i386 ppc64 x86_64";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3830,7 +3838,15 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_VERSION = 4.2;
-				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_SHADOW = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				HEADER_SEARCH_PATHS = "";
@@ -3851,7 +3867,8 @@
 		8F2881FD08F9C040005B3C5A /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1 = x86_64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = supported;
@@ -3871,7 +3888,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_LDFLAGS = "";
-				SDKROOT = "";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				WARNING_CFLAGS = "-Wmost";
 				ZERO_LINK = NO;
 			};

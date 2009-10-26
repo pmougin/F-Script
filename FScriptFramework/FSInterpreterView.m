@@ -110,11 +110,6 @@ static BOOL isEmpty(NSString *str)
   [super dealloc];
 }
 
-- (NSString *)editorClassName
-{
-  return [NSString stringWithCString:"FSInterpreterViewEditor"];
-}
-
 - (void)encodeWithCoder:(NSCoder *)coder
 {
   //id sub;

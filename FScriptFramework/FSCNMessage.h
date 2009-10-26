@@ -19,6 +19,6 @@
 - (void)encodeWithCoder:(NSCoder *)coder;
 - (id)initWithCoder:(NSCoder *)coder;
 - (id)initWithReceiver:(FSCNBase *)theReceiver selectorString:(NSString *)theSelectorString pattern:(FSPattern *)thePattern; // theSelectorString is the representation of the real selector (e.g., "operator_plus" instead of "+") 
-- (void)translateCharRange:(long)translation;
+- (void)translateCharRange:(int32_t)translation;
 
 @end

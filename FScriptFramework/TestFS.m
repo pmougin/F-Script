@@ -15,7 +15,7 @@
 #import "FSFlight.h"
 #import "FSAirplane.h" 
 #import "FSPilot.h"
-#import "constantsInitialization.h"
+#import "FSConstantsInitialization.h"
 #include <unistd.h> 
 #import <ExceptionHandling/NSExceptionHandler.h>
 #include <stdbool.h>
@@ -161,22 +161,6 @@ extern FSNumber *numberWithDouble(double val);
 }
 
 + (SEL) nullSel {return (SEL)0;}
-
-+ (void)graph
-{
-  FILE *file;
-  NSMutableString *command;
-  char *path = malloc(100);
-  strcpy(path,"/tmp/temp.XXXXXX");
-  path = mktemp(path);
-  file = fopen(path,"w");
-  fputs("6\n7\n10\n5\n",file);
-  fflush(file);
-  command = [NSMutableString stringWithString:@"echo -n plot '\""];
-  [command appendString:[NSString stringWithCString:path]];  
-  [command appendString:@"\"' | /Applications/newApplications/gnuplot/pgnuplot"];
-  system([command UTF8String]);
-}
 
 + (NSInteger)query:(NSArray *)A :(NSArray *)F :(NSArray *)P
 {
@@ -444,7 +428,7 @@ static NSInteger p = 362;
 - (NSDictionary *) constants
 {
   NSMutableDictionary *d = [NSMutableDictionary dictionary];
-  constantsInitialization(d);
+  FSConstantsInitialization(d);
   return d;
 }
 
@@ -967,11 +951,6 @@ directory within the User domain. "*/
 + (void) throw
 {
   @throw @"ZZZZ";
-}
-
-+ (void) throw2
-{
-  [@"ZZZZ" throw];
 }
 
  

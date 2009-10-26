@@ -14,6 +14,6 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 - (id)initWithCoder:(NSCoder *)aDecoder;
 - (id)initWithLeft:(FSCNBase *)l right:(FSCNBase *)r;
-- (void)translateCharRange:(long)translation;
+- (void)translateCharRange:(int32_t)translation;
 
 @end

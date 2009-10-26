@@ -5,7 +5,7 @@
 
 @class FSArray;
 
-enum FSContext_symbol_status {DEFINED,UNDEFINED};
+enum FSContext_symbol_status {DEFINED, UNDEFINED};
 
 @interface SymbolTableValueWrapper : NSObject <NSCopying , NSCoding>
 {
@@ -57,7 +57,11 @@ struct FSContextValueWrapper
 @package
   __strong struct FSContextValueWrapper *locals;
   NSUInteger localCount;
- 
+  BOOL receiverRetained; // When entering a method, the symbol table for this method does not retain the object associated with the "self" symbol 
+                         // (i.e., the receiver), as it might not be initialized yet (if we are entering in a init... method). This BOOL will
+                         // be set to NO. The F-Script run-time will then retain the receiver as soon as it determine that it is okay and set this 
+                         // boolean to YES in order to remember the job has been done and thus avoid over retaining.  
+
 @private
   NSUInteger retainCount;
   FSSymbolTable *parent;
@@ -75,6 +79,8 @@ struct FSContextValueWrapper
 - (id)copyWithZone:(NSZone *)zone;
 
 - (void)dealloc;
+
+- (void) didSendDeallocToSymbolAtIndex:(struct FSContextIndex)index;
 
 - (void)encodeWithCoder:(NSCoder *)coder;
 
@@ -97,6 +103,8 @@ struct FSContextValueWrapper
 
 - (BOOL) isEmpty;
 
+- objectForIndex:(struct FSContextIndex)index isDefined:(BOOL *)isDefined;
+
 - (id)objectForSymbol:(NSString *)symbol found:(BOOL *)found; // foud may be passed as NULL
 
 - (FSSymbolTable *) parent;
@@ -115,7 +123,6 @@ struct FSContextValueWrapper
 
 - (void) undefineSymbolAtIndex:(struct FSContextIndex)index;
 
-- objectForIndex:(struct FSContextIndex)index isDefined:(BOOL *)isDefined;
-
+- (void) willSendReleaseToSymbolAtIndex:(struct FSContextIndex)index;
 
 @end

@@ -7,8 +7,6 @@
 @class FSExecutor;
 
 @interface FSSystem:NSObject <NSCopying>
-// Note : Support for NSCoding is only here for backward compatibility with old archives.
-// It is deprecated. 
 {
   FSExecutor *executor; 
   // A FSSystem object point to an Executor instance. Why not an FSInterpreter

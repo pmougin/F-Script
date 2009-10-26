@@ -97,8 +97,7 @@ void RestartWithCorrectGarbageCollectionSettingIfNecessary()
 
 
 NSString  *findPathToFileInLibraryWithinUserDomain(NSString *fileName)
-/*" Retuns the path to the first occurrence of fileName in a Library
-directory within the User domain. "*/
+/*" Returns the path to the first occurrence of fileName in a Library directory within the User domain. "*/
 {
   NSString      *result = nil;		// the returned path
   NSString      *candidate;        	// candidate paths
@@ -113,15 +112,14 @@ directory within the User domain. "*/
     result = [candidate stringByAppendingPathComponent:fileName];
     if(![[NSFileManager defaultManager] fileExistsAtPath:result])
     {
-          result = nil;
+      result = nil;
     } 
   }
   return result;
 }
 
 NSString  *findPathToFileInLibraryWithinSystemDomain(NSString *fileName)
-/*" Retuns the path to the first occurrence of fileName in a Library
-directory within the System domain. "*/
+/*" Returns the path to the first occurrence of fileName in a Library directory within the System domain. "*/
 {
   NSString      *result = nil;		// the returned path
   NSString      *candidate;        	// candidate paths
@@ -136,7 +134,7 @@ directory within the System domain. "*/
     result = [candidate stringByAppendingPathComponent:fileName];
     if(![[NSFileManager defaultManager] fileExistsAtPath:result])
     {
-          result = nil;
+      result = nil;
     } 
   }
   return result;
@@ -200,6 +198,27 @@ directory within the System domain. "*/
     
   if ([[NSUserDefaults standardUserDefaults] boolForKey:@"FScriptLoadSystemFrameworks"])
     [self loadSystemFrameworks];
+  
+  if (floor(NSAppKitVersionNumber) > 949) 
+  {
+    // 10.6 or later system
+    NSString *systemFrameworksDirectoryPath;
+    NSString *path;
+
+    systemFrameworksDirectoryPath = findPathToFileInLibraryWithinSystemDomain(@"Frameworks");
+    if (systemFrameworksDirectoryPath)
+    { 
+      path = [systemFrameworksDirectoryPath stringByAppendingPathComponent:@"PreferencePanes.framework"];    [[NSBundle bundleWithPath:path] load];
+      path = [systemFrameworksDirectoryPath stringByAppendingPathComponent:@"ScreenSaver.framework"];    [[NSBundle bundleWithPath:path] load];
+      
+      path = [systemFrameworksDirectoryPath stringByAppendingPathComponent:@"CoreLocation.framework"];       [[NSBundle bundleWithPath:path] load];
+      path = [systemFrameworksDirectoryPath stringByAppendingPathComponent:@"CoreWLAN.framework"];           [[NSBundle bundleWithPath:path] load];
+      path = [systemFrameworksDirectoryPath stringByAppendingPathComponent:@"ImageCaptureCore.framework"];   [[NSBundle bundleWithPath:path] load];
+      path = [systemFrameworksDirectoryPath stringByAppendingPathComponent:@"OpenDirectory.framework"];      [[NSBundle bundleWithPath:path] load];
+      path = [systemFrameworksDirectoryPath stringByAppendingPathComponent:@"ServerNotification.framework"]; [[NSBundle bundleWithPath:path] load];
+
+    }  
+  }
   
   if (!repositoryPath || ![fileManager fileExistsAtPath:repositoryPath isDirectory:&b])
   {
@@ -457,7 +476,7 @@ directory within the System domain. "*/
   //NSLog(@"** updatePreference");
   if (sender == fontSizeUI)
   {
-    [[NSUserDefaults standardUserDefaults] setFloat:[fontSizeUI doubleValue] forKey:@"FScriptFontSize"];
+    [[NSUserDefaults standardUserDefaults] setDouble:[fontSizeUI doubleValue] forKey:@"FScriptFontSize"];
     [interpreterView setFontSize:[fontSizeUI doubleValue]];
   }
   else if (sender == shouldJournalUI)

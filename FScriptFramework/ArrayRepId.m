@@ -381,7 +381,7 @@
 
 - (NSString *)descriptionLimited:(NSUInteger)nbElem
 {
-  NSMutableString *str = [NSMutableString stringWithCString:"{"];
+  NSMutableString *str = [[@"{" mutableCopy] autorelease];
   NSString *elemStr = @""; // W
   NSUInteger i;
   NSUInteger lim = MIN(count,nbElem); 

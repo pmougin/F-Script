@@ -37,7 +37,7 @@
   return self;
 }
 
-- (void)translateCharRange:(long)translation
+- (void)translateCharRange:(int32_t)translation
 {
   [super translateCharRange:translation];
   [argument translateCharRange:translation];

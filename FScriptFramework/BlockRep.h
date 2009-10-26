@@ -80,7 +80,7 @@
 - (id) useRetain;
 - (NSInteger) useCount;
 
--(id) valueArgs:(id*)args count:(NSUInteger)count block:(FSBlock *)block;
+- (id) valueArgs:(id*)args count:(NSUInteger)count block:(FSBlock *)block;
 - (id) valueWithArguments:(NSArray *)arguments block:(FSBlock *)block;
 
 @end

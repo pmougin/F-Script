@@ -12,7 +12,7 @@
 #import "FSSymbolTable.h"
 #import <objc/objc.h> // sel_getName()
 #import <objc/runtime.h>
-#import "ConstantsInitialization.h"
+#import "FSConstantsInitialization.h"
 #import "FSMethod.h"
 #import "FSCNClassDefinition.h"
 #import "FSCNClassAddition.h"
@@ -243,8 +243,8 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
       [symbol_operator_dict setObject:@"|"  forKey:@"bar"];
       [symbol_operator_dict setObject:@"\\" forKey:@"backslash"];
       
-      constant_dict = [[NSMutableDictionary alloc] initWithCapacity:5000];
-      constantsInitialization(constant_dict);
+      constant_dict = [[NSMutableDictionary alloc] initWithCapacity:8500];
+      FSConstantsInitialization(constant_dict);
     }
   }
 }
@@ -744,7 +744,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
 
 - (FSCNReturn *) returnStatementWithCompilationContext:(struct compilationContext)compilationContext
 {
-  long firstCharIndex = token_first_char_index;
+  int32_t firstCharIndex = token_first_char_index;
   
   [self checkToken:CARET :@"\"^\" expected"];
   [self scan];
@@ -795,7 +795,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
     if (node->nodeType != UNARY_MESSAGE && node->nodeType != BINARY_MESSAGE && node->nodeType != KEYWORD_MESSAGE) 
       [self syntaxError:@"no cascade expected here"];
 
-    long firstCharIndex = token_first_char_index;
+    int32_t firstCharIndex = token_first_char_index;
     NSMutableArray *messages = [NSMutableArray arrayWithObject:node];
     FSCNBase *message;
     
@@ -848,7 +848,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   FSCNBase *argument = nil;  // = nil to avoid the "may be used uninitialized" warning
   NSMutableArray *patternElements = [NSMutableArray arrayWithObject:pattern_elt];
   FSPattern *pattern;
-  long firstCharIndex;
+  int32_t firstCharIndex;
   NSInteger i, pattern_count;
   FSArray *args = (id)[FSArray array];
   NSNull * nsnull;
@@ -1011,8 +1011,8 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
         // We determine if this is the begining of a class definition or addition, or just an identifier 
         
         // Save the scanner state
-        long string_index_beforeLookAhead           = string_index;
-        long token_first_char_index_beforeLookAhead = token_first_char_index;
+        int32_t string_index_beforeLookAhead           = string_index;
+        int32_t token_first_char_index_beforeLookAhead = token_first_char_index;
         struct res_scan rs_beforeLookAhead          = rs;
         
         [self scan];
@@ -1122,7 +1122,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   BOOL negative;
   FSCNPrecomputedObject *r;
   double val;
-  long firstCharIndex;
+  int32_t firstCharIndex;
   
   if ((negative = [rs.value isEqualToString:@"-"]))
   { 
@@ -1160,7 +1160,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
 - (FSCNArray *) arrayWithCompilationContext:(struct compilationContext)compilationContext
 {
   NSMutableArray *elements = [NSMutableArray array];
-  long firstCharIndex = token_first_char_index;
+  int32_t firstCharIndex = token_first_char_index;
   FSCNArray *r;
   
   [self checkToken:OPEN_BRACE :@"\"{\" expected"];
@@ -1197,7 +1197,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   FSCNBlock *r;
   BlockRep *blr;
   struct BlockSignature signature = {0,YES};
-  long start_source_string_index = string_index-1;
+  int32_t start_source_string_index = string_index-1;
   //int sign = 0;
   NSMutableString *source;
   BOOL hasArguments = NO;
@@ -1328,7 +1328,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
 - (FSCNArray *) dictionaryWithCompilationContext:(struct compilationContext)compilationContext
 {
   NSMutableArray *entries = [NSMutableArray array];
-  long firstCharIndex = token_first_char_index;
+  int32_t firstCharIndex = token_first_char_index;
   FSCNArray *r;
   
   [self checkToken:DICTIONARY_BEGIN :@"\"#{\" expected"];
@@ -1399,7 +1399,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   NSMutableString *types = [NSMutableString string];
   NSMutableString *fsEncodedTypes = [NSMutableString string];
   NSMutableArray *typesByArgument = [NSMutableArray array];
-  long startIndex = token_first_char_index;
+  int32_t startIndex = token_first_char_index;
   FSSymbolTable *parentSymbolTable = [FSSymbolTable symbolTable]; // Will contains identifiers other than arguments and locals variables.
                                                                   // Then, when the method gets executed, this symbol table will not be provided (we remove it in instruction (1)),
                                                                   // letting the interpreter look for instance variables, classes names, etc.   
@@ -1534,7 +1534,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   
   [self checkToken:OPEN_BRACE :@"method body expected"];
   
-  NSInteger methodCodeFirstCharIndex = token_first_char_index + 1; // excludes the opening brace
+  int32_t methodCodeFirstCharIndex = token_first_char_index + 1; // excludes the opening brace
   
   [self scan];
   
@@ -1557,7 +1557,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   
   [self checkToken:CLOSE_BRACE :@"\"}\"(end of method) expected"];
   
-  NSInteger lastCharIndex = token_first_char_index;
+  int32_t lastCharIndex = token_first_char_index;
   
   [self scan];
       
@@ -1774,8 +1774,8 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
 {
   NSString *className;
   FSCNClassAddition *r;
-  long firstCharIndex = token_first_char_index;
-  long lastCharIndex;
+  int32_t firstCharIndex = token_first_char_index;
+  int32_t lastCharIndex;
   NSMutableArray *methods = [NSMutableArray array];
   
   [self checkToken:NAME :@"class name expected"];

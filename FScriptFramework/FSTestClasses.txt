@@ -894,6 +894,122 @@ t startTest:'overriding retain or release not allowed'.
 t assertError:['[MyClass : NSObject { - retain { ^self } }]' asBlock].
 t assertError:['[MyClass : NSObject { - (void) release { ^5 } }]' asBlock].
 
+
+"**********************************************************************"
+t startTest:'Releasing receiver in initializer'.
+
+FSTestClass16 : NSObject
+{
+  - init1
+  {
+    self release.
+    ^ 22.
+  }
+  
+  - init2
+  {
+    super release.
+    ^ 22.
+  }
+  
+  - init3
+  {
+    [
+      self release.
+      ^ 22.
+    ] value.
+  }
+  
+  - init4
+  {
+    [
+      super release.
+      ^ 22.
+    ] value.
+  }
+
+  - init5
+  {
+    [|l|
+      self release.
+      ^ 22.
+    ] value.
+  }
+
+  - init6
+  {
+    [|l|
+      super release.
+      ^ 22.
+    ] value.
+  }
+}.
+
+t assert:FSTestClass16 alloc init1 = 22.
+t assert:FSTestClass16 alloc init2 = 22.
+t assert:FSTestClass16 alloc init3 = 22.
+t assert:FSTestClass16 alloc init4 = 22.
+t assert:FSTestClass16 alloc init5 = 22.
+t assert:FSTestClass16 alloc init6 = 22.
+
+"**********************************************************************"
+t startTest:'Deallocating receiver in initializer'.
+
+FSTestClass16 : NSObject
+{
+  - init1
+  {
+    self dealloc.
+    ^ 22.
+  }
+  
+  - init2
+  {
+    super dealloc.
+    ^ 22.
+  }
+  
+  - init3
+  {
+    [
+      self dealloc.
+      ^ 22.
+    ] value.
+  }
+  
+  - init4
+  {
+    [
+      super dealloc.
+      ^ 22.
+    ] value.
+  }
+
+  - init5
+  {
+    [|l|
+      self dealloc.
+      ^ 22.
+    ] value.
+  }
+
+  - init6
+  {
+    [|l|
+      super dealloc.
+      ^ 22.
+    ] value.
+  }
+}.
+
+t assert:FSTestClass16 alloc init1 = 22.
+t assert:FSTestClass16 alloc init2 = 22.
+t assert:FSTestClass16 alloc init3 = 22.
+t assert:FSTestClass16 alloc init4 = 22.
+t assert:FSTestClass16 alloc init5 = 22.
+t assert:FSTestClass16 alloc init6 = 22.
+
+
 "--------------------------------------------------------------------------------------------------------"
 
 t finish. 

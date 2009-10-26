@@ -210,8 +210,14 @@ void __attribute__ ((constructor)) initializeFSExecutor(void)
   if ((path = [bundle pathForResource:@"FlightTutorial" ofType:@"txt"]))
   {
     FSInterpreterResult *res;
-
-    tutorialInstalation = [NSString stringWithContentsOfFile:path];
+    NSStringEncoding usedEncoding;
+    NSError *error;
+    
+    tutorialInstalation = [NSString stringWithContentsOfFile:path usedEncoding:&usedEncoding error:&error];
+    if (!tutorialInstalation)
+    {
+      NSLog(@"Unable to read the flight tutorial instalation file: %@", [error localizedDescription]);
+    }
     [self setShouldJournal:NO]; 
     res = [self execute:tutorialInstalation];
     [self setShouldJournal:shouldJournal];

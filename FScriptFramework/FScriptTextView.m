@@ -5,7 +5,7 @@
 #import "FSArray.h"
 #import "FSCompiler.h"
 #import <objc/objc-class.h>
-#import "ConstantsInitialization.h"
+#import "FSConstantsInitialization.h"
 #import <ExceptionHandling/NSExceptionHandler.h>
 
 static NSMutableArray *completionStrings;
@@ -134,11 +134,11 @@ static NSMutableCharacterSet *letterDigitUnderscoreCharacterSet;
     [letterDigitUnderscoreCharacterSet formUnionWithCharacterSet:[NSCharacterSet decimalDigitCharacterSet]];
     [letterDigitUnderscoreCharacterSet addCharactersInString:@"_"];
     
-    d = [[NSMutableDictionary alloc] initWithCapacity:5000];
-    constantsInitialization(d);
+    d = [[NSMutableDictionary alloc] initWithCapacity:8500];
+    FSConstantsInitialization(d);
     constants = [[d allKeys] retain];
     [d release];
-    completionStrings = nil;  
+    completionStrings = nil;   
 
     [pool release];
   }

@@ -962,7 +962,7 @@ static int comp(const void *a,const void *b)
 
 - (NSString *)descriptionLimited:(NSUInteger)nbElem
 {
-  NSMutableString *str = [NSMutableString stringWithCString:"{"];
+  NSMutableString *str = [[@"{" mutableCopy] autorelease];
   NSString *elemStr = @""; // W
   NSUInteger i;
   NSUInteger lim = MIN(count,nbElem);

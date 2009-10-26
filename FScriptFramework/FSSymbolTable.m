@@ -145,14 +145,11 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
 
 - (FSArray *)allDefinedSymbols
 {
-  //SymbolTableValueWrapper *vw;
   FSArray *r = [FSArray arrayWithCapacity:30];
   for (NSUInteger i = 0; i < localCount; i++)
   {
-    //vw = locals[i];
     if (locals[i].status == DEFINED)
     {
-      //[r addObject:[NSMutableString stringWithString:[vw symbol]]];
       [r addObject:[NSMutableString stringWithString:locals[i].symbol]];
     }
   }  
@@ -187,12 +184,10 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
 
 - (void)dealloc
 {
-  //NSLog(@"FSSymbolTable dealloc"); //, %d , %d",[symbTable retainCount],[valueWrappers retainCount]);
+  //NSLog(@"FSSymbolTable dealloc");
   [parent release];
-  //[valueWrappers release];
   if (locals)
   { 
-    //for (unsigned i = 0; i < localCount; i++) [locals[i] release];
     for (NSUInteger i = 0; i < localCount; i++)
     {
       [locals[i].symbol release];
@@ -201,6 +196,17 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
     free(locals);
   }
   [super dealloc];
+}
+
+- (void) didSendDeallocToSymbolAtIndex:(struct FSContextIndex)index
+{
+  FSSymbolTable *s = self;
+  for (NSUInteger i = 0; i < index.level && s; i++) s = s->parent;
+  
+  if (s)
+  {
+    s->locals[index.index].value = nil;
+  }
 }
 
 - (void)encodeWithCoder:(NSCoder *)coder
@@ -251,6 +257,7 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
 {
   self = [super init];
   retainCount = 1;
+  receiverRetained = YES;
   
   if ([coder allowsKeyedCoding]) 
   {
@@ -364,6 +371,7 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
     localCount = theLocalCount;
     locals = theLocals;
     tryToAttachWhenDecoding = shouldTry;
+    receiverRetained = YES;
     return self;
   }
   return nil;
@@ -392,6 +400,24 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
 }      
 
 - (BOOL) isEmpty  { return (localCount == 0);}
+
+- objectForIndex:(struct FSContextIndex)index isDefined:(BOOL *)isDefined
+{
+  FSSymbolTable *s = self;
+  
+  for (NSUInteger i = 0; i < index.level && s; i++) s = s->parent;
+  
+  if (s)
+  {
+    if (s->locals[index.index].status == DEFINED)
+    {
+      *isDefined = YES;
+      return s->locals[index.index].value;
+    }
+  }
+  *isDefined = NO;
+  return nil;
+}
 
 - (id)objectForSymbol:(NSString *)symbol found:(BOOL *)found // foud may be passed as NULL
 {
@@ -476,14 +502,42 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
   
   if (s)
   {
-    [object retain];
-    [s->locals[index.index].value release];
+    [object retain]; // (1)
+    
+    if (index.index != 0 || s->receiverRetained) 
+    {
+      // We are assigning to a regular variable (i.e., not to a "self" pointing to a non-retained receiver).
+      // Therefore, we release the old value, as usual. 
+      
+      [s->locals[index.index].value release];
+    }
+    else     
+    {
+      // We are assigning to a "self" pointing to a non-retained receiver (we know that because a symbol table with receiverRetained == NO
+      // is a symbol table used for method execution, and the index for "self" in such tables is always 0). 
+      // Therefore, we don't release the old value (i.e., the non-retained receiver).
+      // The new value for "self" has been retained in (1). We note that in the receiverRetained ivar.
+
+      s->receiverRetained = YES;
+    }
+
     s->locals[index.index].value = object; 
     s->locals[index.index].status = DEFINED;
     return self;
   }  
   else return nil;
 }
+
+- (NSString *) symbolForIndex:(struct FSContextIndex)index
+{
+  FSSymbolTable *s = self;
+  
+  for (NSUInteger i = 0; i < index.level && s; i++) s = s->parent;
+  
+  if (s) return s->locals[index.index].symbol;
+  else   return nil;
+}
+
 
 -(void) undefineSymbolAtIndex:(struct FSContextIndex)index
 {
@@ -498,32 +552,23 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
   }
 }
 
-- objectForIndex:(struct FSContextIndex)index isDefined:(BOOL *)isDefined
+- (void) willSendReleaseToSymbolAtIndex:(struct FSContextIndex)index
 {
   FSSymbolTable *s = self;
-  
   for (NSUInteger i = 0; i < index.level && s; i++) s = s->parent;
   
-  if (s)
+  if (s && index.index == 0 && !s->receiverRetained)
   {
-    if (s->locals[index.index].status == DEFINED)
-    {
-      *isDefined = YES;
-      return s->locals[index.index].value;
-    }
+    // We are informed that a release message is going to be sent to a "self" pointing to a non-retained receiver (we know that because a symbol table 
+    // with receiverRetained == NO is a symbol table used for method execution, and the index for "self" in such tables is always 0).
+    // Such receivers are non retained because they might be uninitialized objects (if we are executing an init... method defined in F-Script).
+    // However, to follow the F-Script language semantics, if they are actualy not unitialized they must act as if they where retained. 
+    // The release message might lead to a premature dealloction, and consequently break correct semantic. We retain this receiver in
+    // order to avoid such premature deallocation. Note that we can safely retain it because the fact it is going to receive a release
+    // message means that it is not actually an uninitialized object (unless there is programming error in the F-Script user code of course).
+    [s->locals[0].value retain];
+    s->receiverRetained = YES; 
   }
-  *isDefined = NO;
-  return nil;
-}
-
-- (NSString *) symbolForIndex:(struct FSContextIndex)index
-{
-  FSSymbolTable *s = self;
-  
-  for (NSUInteger i = 0; i < index.level && s; i++) s = s->parent;
-  
-  if (s) return s->locals[index.index].symbol;
-  else   return nil;
 }
                                                                                 
 @end

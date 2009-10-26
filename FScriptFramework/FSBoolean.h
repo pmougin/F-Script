@@ -12,10 +12,10 @@
 
 + (FSBoolean *) booleanWithBool:(BOOL)theBool;
 + (FSBoolean *) fsFalse;
-+ (FSBoolean *)  fsTrue;
-- (FSBoolean *)and:(FSBlock *)operand;
++ (FSBoolean *) fsTrue;
+- (FSBoolean *) and:(FSBlock *)operand;
 - (id) autorelease;
-- (FSBoolean *)clone __attribute__((deprecated));
+- (FSBoolean *) clone __attribute__((deprecated));
 - (id) copy;
 - (id) copyWithZone:(NSZone *)zone;
 - (NSUInteger) hash;
@@ -23,14 +23,14 @@
 - (id) ifFalse:(FSBlock *)falseBlock ifTrue:(FSBlock *)trueBlock;
 - (id) ifTrue:(FSBlock *)trueBlock;
 - (id) ifTrue:(FSBlock *)trueBlock ifFalse:(FSBlock *)falseBlock;
-- (FSBoolean *)not;
-- (FSBoolean *)operator_ampersand:(FSBoolean *)operand;
-- (FSBoolean *)operator_bar:(FSBoolean *)operand;
-- (FSBoolean *)operator_less:(id)operand;
-- (NSNumber *)operator_plus:(id)operand;
-- (FSBoolean *)operator_equal:(id)operand;
-- (FSBoolean *)operator_tilde_equal:(id)operand;
-- (FSBoolean *)or:(FSBlock *)operand;
+- (FSBoolean *) not;
+- (FSBoolean *) operator_ampersand:(FSBoolean *)operand;
+- (FSBoolean *) operator_bar:(FSBoolean *)operand;
+- (FSBoolean *) operator_less:(id)operand;
+- (NSNumber *)  operator_plus:(id)operand;
+- (FSBoolean *) operator_equal:(id)operand;
+- (FSBoolean *) operator_tilde_equal:(id)operand;
+- (FSBoolean *) or:(FSBlock *)operand;
 - (void) release;
 - (id) retain;
 - (NSUInteger) retainCount;

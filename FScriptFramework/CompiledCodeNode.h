@@ -76,6 +76,6 @@
 - setobject:(id)theobject;
 - setReceiver:(CompiledCodeNode*)theReceiver;
 
--(void)translateCharRange:(long)translation;                
+-(void)translateCharRange:(int32_t)translation;                
 
 @end

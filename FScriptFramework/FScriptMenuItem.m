@@ -102,7 +102,7 @@
   //NSLog(@"** updatePreference");
   if (sender == fontSizeUI)
   {
-    [[NSUserDefaults standardUserDefaults] setFloat:[fontSizeUI doubleValue] forKey:@"FScriptFontSize"];
+    [[NSUserDefaults standardUserDefaults] setDouble:[fontSizeUI doubleValue] forKey:@"FScriptFontSize"];
     [[self interpreterView] setFontSize:[fontSizeUI doubleValue]];
   }
   else if (sender == automaticallyIntrospectDeclaredPropertiesUI)

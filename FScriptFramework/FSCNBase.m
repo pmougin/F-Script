@@ -47,7 +47,7 @@
   lastCharIndex  = last;
 }  
 
--(void)translateCharRange:(long)translation
+-(void)translateCharRange:(int32_t)translation
 {  
   firstCharIndex += translation; 
   lastCharIndex += translation;

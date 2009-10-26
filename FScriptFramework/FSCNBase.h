@@ -7,7 +7,8 @@
 
 enum FSCNType {IDENTIFIER, MESSAGE, STATEMENT_LIST, OBJECT, ARRAY, TEST_ABORT, BLOCK, ASSIGNMENT, NUMBER, CASCADE, 
                UNARY_MESSAGE, BINARY_MESSAGE, KEYWORD_MESSAGE, SUPER, CLASS_DEFINITION, CLASS_ADDITION, METHOD, RETURN, DICTIONARY};
-// Note: in older versions of F-Script, the node type was archived directly as its FSCNType integer value. Therefore, for backward compatibility with older archives, the order of this enum should not be modified.
+// Note: in older versions of F-Script, the node type was archived directly as its FSCNType integer value. 
+// Therefore, for backward compatibility with older archives, the order of this enum should not be modified.
 
 @interface FSCNBase : NSObject <NSCoding>
 {
@@ -21,6 +22,6 @@ enum FSCNType {IDENTIFIER, MESSAGE, STATEMENT_LIST, OBJECT, ARRAY, TEST_ABORT, B
 - (id)initWithCoder:(NSCoder *)aDecoder;
 - (id)init;
 - (void)setFirstCharIndex:(int32_t)first lastCharIndex:(int32_t)last;
-- (void)translateCharRange:(long)translation;
+- (void)translateCharRange:(int32_t)translation;
                 
 @end

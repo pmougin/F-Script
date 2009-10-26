@@ -20,11 +20,11 @@ struct res_scan
 
 @interface FSCompiler:NSObject
 {
-  struct res_scan rs;          // current result of the lexical parsing (scanning)
-  __strong const char *string; // string to compile
-  long string_index;           // in order to scan the string to compile 
-  long token_first_char_index; // index in the string of the first character of the current token
-  long string_size;            // size of the string to compile 
+  struct res_scan rs;             // current result of the lexical parsing (scanning)
+  __strong const char *string;    // string to compile
+  int32_t string_index;           // in order to scan the string to compile 
+  int32_t token_first_char_index; // index in the string of the first character of the current token
+  int32_t string_size;            // size of the string to compile 
   jmp_buf error_handler;
   NSString *errorStr;
   NSInteger errorFirstCharIndex;

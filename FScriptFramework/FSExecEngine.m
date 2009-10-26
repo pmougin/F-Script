@@ -52,6 +52,7 @@
 #import "FScriptTextView.h"
 #import "FSGlobalScope.h"
 #import "FSAssociation.h"
+#import "FSNewlyAllocatedObject.h"
 
 static NSMutableSet *issuedWarnings;
 
@@ -444,7 +445,7 @@ id sendMsgNoPattern(id receiver, SEL selector, NSUInteger argumentCount, id *arg
   }
   else if (/*(receiver!=[NSProxy class]) &&*/ ![receiver respondsToSelector:selector] && [receiver methodSignatureForSelector:selector] == nil) // A receiver capable of forwarding the message will return a non-nil signature
   {    
-    if ( (isKindOfClassNSDistantObject(receiver) &&  // fix for broken NSProxy meta-class level implementation in OS X
+    if ( (isKindOfClassNSDistantObject(receiver) && (           // fix for broken NSProxy meta-class level implementation in OS X
              selector == @selector(operator_equal_equal:)     || selector == @selector(operator_tilde_tilde:) 
           || selector == @selector(applyBlock:)
           || selector == @selector(enlist)                    || selector == @selector(enlist:)
@@ -452,10 +453,10 @@ id sendMsgNoPattern(id receiver, SEL selector, NSUInteger argumentCount, id *arg
           || selector == @selector(asBlock)                   || selector == @selector(asBlockOnError:) 
           || selector == @selector(classOrMetaclass)          || selector == @selector(throw) 
           || selector == @selector(setProtocolForProxy:)      || selector == @selector(connectionForProxy)
-          || selector == @selector(initWithLocal:connection:) || selector == @selector(initWithTarget:connection:))
-          || (isKindOfClassNSProtocolChecker(receiver) &&
+          || selector == @selector(initWithLocal:connection:) || selector == @selector(initWithTarget:connection:)))
+          || (isKindOfClassNSProtocolChecker(receiver) && (
              selector == @selector(protocol)                  || selector == @selector(target) 
-          || selector == @selector(initWithTarget:protocol:)) ) 
+          || selector == @selector(initWithTarget:protocol:))) ) 
       switch (argumentCount)
       {
         case 2:  return objc_msgSend(receiver,selector); 
@@ -471,13 +472,13 @@ id sendMsgNoPattern(id receiver, SEL selector, NSUInteger argumentCount, id *arg
     {
       return ([receiver isKindOfClass:[NSArray class]] ? [receiver objectAtIndex:[args[2] doubleValue]] : [receiver self]);
     }
-    else if ([receiver isKindOfClass:[NSArray class]] /*|| [receiver isKindOfClass:[NSSet class]] */) 
+    else if ([receiver isKindOfClass:[NSArray class]]) 
     {     
       FSArray *level = [FSArray arrayWithCapacity:argumentCount-1];
       [level addObject:[FSNumber numberWithDouble:1]];
       for (NSUInteger i = 2; i < argumentCount; i++)
       {
-        if([args[i] isKindOfClass:[NSArray class]] /*|| [args[i] isKindOfClass:[NSSet class]]*/) 
+        if([args[i] isKindOfClass:[NSArray class]]) 
           [level addObject:[FSNumber numberWithDouble:1]]; 
         else 
           [level addObject:[FSNumber numberWithDouble:0]];
@@ -512,30 +513,36 @@ id sendMsgNoPattern(id receiver, SEL selector, NSUInteger argumentCount, id *arg
                                          // retains its return value, which this is not a good thing to do
                                          // with uninitialized objects!). This is why we have this special case.  
   {
+    id newObject;
+    
     if (ancestorToStartWith)
     {
       struct objc_super s_objc_super = {receiver, ancestorToStartWith};
-      return objc_msgSendSuper(&s_objc_super, selector);
+      newObject = objc_msgSendSuper(&s_objc_super, selector);
     }  
     else
     {  
-      return objc_msgSend(receiver,selector);
+      newObject = objc_msgSend(receiver,selector);
     }
+    return newObject;
   }
   else if (selector == @selector(allocWithZone:))
   {
     if (![args[2] isKindOfClass:[FSPointer class]]  && ![args[2] isKindOfClass:[Pointer class]])
       FSVerifClassArgs(@"allocWithZone:",1,args[2],[FSPointer class],(NSInteger)1);
     
+    id newObject;
+    
     if (ancestorToStartWith)
     {
       struct objc_super s_objc_super = {receiver, ancestorToStartWith};
-      return objc_msgSendSuper(&s_objc_super, selector, [args[2] cPointer]);
+      newObject = objc_msgSendSuper(&s_objc_super, selector, [args[2] cPointer]);
     }  
     else
     {  
-      objc_msgSend(receiver,selector, [args[2] cPointer]);
-    }    
+      newObject = objc_msgSend(receiver,selector, [args[2] cPointer]);
+    } 
+    return newObject;   
   }
   
   [msgContext prepareForMessageWithReceiver:receiver selector:selector];
@@ -1211,9 +1218,16 @@ id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *e
     NSUInteger argumentCount;
     Class ancestorToStartWith;
     
-    if      (codeNode->nodeType == UNARY_MESSAGE)  argumentCount = 0;
-    else if (codeNode->nodeType == BINARY_MESSAGE) argumentCount = 1;
-    else                                           argumentCount = ((FSCNKeywordMessage *)node)->argumentCount;
+    if (codeNode->nodeType == UNARY_MESSAGE)  
+    {
+      argumentCount = 0;
+      if (node->selector == @selector(release) && (node->receiver->nodeType == IDENTIFIER || node->receiver->nodeType == SUPER))
+        [localSymbolTable willSendReleaseToSymbolAtIndex:((FSCNIdentifier *)(node->receiver))->locationInContext];
+    }
+    else if (codeNode->nodeType == BINARY_MESSAGE) 
+      argumentCount = 1;
+    else                                           
+      argumentCount = ((FSCNKeywordMessage *)node)->argumentCount;
         
     id *arguments = NSAllocateCollectable(sizeof(id) * (argumentCount+2) , NSScannedOption | NSCollectorDisabledOption);
     
@@ -1243,9 +1257,17 @@ id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *e
         else ancestorToStartWith = [currentClass superclass];
       }
       else ancestorToStartWith = nil;
-                                        
-      res_msg = sendMsg(arguments[0], node->selector, argumentCount+2, arguments, node->pattern, node->msgContext, ancestorToStartWith);                                                
-                  
+     
+      @try
+      { 
+        res_msg = sendMsg(arguments[0], node->selector, argumentCount+2, arguments, node->pattern, node->msgContext, ancestorToStartWith);                                                
+      }
+      @finally
+      {
+        if (node->selector == @selector(dealloc) && !FSIsIgnoredSelector(node->selector) && (node->receiver->nodeType == IDENTIFIER || node->receiver->nodeType == SUPER))
+          [localSymbolTable didSendDeallocToSymbolAtIndex:((FSCNIdentifier *)(node->receiver))->locationInContext];
+      }    
+
       return res_msg;
     }
     @finally 
@@ -1284,9 +1306,16 @@ id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *e
       NSUInteger argumentCount;
       FSCNMessage *messageNode = ((FSCNCascade*)codeNode)->messages[j];
       
-      if      (messageNode->nodeType == UNARY_MESSAGE)  argumentCount = 0;
-      else if (messageNode->nodeType == BINARY_MESSAGE) argumentCount = 1;
-      else                                              argumentCount = ((FSCNKeywordMessage *)messageNode)->argumentCount;
+      if (messageNode->nodeType == UNARY_MESSAGE)
+      {
+        argumentCount = 0;
+        if (messageNode->selector == @selector(release) && (messageNode->receiver->nodeType == IDENTIFIER || messageNode->receiver->nodeType == SUPER))
+          [localSymbolTable willSendReleaseToSymbolAtIndex:((FSCNIdentifier *)(messageNode->receiver))->locationInContext];
+      }
+      else if (messageNode->nodeType == BINARY_MESSAGE) 
+        argumentCount = 1;
+      else                                              
+        argumentCount = ((FSCNKeywordMessage *)messageNode)->argumentCount;
           
       id *arguments = NSAllocateCollectable(sizeof(id) * (argumentCount+2) , NSScannedOption | NSCollectorDisabledOption);
       
@@ -1307,7 +1336,15 @@ id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *e
         *errorFirstCharIndexPtr = messageNode->firstCharIndex; 
         *errorLastCharIndexPtr  = messageNode->lastCharIndex;
                               
-        res_msg = sendMsg(arguments[0], messageNode->selector, argumentCount+2, arguments, messageNode->pattern, messageNode->msgContext, ancestorToStartWith);
+        @try
+        {
+          res_msg = sendMsg(arguments[0], messageNode->selector, argumentCount+2, arguments, messageNode->pattern, messageNode->msgContext, ancestorToStartWith);
+        }
+        @finally
+        {
+          if (messageNode->selector == @selector(dealloc) && !FSIsIgnoredSelector(messageNode->selector) && (messageNode->receiver->nodeType == IDENTIFIER || messageNode->receiver->nodeType == SUPER))
+            [localSymbolTable didSendDeallocToSymbolAtIndex:((FSCNIdentifier *)(messageNode->receiver))->locationInContext];
+        }    
       }
       @finally 
       {
@@ -1452,7 +1489,7 @@ id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *e
     }
 
     //--------------------- We need an F-Script dealloc method to take control upon deallocation in order to release the resources holding the F-Script dynamic instance variables associated to the object
-    if (!fscript_isFScriptClass(superclass))
+    if (!fscript_isFScriptClass(superclass) && !FSIsIgnoredSelector(@selector(dealloc)))
     {
       ok = [[FSCompiler dummyDeallocMethodForClassNamed:className] addToClass:class];
       if (!ok) FSExecError([NSString stringWithFormat:@"F-Script internal error: can't add method \"dealloc\" to class %@", className]);

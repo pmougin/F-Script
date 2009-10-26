@@ -299,40 +299,6 @@ static int comp(const void *a,const void *b)
   } 
 }
 
-/*- (void)graph
-{
-  unsigned i, count;
-  NSDictionary *errorInfo;
-  NSAppleScript *as;
-  FILE *file;
-  NSMutableString *command;
-  char *path = malloc(30);
-  [NSData dataWithBytesNoCopy:path length:30];
-  // In order to ensure that it will be freed even if an exception is raised during the method, we give 
-  // the ownership of the memory allocated for "path" to an autoreleased NSData object.
-  strcpy(path,"/tmp/temp.XXXXXX");
-  path = mktemp(path);
-  file = fopen(path,"w");
-  for (i = 0, count = [self count]; i < count; i++)
-  {
-    id object = [self objectAtIndex:i];
-    if ([object isKindOfClass:[NSNumber class]])
-      fprintf(file,"%g\n",[[self objectAtIndex:i] doubleValue]);
-    else
-        
-  }  
-  fflush(file);
-  [NSTimer scheduledTimerWithTimeInterval:20 target:[FSMiscTools class] selector:@selector(unlink:) userInfo:[NSString stringWithCString:path] repeats:NO];
-  command = [NSMutableString stringWithString:@"tell application \"gnuplot-3.7.1d\"\n activate\n exec \"plot \\\""];
-  [command appendString:[NSString stringWithCString:path]];  
-  [command appendString:@"\\\"with linespoints\"\n end tell"];
-  as = [[NSAppleScript alloc] initWithSource:command];
-  if ([as executeAndReturnError:&errorInfo] == nil)
-  {
-    FSExecError([errorInfo objectForKey:NSAppleScriptErrorMessage]);
-  }
-}*/
-
 - (FSArray *)index 
 {
   return [[NSNumber numberWithUnsignedInteger:[self count]] iota];
