@@ -1,10 +1,10 @@
-/*   FSCNClassAddition.m Copyright (c) 2008-2009 Philippe Mougin.  */
+/*   FSCNCategory.m Copyright (c) 2008-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
-#import "FSCNClassAddition.h"
+#import "FSCNCategory.h"
 #import "FSCNMethod.h"
 
-@implementation FSCNClassAddition
+@implementation FSCNCategory
 
 - (NSString *)className 
 { 
@@ -20,7 +20,7 @@
 
 - (NSString *)description
 {
-  return @"Class addition"; 
+  return @"Category"; 
 }
 
 
@@ -36,7 +36,7 @@
   self = [super init];
   if (self != nil) 
   {
-    nodeType  = CLASS_ADDITION;
+    nodeType  = CATEGORY;
     className = [theClassName retain];
     methods   = [theMethods retain];
   }

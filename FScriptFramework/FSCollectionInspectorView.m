@@ -122,7 +122,7 @@ static NSString *headerCellStringForBlock(FSBlock *block)
   [tableView sizeLastColumnToFit];
   //[tableView moveColumn:newColumnIndex toColumn:[tableView numberOfColumns]-1];
   
-  [tableView selectColumn:newColumnIndex byExtendingSelection:NO];
+  [tableView selectColumnIndexes:[NSIndexSet indexSetWithIndex:newColumnIndex] byExtendingSelection:NO];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(blockDidChange:) name:@"BlockDidChangeNotification" object:defaultBlock];
   

@@ -15,7 +15,7 @@
 #import "FSConstantsInitialization.h"
 #import "FSMethod.h"
 #import "FSCNClassDefinition.h"
-#import "FSCNClassAddition.h"
+#import "FSCNCategory.h"
 #import "FSCNIdentifier.h"
 #import "FSCNSuper.h"
 #import "FSPattern.h"
@@ -161,7 +161,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
 - (NSString *)typeWithCompilationContext:(struct compilationContext)compilationContext;
 - (FSCNBase *)methodBodyWithCompilationContext:(struct compilationContext)compilationContext;
 - (FSCNClassDefinition *)classDefinitionWithCompilationContext:(struct compilationContext)compilationContext;
-- (FSCNClassAddition *)classAdditionWithCompilationContext:(struct compilationContext)compilationContext;
+- (FSCNCategory *)categoryWithCompilationContext:(struct compilationContext)compilationContext;
 
 @end 
 
@@ -1017,17 +1017,16 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
         
         [self scan];
         
-        /*if (rs.type == OPEN_BRACE)
+        if (rs.type == OPEN_BRACE)
         {
-          
           // Restore the scanner state
           string_index           = string_index_beforeLookAhead;
           token_first_char_index = token_first_char_index_beforeLookAhead;
           rs                     = rs_beforeLookAhead;
           
-          return [self classAdditionWithCompilationContext:compilationContext];
+          return [self categoryWithCompilationContext:compilationContext];
         }
-        else */
+        else
         {
           if (rs.type == COLON)
           {
@@ -1760,7 +1759,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
     [methodNodes addObject:newMethodNode];
   }
   
-  [self checkToken:CLOSE_BRACE :@"\"}\" expected"];
+  [self checkToken:CLOSE_BRACE :@"method definition or \"}\" expected"];
   
   r = [[[FSCNClassDefinition alloc] initWithClassName:className superclassName:superclassName civarNames:civarNames ivarNames:ivarNames methods:methodNodes] autorelease];
   [r setFirstCharIndex:firstCharIndex lastCharIndex:token_first_char_index];
@@ -1770,10 +1769,10 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   return r;
 }
 
-- (FSCNClassAddition *)classAdditionWithCompilationContext:(struct compilationContext)compilationContext
+- (FSCNCategory *)categoryWithCompilationContext:(struct compilationContext)compilationContext
 {
   NSString *className;
-  FSCNClassAddition *r;
+  FSCNCategory *r;
   int32_t firstCharIndex = token_first_char_index;
   int32_t lastCharIndex;
   NSMutableArray *methods = [NSMutableArray array];
@@ -1783,22 +1782,25 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   compilationContext.className = rs.value;
   [self scan];
   [self checkToken:OPEN_BRACE :@"\"{\" expected"];
-  
-  lastCharIndex = token_first_char_index-1;
-  
-  [self scan];
     
+  [self scan];
+   
+  if (rs.type == NAME) 
+    [self syntaxError:@"instance variable definition not allowed here (instance variable definitions can only appear in class definitions)" firstCharIndex:token_first_char_index lastCharIndex:string_index-1]; 
+        
   // Method definitions
   while (rs.type == OPERATOR)
   {
     [methods addObject:[self methodWithCompilationContext:compilationContext]];
   }
   
-  [self checkToken:CLOSE_BRACE :@"\"}\" expected"];
+  [self checkToken:CLOSE_BRACE :@"method definition or \"}\" expected"];
               
   [self scan];
   
-  r = [[[FSCNClassAddition alloc] initWithClassName:className methods:methods] autorelease];  
+  lastCharIndex = token_first_char_index-1;
+
+  r = [[[FSCNCategory alloc] initWithClassName:className methods:methods] autorelease];  
   [r setFirstCharIndex:firstCharIndex lastCharIndex:lastCharIndex];
 
   return r;

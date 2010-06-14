@@ -12,7 +12,7 @@ typedef enum {DECOMPOSE,NO_DECOMPOSE} T_parser_mode;
 - (void)command:(NSString *)command from:(id)sender;
 @end
 
-@interface ShellView : FScriptTextView /* <NSTextViewDelegate> */
+@interface ShellView : FScriptTextView <NSTextViewDelegate>
 {
   NSString *prompt;                              
   NSUInteger start;                   // The start of the current command (i.e. the command beign edited) 

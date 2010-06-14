@@ -1431,11 +1431,9 @@ static NSMutableArray *customButtons = nil;
     CGFloat baseWidth  = NSWidth([self bounds]);
     CGFloat baseHeight = NSHeight([self bounds]);
     CGFloat fontSize;
-    // NSButton *kvButton; // jg added
   
     fontSize = systemFontSize();
   
-    //browser = [[NSBrowser alloc] initWithFrame:NSMakeRect(0,20,baseWidth,baseHeight-57)]; 
     browser = [[NSBrowser alloc] initWithFrame:NSMakeRect(0, FSObjectBrowserBottomBarHeight, baseWidth, baseHeight-FSObjectBrowserBottomBarHeight)];
     //[browser setMatrixClass:[FSObjectBrowserMatrix class]];
     [browser setCellClass:[FSObjectBrowserCell class]];
@@ -1449,6 +1447,7 @@ static NSMutableArray *customButtons = nil;
     [[browser cellPrototype] setFont:[NSFont systemFontOfSize:fontSize]];
     [browser setDelegate:self];
     [browser setFocusRingType:NSFocusRingTypeNone];
+    [browser setAutohidesScroller:YES];
     //[browser setAcceptsArrowKeys:NO];
     
     if ([browser respondsToSelector:@selector(setColumnResizingType:)]) [browser setColumnResizingType:2];

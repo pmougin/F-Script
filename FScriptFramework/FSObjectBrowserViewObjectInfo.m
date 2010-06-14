@@ -17,7 +17,7 @@
 #import "FSGenericPointerPrivate.h"
 #import "FSObjectPointerPrivate.h"
 #import "FSCNClassDefinition.h"
-#import "FSCNClassAddition.h"
+#import "FSCNCategory.h"
 #import "FSCNIdentifier.h"
 #import "FSCNSuper.h"
 #import "FSPattern.h"
@@ -229,21 +229,6 @@ static id objectFromBrowserColumnResizingType(NSBrowserColumnResizingType browse
   default:                      return [Number numberWithDouble:buttonType];
   } 
 }*/
-
-static id objectFromCellEntryType(NSInteger cellEntryType)
-{
-  switch (cellEntryType)
-  {
-  case NSIntType:            return [FSNamedNumber namedNumberWithDouble:cellEntryType name:@"NSIntType"];
-  case NSPositiveIntType:    return [FSNamedNumber namedNumberWithDouble:cellEntryType name:@"NSPositiveIntType"];  
-  case NSFloatType:          return [FSNamedNumber namedNumberWithDouble:cellEntryType name:@"NSFloatType"];
-  case NSPositiveFloatType:  return [FSNamedNumber namedNumberWithDouble:cellEntryType name:@"NSPositiveFloatType"];
-  case NSDoubleType:         return [FSNamedNumber namedNumberWithDouble:cellEntryType name:@"NSDoubleType"];  
-  case NSPositiveDoubleType: return [FSNamedNumber namedNumberWithDouble:cellEntryType name:@"NSPositiveDoubleType"];
-  case NSAnyType:            return [FSNamedNumber namedNumberWithDouble:cellEntryType name:@"NSAnyType"];  
-  default:                   return [FSNumber numberWithDouble:cellEntryType];
-  } 
-}
 
 static id objectFromCellImagePosition(NSInteger cellImagePosition)
 {
@@ -1550,6 +1535,12 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
       [self addObject:o->receiver withLabel:@"Receiver" toMatrix:m classLabel:@"" selectedClassLabel:selectedClassLabel selectedLabel:selectedLabel selectedObject:selectedObject];           
       [self addObjects:[NSArray arrayWithObjects:o->messages count:o->messageCount] withLabel:@"Message sends" toMatrix:m classLabel:@"" selectedClassLabel:selectedClassLabel selectedLabel:selectedLabel selectedObject:selectedObject];
     }
+    else if ([object isKindOfClass:[FSCNCategory class]])
+    {
+      FSCNCategory *o = object;
+      [self addObject:o->className withLabel:@"Class name" toMatrix:m classLabel:@"" selectedClassLabel:selectedClassLabel selectedLabel:selectedLabel selectedObject:selectedObject];           
+      [self addObjects:o->methods withLabel:@"Methods" toMatrix:m classLabel:@"" selectedClassLabel:selectedClassLabel selectedLabel:selectedLabel selectedObject:selectedObject];
+    }
     else if ([object isKindOfClass:[FSCNClassDefinition class]])
     {
       FSCNClassDefinition *o = object;
@@ -1804,7 +1795,6 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
     NSBezierPath *o = object;
     ADD_CLASS_LABEL(@"NSBezierPath Info");
     ADD_RECT(                [o bounds]                             ,@"Bounds")
-    ADD_BOOL(                [o cachesBezierPath]                   ,@"Caches bezier path")
     ADD_RECT(                [o controlPointBounds]                 ,@"Control point bounds")
     if (![o isEmpty]) ADD_POINT([o currentPoint]                    ,@"Current point")
     ADD_NUMBER(              [o elementCount]                       ,@"Element count")
@@ -2083,7 +2073,6 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
     ADD_OBJECT(objectFromControlSize([o controlSize])               ,@"Control size")
     ADD_OBJECT(objectFromControlTint([o controlTint])               ,@"Control tint")
     ADD_OBJECT_NOT_NIL(      [o controlView]                        ,@"Control view")
-    ADD_OBJECT(objectFromCellEntryType([o entryType])               ,@"Entry type")
     ADD_OBJECT(objectFromFocusRingType([o focusRingType])           ,@"Focus ring type")
     ADD_OBJECT(              [o font]                               ,@"Font")
     ADD_OBJECT_NOT_NIL(      [o formatter]                          ,@"Formatter")
@@ -2588,7 +2577,6 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
     ADD_CLASS_LABEL(@"NSImage Info");
     ADD_RECT(                [o alignmentRect]                      ,@"Alignment rect")
     ADD_OBJECT(              [o backgroundColor]                    ,@"Background color")
-    ADD_OBJECT(              [o bestRepresentationForDevice:nil]    ,@"Best representation for current device")
     ADD_BOOL(                [o cacheDepthMatchesImageDepth]        ,@"Cache depth matches image depth")
     ADD_OBJECT(objectFromImageCacheMode([o cacheMode])              ,@"Cache mode")
     ADD_OBJECT_NOT_NIL(      [o delegate]                           ,@"Delegate")
@@ -2636,13 +2624,6 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
       ADD_OBJECT_NOT_NIL([o valueForProperty:NSImageProgressive]    ,@"Progressive")
       ADD_OBJECT_NOT_NIL([o valueForProperty:NSImageRGBColorTable]  ,@"RGB color table")
       ADD_NUMBER(            [o samplesPerPixel]                    ,@"Samples per pixel")   
-    }
-    else if ([object isKindOfClass:[NSCachedImageRep class]]) 
-    {
-      NSCachedImageRep *o = object;
-      ADD_CLASS_LABEL(@"NSCachedImageRep Info");
-      ADD_RECT(              [o rect]                               ,@"Rect")
-      ADD_OBJECT(            [o window]                             ,@"Window")    
     }
     else if ([object isKindOfClass:[NSCIImageRep class]]) 
     {
@@ -2755,11 +2736,9 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
   {
     NSMenu *o = object;
     ADD_CLASS_LABEL(@"NSMenu Info");
-    ADD_OBJECT_NOT_NIL(      [o attachedMenu]                       ,@"Attached menu")
     ADD_BOOL(                [o autoenablesItems]                   ,@"Autoenables Items")
     ADD_OBJECT_NOT_NIL(      [o delegate]                           ,@"Delegate")    
     ADD_OBJECT_NOT_NIL(      [o highlightedItem]                    ,@"Highlighted item")    
-    ADD_BOOL(                [o isAttached]                         ,@"Is attached")
     ADD_BOOL(                [o isTornOff]                          ,@"Is torn off")
     ADD_OBJECTS(             [o itemArray]                          ,@"Items" )
     ADD_BOOL(                [o menuChangedMessagesEnabled]         ,@"Menu changed messages enabled")
@@ -3015,7 +2994,6 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
         {
           NSBrowser *o = object;
           ADD_CLASS_LABEL(@"NSBrowser Info");
-          ADD_BOOL(          [o acceptsArrowKeys]                   ,@"Accepts arrow keys")                      
           ADD_BOOL(          [o allowsBranchSelection]              ,@"Allows branch selection")                      
           ADD_BOOL(          [o allowsEmptySelection]               ,@"Allows empty selection")                      
           ADD_BOOL(          [o allowsMultipleSelection]            ,@"Allows multiple selection")    
@@ -3412,7 +3390,6 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
       {
         NSProgressIndicator *o = object;
         ADD_CLASS_LABEL(@"NSProgressIndicator Info");
-        ADD_NUMBER(          [o animationDelay]                     ,@"Animation delay") 
         ADD_OBJECT(          objectFromControlSize([o controlSize]) ,@"Control size")  
         ADD_OBJECT(          objectFromControlTint([o controlTint]) ,@"Control tint")
         if ([o style] == NSProgressIndicatorBarStyle && ![o isIndeterminate])
@@ -3481,7 +3458,6 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
         ADD_CLASS_LABEL(@"NSSplitView Info");
         ADD_OBJECT_NOT_NIL(  [o delegate]                           ,@"Delegate")
         ADD_NUMBER(          [o dividerThickness]                   ,@"Divider thickness")
-        ADD_BOOL(            [o isPaneSplitter]                     ,@"Is pane splitter")
         ADD_BOOL(            [o isVertical]                         ,@"Is vertical")
         ADD_OBJECT_NOT_NIL(  [o autosaveName]                       ,@"Autosave name")
       }

@@ -12,7 +12,7 @@
 
 @interface FSInterpreterView(FSInterpreterViewPrivate)
 - (CLIView *)cliView;
-@end
+@end 
 
 @interface CLIView(CLIViewPrivate)
 - (ShellView *)shellView;
@@ -69,7 +69,6 @@ static id globalServicesProvider;
 - (void)registerExports
 {
   [self registerServicesProvider];
-//  [self registerServerConnection:@"fs"]; // tell Philippe to remove this one!
   [self registerServerConnection:@"F-Script"]; 
 }
 - (void)registerServerConnection:(NSString *)connectionName

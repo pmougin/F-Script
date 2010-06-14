@@ -6,7 +6,7 @@
 #import "FSMsgContext.h"
 
 enum FSCNType {IDENTIFIER, MESSAGE, STATEMENT_LIST, OBJECT, ARRAY, TEST_ABORT, BLOCK, ASSIGNMENT, NUMBER, CASCADE, 
-               UNARY_MESSAGE, BINARY_MESSAGE, KEYWORD_MESSAGE, SUPER, CLASS_DEFINITION, CLASS_ADDITION, METHOD, RETURN, DICTIONARY};
+               UNARY_MESSAGE, BINARY_MESSAGE, KEYWORD_MESSAGE, SUPER, CLASS_DEFINITION, CATEGORY, METHOD, RETURN, DICTIONARY};
 // Note: in older versions of F-Script, the node type was archived directly as its FSCNType integer value. 
 // Therefore, for backward compatibility with older archives, the order of this enum should not be modified.
 

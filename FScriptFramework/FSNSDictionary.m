@@ -9,6 +9,12 @@
 
 @implementation NSDictionary(FSNSDictionary)
 
+- (id)at:(id)aKey
+{
+  return [self objectForKey:aKey];
+}
+
+
 - (void) inspect
 {
   [self inspectWithSystem:nil];

@@ -23,6 +23,13 @@
 #import <AppKit/AppKit.h>
 #import "FSAssociation.h"
 
+@interface NSObject (DebugDescriptionDeclaration) 
+
+- (NSString *) debugDescription;
+
+@end
+
+
 @implementation NSObject (FSNSObject)
 
 + replacementObjectForCoder:(NSCoder *)encoder
@@ -90,9 +97,14 @@
 
 - (NSString *)printString
 {
-  NSString *description  = [self description];
-  if (description == nil) return @""; // Some Cocoa classes return nil when asked for their descriptions! 
-  else return description;
+  NSString *result;
+  
+  if ([self respondsToSelector:@selector(debugDescription)]) result = [self debugDescription];
+  else                                                       result = [self description];
+  
+  if (result == nil) result = @""; // Some Cocoa classes return nil when asked for their descriptions! 
+  
+  return result;
 }
 
 - (FSBoolean *)operator_equal_equal:(id)operand

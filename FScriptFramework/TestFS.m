@@ -1211,6 +1211,14 @@ void logFloat(int dummy, ...)
   return [NSString stringWithUTF8String:@encode(NSRange)];
 }
 
+
+/*
++ block
+{
+  return ^ id (){return @"hello";};
+}
+*/
+
 @end
 
 @implementation TestFSSub

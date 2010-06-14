@@ -24,6 +24,7 @@
 #import <FScript/FSNSImage.h>
 #import <FScript/FSNSManagedObjectContext.h>
 #import <FScript/FSNSMutableArray.h>
+#import <FScript/FSNSMutableDictionary.h>
 #import <FScript/FSNSMutableString.h>
 #import <FScript/FSNSNumber.h>
 #import <FScript/FSNSObject.h>

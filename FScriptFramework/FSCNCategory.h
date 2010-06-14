@@ -1,13 +1,13 @@
-/*   FSCNClassAddition.h Copyright (c) 2008-2009 Philippe Mougin.  */
+/*   FSCNCategory.h Copyright (c) 2008-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
 #import "FSCNBase.h"
 
-@interface FSCNClassAddition : FSCNBase
+@interface FSCNCategory : FSCNBase
 {
   @public
     NSString *className;
-    NSArray *methods;
+    NSArray  *methods;
 }
 
 - (NSString *) className;

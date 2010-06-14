@@ -1,9 +1,9 @@
-January 01, 2009
+April 26, 2010
 
 This is the legal notice for F-Script:
 --------------------------------------
 
-F-Script. Copyright (c) 1997, 2009, Philippe Mougin. All rights reserved.
+F-Script. Copyright (c) 1997, 2010, Philippe Mougin. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 

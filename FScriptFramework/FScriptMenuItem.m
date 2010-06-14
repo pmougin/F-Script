@@ -62,7 +62,7 @@
   }
   return nil;  
 }
-
+ 
 - (FSInterpreterView *) interpreterView
 {
   if (!interpreterView) [NSBundle loadNibNamed:@"FSConsole.nib" owner:self];

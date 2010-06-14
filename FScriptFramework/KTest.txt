@@ -2990,10 +2990,6 @@ t assertError:[v width].
 
 t startTest:'NSSize'.
 
-t assertError:[NSValue sizeWithWidth:-0.1 height:6].
-t assertError:[NSValue sizeWithWidth:6 height:-0.1].
-t assertError:[NSValue sizeWithWidth:-0.1 height:-0.1].
-
 v := NSValue sizeWithWidth:0 height:0.
 t assert:v width = 0 & (v height = 0).
 v := NSValue sizeWithWidth:5 height:10.

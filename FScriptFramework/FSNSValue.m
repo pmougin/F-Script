@@ -18,10 +18,7 @@
  
 + (NSSize)sizeWithWidth:(CGFloat)width height:(CGFloat)height
 {
-  if (width  < 0) FSExecError(@"width of an NSSize should never be negative");
-  if (height < 0) FSExecError(@"height of an NSSize should never be negative");
-
-  return NSMakeSize(width,height);
+  return NSMakeSize(width, height);
 }
 
 - (id)clone { return  [[self copy] autorelease];}

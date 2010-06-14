@@ -3,26 +3,6 @@ t setShouldLog:YES.
 
 "--------------------------------------------------------------------------------------------------------"
 
-"--- NOT SUPPORTED YET ----"
-"
-t startTest:'adding an F-Script method to an Objective-C class'.
-
-anFSTestObjCClass2 := FSTestObjCClass2 alloc init autorelease.
-
-FSTestObjCClass2 
-{ 
-  - fscriptMethodAddedToObjCClass
-  {
-    ^'hello, I''m from an F-Script method added to an Objective-C class'.
-  }
-}
-
-t assert: anFSTestObjCClass2 fscriptMethodAddedToObjCClass = 'hello, I''m from an F-Script method added to an Objective-C class'.
-
-t startTest:'call to super from ObjC to F-Script'.
-"
-"----------------------------"
-
 t startCategory:'Class Creation'.
 
 "**********************************************************************"
@@ -1009,6 +989,87 @@ t assert:FSTestClass16 alloc init4 = 22.
 t assert:FSTestClass16 alloc init5 = 22.
 t assert:FSTestClass16 alloc init6 = 22.
 
+
+"**********************************************************************"
+"**********************************************************************"
+t startCategory:'Categories'.
+
+t startTest:'Empty category'.
+
+NSObject {}.
+
+"**********************************************************************"
+t startTest:'adding F-Script methods to an Objective-C class'.
+
+anFSTestObjCClass2 := FSTestObjCClass2 alloc init autorelease.
+
+FSTestObjCClass2 
+{ 
+  - fscriptMethodAddedToObjCClass
+  {
+    ^ {iv_NSPoint, iv_NSPoint2}
+  }
+  
+  - (NSPoint)fscriptMethod2AddedToObjCClassWithArg1:(float)x arg2:(float)y
+  {
+    ^ x<>y
+  }
+
+  + fscriptClassMethodAddedToObjCClass
+  {
+    ^ 'hello'
+  }
+  
+  + (int)fscriptClassMethod2AddedToObjCClassWithArg:(int)x
+  {
+    ^ x
+  }
+
+}.
+
+t assert:(anFSTestObjCClass2 fscriptMethodAddedToObjCClass isEqual:{100<>200, 0<>500}).
+t assert:((anFSTestObjCClass2 fscriptMethod2AddedToObjCClassWithArg1:12 arg2:45) = (12<>45)).
+
+t assert:(FSTestObjCClass2 fscriptClassMethodAddedToObjCClass = 'hello').
+t assert:((FSTestObjCClass2 fscriptClassMethod2AddedToObjCClassWithArg:377) = 377).
+
+"**********************************************************************"
+t startTest:'adding F-Script methods to an F-Script class'.
+
+anFSTestClass4 := FSTestClass4 alloc init autorelease.
+anFSTestClass4 setA:'a'.
+anFSTestClass4 setB:'b'.
+anFSTestClass4 setY:'y'.
+
+FSTestClass4 
+{ 
+  - fscriptMethod1AddedToFScriptClass
+  {
+    ^ {y, iv_a, iv_b, iv_unsigned_long_long2, iv__Bool}
+  }
+  
+  - (int) fscriptMethod2AddedToFScriptClassWithArg1:(float)arg1 arg2:(NSNumber *)arg2
+  {
+    ^ arg1 + arg2
+  }
+  
+  + fscriptClassMethodAddedToFScriptClass
+  {
+    ^ 'hello'
+  }
+  
+  + (int)fscriptClassMethod2AddedToFScriptClassWithArg:(int)x
+  {
+    ^ x
+  }
+
+}.
+
+t assert: (anFSTestClass4 fscriptMethod1AddedToFScriptClass isEqual:{'y', 'a', 'b', 789, YES}).
+t assert: ((anFSTestClass4 fscriptMethod2AddedToFScriptClassWithArg1:-4 arg2:-6) = -10).
+
+t assert:(FSTestClass4 fscriptClassMethodAddedToFScriptClass = 'hello').
+t assert:((FSTestClass4 fscriptClassMethod2AddedToFScriptClassWithArg:377) = 377).
 
 "--------------------------------------------------------------------------------------------------------"
 

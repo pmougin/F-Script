@@ -7,6 +7,7 @@
 
 @interface NSDictionary(FSNSDictionary)
 
+- (id)at:(id)aKey;
 - (void)inspect;
 - (void)inspectIn:(FSSystem *)system __attribute__((deprecated));  // use inspectWithSystem: instead
 - (void)inspectWithSystem:(FSSystem *)system;

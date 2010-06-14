@@ -212,6 +212,13 @@
 		8F3C139F0C65E66400948776 /* FSMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F3C13980C65E66400948776 /* FSMethod.h */; };
 		8F3C13A00C65E66400948776 /* FSMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F3C13990C65E66400948776 /* FSMethod.m */; };
 		8F42D4100A0F8CC30032461E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F85274707F6016900E706F5 /* Cocoa.framework */; };
+		8F44270D116549C700E88F21 /* FSNSMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F44270B116549C700E88F21 /* FSNSMutableDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8F44270E116549C700E88F21 /* FSNSMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F44270C116549C700E88F21 /* FSNSMutableDictionary.m */; };
+		8F44270F116549C700E88F21 /* FSNSMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F44270B116549C700E88F21 /* FSNSMutableDictionary.h */; };
+		8F442710116549C700E88F21 /* FSNSMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F44270C116549C700E88F21 /* FSNSMutableDictionary.m */; };
+		8F442711116549C700E88F21 /* FSNSMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F44270C116549C700E88F21 /* FSNSMutableDictionary.m */; };
+		8F442712116549C700E88F21 /* FSNSMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F44270B116549C700E88F21 /* FSNSMutableDictionary.h */; };
+		8F442713116549C700E88F21 /* FSNSMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F44270C116549C700E88F21 /* FSNSMutableDictionary.m */; };
 		8F45CBBF0DA813F200AFA8C8 /* FSCNMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F45CBBE0DA813F200AFA8C8 /* FSCNMethod.m */; };
 		8F45CBC00DA813F200AFA8C8 /* FSCNMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F45CBBD0DA813F200AFA8C8 /* FSCNMethod.h */; };
 		8F45CBC10DA813F200AFA8C8 /* FSCNMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F45CBBE0DA813F200AFA8C8 /* FSCNMethod.m */; };
@@ -269,6 +276,13 @@
 		8F5AD3260D05CFFE000CEAC6 /* FSCNClassDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F5AD3210D05CFFE000CEAC6 /* FSCNClassDefinition.m */; };
 		8F5AD3270D05CFFE000CEAC6 /* FSCNClassDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F5AD3200D05CFFE000CEAC6 /* FSCNClassDefinition.h */; };
 		8F5AD3280D05CFFE000CEAC6 /* FSCNClassDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F5AD3210D05CFFE000CEAC6 /* FSCNClassDefinition.m */; };
+		8F5EDA02109B384A003A2F4C /* FSWorksWhenModalWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F5EDA00109B384A003A2F4C /* FSWorksWhenModalWindow.h */; };
+		8F5EDA03109B384A003A2F4C /* FSWorksWhenModalWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F5EDA01109B384A003A2F4C /* FSWorksWhenModalWindow.m */; };
+		8F5EDA04109B384A003A2F4C /* FSWorksWhenModalWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F5EDA00109B384A003A2F4C /* FSWorksWhenModalWindow.h */; };
+		8F5EDA05109B384A003A2F4C /* FSWorksWhenModalWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F5EDA01109B384A003A2F4C /* FSWorksWhenModalWindow.m */; };
+		8F5EDA06109B384A003A2F4C /* FSWorksWhenModalWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F5EDA00109B384A003A2F4C /* FSWorksWhenModalWindow.h */; };
+		8F5EDA07109B384A003A2F4C /* FSWorksWhenModalWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F5EDA01109B384A003A2F4C /* FSWorksWhenModalWindow.m */; };
+		8F5EDA08109B384A003A2F4C /* FSWorksWhenModalWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F5EDA01109B384A003A2F4C /* FSWorksWhenModalWindow.m */; };
 		8F60217205A25CDC0004EFF1 /* FSCollectionInspectorTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F60216E05A25CDC0004EFF1 /* FSCollectionInspectorTableView.h */; };
 		8F60217305A25CDC0004EFF1 /* FSCollectionInspectorTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F60216F05A25CDC0004EFF1 /* FSCollectionInspectorTableView.m */; };
 		8F60217405A25CDC0004EFF1 /* FSCollectionInspectorTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F60216E05A25CDC0004EFF1 /* FSCollectionInspectorTableView.h */; };
@@ -906,13 +920,13 @@
 		8F7F4FA107FB274C008E42F4 /* FSInspectorUniquier.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F4F9D07FB274C008E42F4 /* FSInspectorUniquier.m */; };
 		8F7F4FA407FB274C008E42F4 /* FSInspectorUniquier.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F7F4F9C07FB274C008E42F4 /* FSInspectorUniquier.h */; };
 		8F7F4FA507FB274C008E42F4 /* FSInspectorUniquier.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F4F9D07FB274C008E42F4 /* FSInspectorUniquier.m */; };
-		8F8112F20D85E58200CB3407 /* FSCNClassAddition.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F8112F00D85E58200CB3407 /* FSCNClassAddition.h */; };
-		8F8112F30D85E58200CB3407 /* FSCNClassAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8112F10D85E58200CB3407 /* FSCNClassAddition.m */; };
-		8F8112F40D85E58200CB3407 /* FSCNClassAddition.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F8112F00D85E58200CB3407 /* FSCNClassAddition.h */; };
-		8F8112F50D85E58200CB3407 /* FSCNClassAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8112F10D85E58200CB3407 /* FSCNClassAddition.m */; };
-		8F8112F60D85E58200CB3407 /* FSCNClassAddition.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F8112F00D85E58200CB3407 /* FSCNClassAddition.h */; };
-		8F8112F70D85E58200CB3407 /* FSCNClassAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8112F10D85E58200CB3407 /* FSCNClassAddition.m */; };
-		8F8112F80D85E58200CB3407 /* FSCNClassAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8112F10D85E58200CB3407 /* FSCNClassAddition.m */; };
+		8F8112F20D85E58200CB3407 /* FSCNCategory.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F8112F00D85E58200CB3407 /* FSCNCategory.h */; };
+		8F8112F30D85E58200CB3407 /* FSCNCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8112F10D85E58200CB3407 /* FSCNCategory.m */; };
+		8F8112F40D85E58200CB3407 /* FSCNCategory.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F8112F00D85E58200CB3407 /* FSCNCategory.h */; };
+		8F8112F50D85E58200CB3407 /* FSCNCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8112F10D85E58200CB3407 /* FSCNCategory.m */; };
+		8F8112F60D85E58200CB3407 /* FSCNCategory.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F8112F00D85E58200CB3407 /* FSCNCategory.h */; };
+		8F8112F70D85E58200CB3407 /* FSCNCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8112F10D85E58200CB3407 /* FSCNCategory.m */; };
+		8F8112F80D85E58200CB3407 /* FSCNCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8112F10D85E58200CB3407 /* FSCNCategory.m */; };
 		8F85274907F6016900E706F5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F85274707F6016900E706F5 /* Cocoa.framework */; };
 		8F85274B07F6016900E706F5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F85274707F6016900E706F5 /* Cocoa.framework */; };
 		8F8607E50CF9827600D2DC99 /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F6584F80C484A5100C8A3FC /* ScriptingBridge.framework */; };
@@ -1012,7 +1026,7 @@
 		8F9D041B0F1DF1CB001B8286 /* FSNSFileHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F9D04170F1DF1CB001B8286 /* FSNSFileHandle.h */; };
 		8F9D041C0F1DF1CB001B8286 /* FSNSFileHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9D04180F1DF1CB001B8286 /* FSNSFileHandle.m */; };
 		8F9D041D0F1DF1CB001B8286 /* FSNSFileHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9D04180F1DF1CB001B8286 /* FSNSFileHandle.m */; };
-		8F9D041E0F1DF1CB001B8286 /* FSNSFileHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F9D04170F1DF1CB001B8286 /* FSNSFileHandle.h */; };
+		8F9D041E0F1DF1CB001B8286 /* FSNSFileHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = 8F9D04170F1DF1CB001B8286 /* FSNSFileHandle.h */; settings = {ATTRIBUTES = (); }; };
 		8F9D041F0F1DF1CB001B8286 /* FSNSFileHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9D04180F1DF1CB001B8286 /* FSNSFileHandle.m */; };
 		8FA8EDE007735B3B001BEC7B /* FSCollectionInspectorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FA8EDC607735B3B001BEC7B /* FSCollectionInspectorView.h */; };
 		8FA8EDE407735B3B001BEC7B /* FSCollectionInspectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8EDD307735B3B001BEC7B /* FSCollectionInspectorView.m */; };
@@ -1356,6 +1370,8 @@
 		8F37AEC3078B7E900083565D /* FSManagedObjectContextInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSManagedObjectContextInspector.m; sourceTree = "<group>"; };
 		8F3C13980C65E66400948776 /* FSMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSMethod.h; sourceTree = "<group>"; };
 		8F3C13990C65E66400948776 /* FSMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSMethod.m; sourceTree = "<group>"; };
+		8F44270B116549C700E88F21 /* FSNSMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSNSMutableDictionary.h; sourceTree = "<group>"; };
+		8F44270C116549C700E88F21 /* FSNSMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSNSMutableDictionary.m; sourceTree = "<group>"; };
 		8F45CBBD0DA813F200AFA8C8 /* FSCNMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCNMethod.h; sourceTree = "<group>"; };
 		8F45CBBE0DA813F200AFA8C8 /* FSCNMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCNMethod.m; sourceTree = "<group>"; };
 		8F4822020D2C317700754A4E /* FSTestObjCClass2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSTestObjCClass2.h; sourceTree = "<group>"; };
@@ -1384,6 +1400,8 @@
 		8F59CA700D86DD0800D67A78 /* FSCNMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCNMessage.m; sourceTree = "<group>"; };
 		8F5AD3200D05CFFE000CEAC6 /* FSCNClassDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCNClassDefinition.h; sourceTree = "<group>"; };
 		8F5AD3210D05CFFE000CEAC6 /* FSCNClassDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCNClassDefinition.m; sourceTree = "<group>"; };
+		8F5EDA00109B384A003A2F4C /* FSWorksWhenModalWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSWorksWhenModalWindow.h; sourceTree = "<group>"; };
+		8F5EDA01109B384A003A2F4C /* FSWorksWhenModalWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSWorksWhenModalWindow.m; sourceTree = "<group>"; };
 		8F60216E05A25CDC0004EFF1 /* FSCollectionInspectorTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCollectionInspectorTableView.h; sourceTree = "<group>"; };
 		8F60216F05A25CDC0004EFF1 /* FSCollectionInspectorTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCollectionInspectorTableView.m; sourceTree = "<group>"; };
 		8F60F24505A9FE8B00985FEC /* FSNSSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSNSSet.h; sourceTree = "<group>"; };
@@ -1415,8 +1433,8 @@
 		8F7D7DB8058E32CD00F1B8A8 /* FSReplacementForCoderForNilInArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSReplacementForCoderForNilInArray.m; sourceTree = "<group>"; };
 		8F7F4F9C07FB274C008E42F4 /* FSInspectorUniquier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSInspectorUniquier.h; sourceTree = "<group>"; };
 		8F7F4F9D07FB274C008E42F4 /* FSInspectorUniquier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSInspectorUniquier.m; sourceTree = "<group>"; };
-		8F8112F00D85E58200CB3407 /* FSCNClassAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCNClassAddition.h; sourceTree = "<group>"; };
-		8F8112F10D85E58200CB3407 /* FSCNClassAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCNClassAddition.m; sourceTree = "<group>"; };
+		8F8112F00D85E58200CB3407 /* FSCNCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCNCategory.h; sourceTree = "<group>"; };
+		8F8112F10D85E58200CB3407 /* FSCNCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCNCategory.m; sourceTree = "<group>"; };
 		8F85274707F6016900E706F5 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		8F86923607F19BA8000D20A4 /* FSObjectBrowserNamedObjectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSObjectBrowserNamedObjectWrapper.h; sourceTree = "<group>"; };
 		8F86923707F19BA8000D20A4 /* FSObjectBrowserNamedObjectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSObjectBrowserNamedObjectWrapper.m; sourceTree = "<group>"; };
@@ -1842,8 +1860,8 @@
 				8FAE79AB0DA0ED5D00CB6E14 /* FSCNBlock.m */,
 				8F5900130D9468FC003A8B17 /* FSCNCascade.h */,
 				8F5900140D9468FC003A8B17 /* FSCNCascade.m */,
-				8F8112F00D85E58200CB3407 /* FSCNClassAddition.h */,
-				8F8112F10D85E58200CB3407 /* FSCNClassAddition.m */,
+				8F8112F00D85E58200CB3407 /* FSCNCategory.h */,
+				8F8112F10D85E58200CB3407 /* FSCNCategory.m */,
 				8F5AD3200D05CFFE000CEAC6 /* FSCNClassDefinition.h */,
 				8F5AD3210D05CFFE000CEAC6 /* FSCNClassDefinition.m */,
 				8F940C6E0F23BC2E004525E1 /* FSCNDictionary.h */,
@@ -1968,6 +1986,8 @@
 				8F5189E807F072EA00A50735 /* FSNSManagedObjectContext.m */,
 				8F66F85404666E8100AFC811 /* FSNSMutableArray.h */,
 				8F66F85504666E8100AFC811 /* FSNSMutableArray.m */,
+				8F44270B116549C700E88F21 /* FSNSMutableDictionary.h */,
+				8F44270C116549C700E88F21 /* FSNSMutableDictionary.m */,
 				0CD4E35F00D7DFE17BE9C1BD /* FSNSMutableString.h */,
 				0CD4E36000D7DFE17BE9C1BD /* FSNSMutableString.m */,
 				0CD4E36100D7DFE17BE9C1BD /* FSNSNumber.h */,
@@ -2054,6 +2074,8 @@
 				0CD4E37400D7DFE17BE9C1BD /* FSVoid.h */,
 				0CD4E37500D7DFE17BE9C1BD /* FSVoid.m */,
 				0CD4E37600D7DFE17BE9C1BD /* FSVoidPrivate.h */,
+				8F5EDA00109B384A003A2F4C /* FSWorksWhenModalWindow.h */,
+				8F5EDA01109B384A003A2F4C /* FSWorksWhenModalWindow.m */,
 				0CD4E37900D7DFE17BE9C1BD /* genObjInspector.nib */,
 				0CD4E37D00D7DFE17BE9C1BD /* KTest.txt */,
 				66029E580161E0650055708C /* KTestManager.h */,
@@ -2286,7 +2308,7 @@
 				8FE639920D09DCB600255EBA /* FSCNIdentifier.h in Headers */,
 				8FE3DD220D26D49900A1D767 /* FSTestObjCClass1.h in Headers */,
 				8F4822040D2C317700754A4E /* FSTestObjCClass2.h in Headers */,
-				8F8112F40D85E58200CB3407 /* FSCNClassAddition.h in Headers */,
+				8F8112F40D85E58200CB3407 /* FSCNCategory.h in Headers */,
 				8F59CA710D86DD0800D67A78 /* FSCNMessage.h in Headers */,
 				8F7223810D870C6A00394C99 /* FSCNSuper.h in Headers */,
 				8F2E34240D8DB61C00912543 /* FSCNUnaryMessage.h in Headers */,
@@ -2313,6 +2335,8 @@
 				8F7A712D0F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.h in Headers */,
 				8F2D720E0F6BD9B100F0862A /* FSNSAffineTransform.h in Headers */,
 				8FCA593610883B0100F67841 /* FSNewlyAllocatedObject.h in Headers */,
+				8F5EDA04109B384A003A2F4C /* FSWorksWhenModalWindow.h in Headers */,
+				8F442712116549C700E88F21 /* FSNSMutableDictionary.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2461,7 +2485,7 @@
 				8FE639900D09DCB600255EBA /* FSCNIdentifier.h in Headers */,
 				8FE3DD250D26D49900A1D767 /* FSTestObjCClass1.h in Headers */,
 				8F4822090D2C317700754A4E /* FSTestObjCClass2.h in Headers */,
-				8F8112F60D85E58200CB3407 /* FSCNClassAddition.h in Headers */,
+				8F8112F60D85E58200CB3407 /* FSCNCategory.h in Headers */,
 				8F59CA750D86DD0800D67A78 /* FSCNMessage.h in Headers */,
 				8F7223830D870C6A00394C99 /* FSCNSuper.h in Headers */,
 				8F2E34220D8DB61C00912543 /* FSCNUnaryMessage.h in Headers */,
@@ -2489,6 +2513,8 @@
 				8F2D72100F6BD9B100F0862A /* FSNSAffineTransform.h in Headers */,
 				8F9636440F8DF6AB00A70F39 /* FSDemoAssistant.h in Headers */,
 				8FCA593410883B0100F67841 /* FSNewlyAllocatedObject.h in Headers */,
+				8F5EDA02109B384A003A2F4C /* FSWorksWhenModalWindow.h in Headers */,
+				8F44270F116549C700E88F21 /* FSNSMutableDictionary.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2624,7 +2650,7 @@
 				8FE639950D09DCB600255EBA /* FSCNIdentifier.h in Headers */,
 				8FE3DD270D26D49900A1D767 /* FSTestObjCClass1.h in Headers */,
 				8F4822060D2C317700754A4E /* FSTestObjCClass2.h in Headers */,
-				8F8112F20D85E58200CB3407 /* FSCNClassAddition.h in Headers */,
+				8F8112F20D85E58200CB3407 /* FSCNCategory.h in Headers */,
 				8F59CA730D86DD0800D67A78 /* FSCNMessage.h in Headers */,
 				8F72237F0D870C6A00394C99 /* FSCNSuper.h in Headers */,
 				8F2E34200D8DB61C00912543 /* FSCNUnaryMessage.h in Headers */,
@@ -2651,6 +2677,8 @@
 				8F7A712B0F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.h in Headers */,
 				8F2D720C0F6BD9B100F0862A /* FSNSAffineTransform.h in Headers */,
 				8FCA593810883B0100F67841 /* FSNewlyAllocatedObject.h in Headers */,
+				8F5EDA06109B384A003A2F4C /* FSWorksWhenModalWindow.h in Headers */,
+				8F44270D116549C700E88F21 /* FSNSMutableDictionary.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3061,7 +3089,7 @@
 				8FE639940D09DCB600255EBA /* FSCNIdentifier.m in Sources */,
 				8FE3DD240D26D49900A1D767 /* FSTestObjCClass1.m in Sources */,
 				8F4822080D2C317700754A4E /* FSTestObjCClass2.m in Sources */,
-				8F8112F80D85E58200CB3407 /* FSCNClassAddition.m in Sources */,
+				8F8112F80D85E58200CB3407 /* FSCNCategory.m in Sources */,
 				8F59CA770D86DD0800D67A78 /* FSCNMessage.m in Sources */,
 				8F7223850D870C6A00394C99 /* FSCNSuper.m in Sources */,
 				8F2E34260D8DB61C00912543 /* FSCNUnaryMessage.m in Sources */,
@@ -3088,6 +3116,8 @@
 				8F7A712F0F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.m in Sources */,
 				8F2D720B0F6BD9B100F0862A /* FSNSAffineTransform.m in Sources */,
 				8FCA593310883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */,
+				8F5EDA08109B384A003A2F4C /* FSWorksWhenModalWindow.m in Sources */,
+				8F442711116549C700E88F21 /* FSNSMutableDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3205,7 +3235,7 @@
 				8FE639930D09DCB600255EBA /* FSCNIdentifier.m in Sources */,
 				8FE3DD230D26D49900A1D767 /* FSTestObjCClass1.m in Sources */,
 				8F4822050D2C317700754A4E /* FSTestObjCClass2.m in Sources */,
-				8F8112F50D85E58200CB3407 /* FSCNClassAddition.m in Sources */,
+				8F8112F50D85E58200CB3407 /* FSCNCategory.m in Sources */,
 				8F59CA720D86DD0800D67A78 /* FSCNMessage.m in Sources */,
 				8F7223820D870C6A00394C99 /* FSCNSuper.m in Sources */,
 				8F2E34250D8DB61C00912543 /* FSCNUnaryMessage.m in Sources */,
@@ -3232,6 +3262,8 @@
 				8F7A712E0F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.m in Sources */,
 				8F2D720F0F6BD9B100F0862A /* FSNSAffineTransform.m in Sources */,
 				8FCA593710883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */,
+				8F5EDA05109B384A003A2F4C /* FSWorksWhenModalWindow.m in Sources */,
+				8F442713116549C700E88F21 /* FSNSMutableDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3361,7 +3393,7 @@
 				8FE639910D09DCB600255EBA /* FSCNIdentifier.m in Sources */,
 				8FE3DD260D26D49900A1D767 /* FSTestObjCClass1.m in Sources */,
 				8F48220A0D2C317700754A4E /* FSTestObjCClass2.m in Sources */,
-				8F8112F70D85E58200CB3407 /* FSCNClassAddition.m in Sources */,
+				8F8112F70D85E58200CB3407 /* FSCNCategory.m in Sources */,
 				8F59CA760D86DD0800D67A78 /* FSCNMessage.m in Sources */,
 				8F7223840D870C6A00394C99 /* FSCNSuper.m in Sources */,
 				8F2E34230D8DB61C00912543 /* FSCNUnaryMessage.m in Sources */,
@@ -3389,6 +3421,8 @@
 				8F2D72110F6BD9B100F0862A /* FSNSAffineTransform.m in Sources */,
 				8F9636420F8DF69F00A70F39 /* FSDemoAssistant.m in Sources */,
 				8FCA593510883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */,
+				8F5EDA03109B384A003A2F4C /* FSWorksWhenModalWindow.m in Sources */,
+				8F442710116549C700E88F21 /* FSNSMutableDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3503,7 +3537,7 @@
 				8FE639960D09DCB600255EBA /* FSCNIdentifier.m in Sources */,
 				8FE3DD280D26D49900A1D767 /* FSTestObjCClass1.m in Sources */,
 				8F4822070D2C317700754A4E /* FSTestObjCClass2.m in Sources */,
-				8F8112F30D85E58200CB3407 /* FSCNClassAddition.m in Sources */,
+				8F8112F30D85E58200CB3407 /* FSCNCategory.m in Sources */,
 				8F59CA740D86DD0800D67A78 /* FSCNMessage.m in Sources */,
 				8F7223800D870C6A00394C99 /* FSCNSuper.m in Sources */,
 				8F2E34210D8DB61C00912543 /* FSCNUnaryMessage.m in Sources */,
@@ -3530,6 +3564,8 @@
 				8F7A712C0F48397C00E95364 /* FSObjectBrowserBottomBarTextDisplay.m in Sources */,
 				8F2D720D0F6BD9B100F0862A /* FSNSAffineTransform.m in Sources */,
 				8FCA593910883B0100F67841 /* FSNewlyAllocatedObject.m in Sources */,
+				8F5EDA07109B384A003A2F4C /* FSWorksWhenModalWindow.m in Sources */,
+				8F44270E116549C700E88F21 /* FSNSMutableDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3595,12 +3631,13 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
 				INFOPLIST_FILE = "Info-FScriptFramework__Upgraded_.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-lffi",
@@ -3612,7 +3649,7 @@
 				PREBINDING = NO;
 				PRINCIPAL_CLASS = "";
 				PRODUCT_NAME = FScript;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 				SECTORDER_FLAGS = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wmost";
@@ -3624,8 +3661,6 @@
 		8F2881EA08F9C040005B3C5A /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				COPY_PHASE_STRIP = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -3635,12 +3670,12 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
 				INFOPLIST_FILE = "Info-FScriptFramework__Upgraded_.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-lffi",
@@ -3663,26 +3698,20 @@
 		8F2881ED08F9C040005B3C5A /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1 = x86_64;
 				COPY_PHASE_STRIP = "$(value) NO";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_MODEL_TUNING = "";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
 				INFOPLIST_FILE = "Info-FSTest1_2.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = FSTest1;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost";
 				WRAPPER_EXTENSION = app;
@@ -3693,19 +3722,15 @@
 		8F2881EE08F9C040005B3C5A /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_MODEL_TUNING = "";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
 				INFOPLIST_FILE = "Info-FSTest1_2.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -3721,27 +3746,23 @@
 		8F2881F108F9C040005B3C5A /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1 = x86_64;
 				COPY_PHASE_STRIP = "$(value) NO";
 				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_ENABLE_OBJC_GC = supported;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
 				INFOPLIST_FILE = "Info-FSTest2_2.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-lffi";
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = FSTest2;
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				SECTORDER_FLAGS = "";
 				WARNING_CFLAGS = "-Wmost";
 				WRAPPER_EXTENSION = app;
@@ -3752,24 +3773,16 @@
 		8F2881F208F9C040005B3C5A /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					ppc,
-					ppc64,
-					x86_64,
-				);
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_MODEL_TUNING = "";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
 				INFOPLIST_FILE = "Info-FSTest2_2.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-lffi";
 				OTHER_REZFLAGS = "";
@@ -3785,8 +3798,6 @@
 		8F2881F508F9C040005B3C5A /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1 = x86_64;
 				AUTO_SHADOW = YES;
 				COPY_PHASE_STRIP = "$(value) NO";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3794,25 +3805,20 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(DEVELOPER_FRAMEWORKS_DIR)\"";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = 4.2;
+				GCC_MODEL_TUNING = "";
 				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_UNKNOWN_PRAGMAS = NO;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Info-F_Script__Upgraded_.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-lffi";
 				OTHER_REZFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = "F-Script";
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
 				SECTORDER_FLAGS = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
@@ -3822,8 +3828,6 @@
 		8F2881F608F9C040005B3C5A /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3833,11 +3837,10 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_VERSION = 4.2;
+				GCC_MODEL_TUNING = "";
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
@@ -3851,7 +3854,6 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Info-F_Script__Upgraded_.plist";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-lffi";
 				OTHER_REZFLAGS = "";
@@ -3870,11 +3872,14 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1)";
 				ARCHS_STANDARD_64_BIT_PRE_XCODE_3_1 = x86_64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
@@ -3886,9 +3891,10 @@
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				IBC_FLATTEN_NIBS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "";
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
 				WARNING_CFLAGS = "-Wmost";
 				ZERO_LINK = NO;
 			};
@@ -3898,27 +3904,30 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
-					i386,
-					ppc,
-					ppc64,
 					x86_64,
+					i386,
 				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_ENABLE_OBJC_GC = supported;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_VERSION = 4.2;
+				GCC_VERSION = "";
+				IBC_FLATTEN_NIBS = NO;
 				INSTALL_OWNER = "$(inherited)";
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "";
-				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.6.sdk";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Deployment;
 		};
 		8F6392D40BDB8522005C8D94 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_32_BIT)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3928,8 +3937,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = G4;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_MODEL_TUNING = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				GCC_WARN_UNUSED_PARAMETER = NO;
@@ -3952,20 +3960,16 @@
 		8F6392D50BDB8522005C8D94 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SYSTEM_DEVELOPER_DIR)/Library/Frameworks\"";
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = G4;
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_MODEL_TUNING = "";
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				INFOPLIST_FILE = "FScriptIBPlugin/FScriptIBPlugin-Info.plist";

@@ -44,7 +44,7 @@
 #import "FSCNArray.h"
 #import "FSCNBlock.h"
 #import "FSCNAssignment.h"
-#import "FSCNClassAddition.h"
+#import "FSCNCategory.h"
 #import "FSCNSuper.h"
 #import "FSCNReturn.h"
 #import "FSCNMethod.h"
@@ -787,7 +787,7 @@ id sendMsgNoPattern(id receiver, SEL selector, NSUInteger argumentCount, id *arg
     char fsEncodedType = msgContext->returnType;
     
     return FSMapToObject(&returnValue, 0, fsEncodedType, fsEncodedType == '*' || fsEncodedType == '^' ? [msgContext->signature methodReturnType] : NULL, nil, nil);    
-  } 
+  }
   
   return nil; // W
 }
@@ -1143,6 +1143,70 @@ static void checkNoShadowingOfInheritedIvars(NSString *className, NSArray *ivarN
   }
 }    
 
+static void checkNoChangingSignatureOfExistingMethods(Class class, NSArray *methodNodes)
+{    
+  unsigned int instanceMethodCount, classMethodCount;     
+  NSUInteger i;
+  Method *instanceMethods = class_copyMethodList(class, &instanceMethodCount);
+  Method *classMethods    = class_copyMethodList(object_getClass(class), &classMethodCount);
+  
+  for (FSCNMethod *methodNode in methodNodes)
+  {
+    FSMethod *method = methodNode->method;
+
+    if (!FSIsIgnoredSelector(method->selector))
+    {
+      // We are not in presence of an "ignored selector", so we can safely compare method names
+      // (Under GC, selectors for retain, release, autorelease, retainCount and dealloc are all represented by the same special non-functional "ignored" selector)     
+
+      Method *existingMethods;
+      unsigned int existingMethodCount;
+      
+      if (methodNode->isClassMethod) 
+      {
+        existingMethods     = classMethods; 
+        existingMethodCount = classMethodCount;
+      }
+      else
+      {
+        existingMethods     = instanceMethods; 
+        existingMethodCount = instanceMethodCount;
+      }
+      
+      for (i = 0; i < existingMethodCount && method_getName(existingMethods[i]) != method->selector; i++);
+      
+      if (i < existingMethodCount && strcmp(method_getTypeEncoding(existingMethods[i]), method->types) != 0) 
+      {
+        // A method with the same selector and another signature is already defined for the class
+        free(instanceMethods);
+        free(classMethods);
+        FSExecError([NSString stringWithFormat:@"can't modify the signature of method \"%@\" in class %@. When redefining an existing method, the new one and the original must have the same signature.", NSStringFromSelector(method->selector), NSStringFromClass(class)]);
+      }
+    }  
+  }
+  free(instanceMethods);
+  free(classMethods);
+}
+
+static void addMethodsToClass(NSArray *methods, Class class)
+{
+    // We make sure we won't try to replace an existing method with a new one with another signature; Objective-C doesn't support this (10.6.2) 
+    checkNoChangingSignatureOfExistingMethods(class, methods);
+
+    for (FSCNMethod *methodNode in methods)
+    {
+      BOOL ok;
+      FSMethod *method = methodNode->method;
+      
+      if (methodNode->isClassMethod) ok = [method addToClass:object_getClass(class)];
+      else                           ok = [method addToClass:class]; 
+      
+      if (ok) [FScriptTextView registerMethodNameForCompletion:NSStringFromSelector(method->selector)];
+      
+      if (!ok) FSExecError([NSString stringWithFormat:@"invalid method \"%@\"", NSStringFromSelector(method->selector)]);
+    }
+}
+
 id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *errorFirstCharIndexPtr, NSInteger *errorLastCharIndexPtr)  
 {
   id receiver;
@@ -1445,7 +1509,6 @@ id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *e
     NSString            *className      = node->className;
     NSString            *superclassName = node->superclassName;
     Class class, superclass;
-    BOOL ok;
     BOOL redefinition = NO;
     
     *errorFirstCharIndexPtr = node->firstCharIndex; 
@@ -1491,65 +1554,12 @@ id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *e
     //--------------------- We need an F-Script dealloc method to take control upon deallocation in order to release the resources holding the F-Script dynamic instance variables associated to the object
     if (!fscript_isFScriptClass(superclass) && !FSIsIgnoredSelector(@selector(dealloc)))
     {
-      ok = [[FSCompiler dummyDeallocMethodForClassNamed:className] addToClass:class];
+      BOOL ok = [[FSCompiler dummyDeallocMethodForClassNamed:className] addToClass:class];
       if (!ok) FSExecError([NSString stringWithFormat:@"F-Script internal error: can't add method \"dealloc\" to class %@", className]);
     }
     //--------------------------------------------------------------------------------
-
-    // -------------------- We make sure we won't try to replace an existing method with a new one with another signature; Objective-C doesn't support this (10.5.2) 
-    unsigned int instanceMethodCount, classMethodCount;     
-    Method *instanceMethods = class_copyMethodList(class, &instanceMethodCount);
-    Method *classMethods    = class_copyMethodList(object_getClass(class), &classMethodCount);
-    
-    for (FSCNMethod *methodNode in node->methods)
-    {
-      FSMethod *method = methodNode->method;
-
-      if (!FSIsIgnoredSelector(method->selector))
-      {
-        // We are not in presence of an "ignored selector", so we can safely compare method names
-        // (Under GC, selectors for retain, release, autorelease, retainCount and dealloc are all represented by the same special non-functional "ignored" selector)     
-
-        Method *existingMethods;
-        unsigned int existingMethodCount;
         
-        if (methodNode->isClassMethod) 
-        {
-          existingMethods     = classMethods; 
-          existingMethodCount = classMethodCount;
-        }
-        else
-        {
-          existingMethods     = instanceMethods; 
-          existingMethodCount = instanceMethodCount;
-        }
-        
-        for (i = 0; i < existingMethodCount && method_getName(existingMethods[i]) != method->selector; i++);
-        
-        if (i < existingMethodCount && strcmp(method_getTypeEncoding(existingMethods[i]), method->types) != 0) 
-        {
-          // A method with the same selector and another signature is already defined for the class
-          free(instanceMethods);
-          free(classMethods);
-          FSExecError([NSString stringWithFormat:@"can't modify the signature of method \"%@\" in class %@. When redefining an existing method, the new one and the original must have the same signature.", NSStringFromSelector(method->selector), className]);
-        }
-      }  
-    }
-    free(instanceMethods);
-    free(classMethods);
-    //--------------------------------------------------------------------------------
-       
-    for (FSCNMethod *methodNode in node->methods)
-    {
-      FSMethod *method = methodNode->method;
-      
-      if (methodNode->isClassMethod) ok = [method addToClass:object_getClass(class)];
-      else                           ok = [method addToClass:class]; 
-      
-      if (ok) [FScriptTextView registerMethodNameForCompletion:NSStringFromSelector(method->selector)];
-      
-      if (!ok) FSExecError([NSString stringWithFormat:@"invalid method \"%@\"", NSStringFromSelector(method->selector)]);
-    }
+    addMethodsToClass(node->methods, class);
     
     fscript_setDynamicIvarNames(class, [NSSet setWithArray:node->ivarNames]);
     fscript_setDynamicIvarNames(object_getClass(class), [NSSet setWithArray:node->civarNames]);
@@ -1563,24 +1573,19 @@ id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *e
     return class;  
   }
   
-  case CLASS_ADDITION : // TODO: review and finish
+  case CATEGORY:
   {
-    Class r = NSClassFromString( ((FSCNClassAddition *)codeNode)->className );   
-    if (r == nil) FSExecError([NSString stringWithFormat:@"class \"%@\" not found", ((FSCNClassAddition *)codeNode)->className]);
+    FSCNCategory *node = (FSCNCategory *)codeNode;
+    Class class = NSClassFromString(node->className);   
+    if (class == nil) FSExecError([NSString stringWithFormat:@"class \"%@\" not found", node->className]);
 
-    for (FSCNPrecomputedObject *methodNode in ((FSCNClassAddition *)codeNode)->methods)
-    {
-      FSMethod *method = methodNode->object;
-      BOOL ok = [method addToClass:r];
-      
-      if (ok) [FScriptTextView registerMethodNameForCompletion:NSStringFromSelector(method->selector)];
-      
-      if (!ok) FSExecError([NSString stringWithFormat:@"invalid method \"%@\"", NSStringFromSelector(method->selector)]);
-    }
-                                                          
+    addMethodsToClass(node->methods, class);
+    
+    return [FSVoid fsVoid];
   }
   
   } // end_switch
 
+  assert(0);
   return nil; // W
 }  

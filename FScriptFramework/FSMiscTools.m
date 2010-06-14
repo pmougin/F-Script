@@ -431,9 +431,9 @@ NSString *printString(id object)
 
 NSString *printStringLimited(id object, NSUInteger limit) // Hack. A better scheme for limiting string size will be implemented.
 {
-  NSString *str;
+  NSString *result;
   
-  if (object == nil) str = @"nil";
+  if (object == nil) result = @"nil";
   else  
   {
     @try
@@ -443,28 +443,28 @@ NSString *printStringLimited(id object, NSUInteger limit) // Hack. A better sche
       Another problem would be an exception raised by the "descriptionLimited" or "printString" methods.*/ 
 
       if ([object isKindOfClass:[NSArray class]] && [object respondsToSelector:@selector(descriptionLimited:)]) 
-        str = [object descriptionLimited:limit]; // a proxy to a remote NSArray may not responds to descriptionLimited:.
+        result = [object descriptionLimited:limit]; // a proxy to a remote NSArray may not responds to descriptionLimited:.
       else
       {  
         if ([object respondsToSelector:@selector(printString)]) 
-          str = [object printString];
+          result = [object printString];
         else
         {
-          str = [object description];
-          if (str == nil) // Some Cocoa classes return nil when asked for their descriptions! 
-          str = @"";    
+          result = [object description];
+          if (result == nil) // Some Cocoa classes return nil when asked for their descriptions! 
+            result = @"";    
         }
       }
       
-      if ([str hasPrefix:@"{\n"]) 
-        str = [@"{" stringByAppendingString:[str substringFromIndex:2]]; 
+      if ([result hasPrefix:@"{\n"]) 
+        result = [@"{" stringByAppendingString:[result substringFromIndex:2]]; 
     }
     @catch (id exception)
     {
-      str = [NSString stringWithFormat:@"*** Non printable object. Exception thrown when trying to get a textual representation of the object: %@", FSErrorMessageFromException(exception)];                          
+      result = [NSString stringWithFormat:@"*** Non printable object. Exception thrown when trying to get a textual representation of the object: %@", FSErrorMessageFromException(exception)];                          
     }
   }
-  return str;
+  return result;
 }
  
 CGFloat systemFontSize(void)

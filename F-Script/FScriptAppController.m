@@ -176,7 +176,7 @@ NSString  *findPathToFileInLibraryWithinSystemDomain(NSString *fileName)
   
   for (NSString *systemFrameworksPath in systemFrameworksPaths)
   {
-    for (NSString *framework in [[NSFileManager defaultManager] directoryContentsAtPath:systemFrameworksPath])
+    for (NSString *framework in [[NSFileManager defaultManager] contentsOfDirectoryAtPath:systemFrameworksPath error:NULL])
     {
       NSBundle *frameworkBundle = [NSBundle bundleWithPath:[systemFrameworksPath stringByAppendingPathComponent:framework]];
       if ([frameworkBundle preflightAndReturnError:nil])
@@ -222,33 +222,46 @@ NSString  *findPathToFileInLibraryWithinSystemDomain(NSString *fileName)
   
   if (!repositoryPath || ![fileManager fileExistsAtPath:repositoryPath isDirectory:&b])
   {
+    NSError  *error = nil;
     NSString *applicationSupportDirectoryPath = findPathToFileInLibraryWithinUserDomain(@"Application Support");
+    BOOL repositoryCreated = NO;
     
     if (!applicationSupportDirectoryPath)
     {
       NSArray *pathArray = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
       
       if ([pathArray count] > 0) 
-        [fileManager createDirectoryAtPath:[[pathArray objectAtIndex:0] stringByAppendingPathComponent:@"Application Support"] attributes:nil];
+        [fileManager createDirectoryAtPath:[[pathArray objectAtIndex:0] stringByAppendingPathComponent:@"Application Support"] withIntermediateDirectories:NO attributes:nil error:NULL];
     }
     
     applicationSupportDirectoryPath = findPathToFileInLibraryWithinUserDomain(@"Application Support");
     
     if (applicationSupportDirectoryPath)
-    {
+    {      
       repositoryPath = [applicationSupportDirectoryPath stringByAppendingPathComponent:@"F-Script"];
-      [fileManager createDirectoryAtPath:repositoryPath attributes:nil];
-      [fileManager createDirectoryAtPath:[repositoryPath stringByAppendingPathComponent:@"classes"] attributes:nil];
-      if ([[NSUserDefaults standardUserDefaults] respondsToSelector:@selector(setObject:forKey:inDomain:)])
-        [[NSUserDefaults standardUserDefaults] setObject:repositoryPath forKey:@"FScriptRepositoryPath" inDomain:NSGlobalDomain]; // This is an undocumented Cocoa API in Mac OS X 10.1
+      
+      [fileManager createDirectoryAtPath:[repositoryPath stringByAppendingPathComponent:@"classes"] withIntermediateDirectories:YES attributes:nil error:&error];
+      
+      if (error) 
+        NSLog(@"Failed to create the repository: %@", error);
       else
-        [[NSUserDefaults standardUserDefaults] setObject:repositoryPath forKey:@"FScriptRepositoryPath"];
-      [[NSUserDefaults standardUserDefaults] setObject:[repositoryPath stringByAppendingPathComponent:@"journal.txt"] forKey:@"FScriptJournalName"];
-      [[NSUserDefaults standardUserDefaults] synchronize];
+      {
+        repositoryCreated = YES;
+        if ([[NSUserDefaults standardUserDefaults] respondsToSelector:@selector(setObject:forKey:inDomain:)])
+          [[NSUserDefaults standardUserDefaults] setObject:repositoryPath forKey:@"FScriptRepositoryPath" inDomain:NSGlobalDomain]; // This is an undocumented Cocoa API in Mac OS X 10.1
+        else
+          [[NSUserDefaults standardUserDefaults] setObject:repositoryPath forKey:@"FScriptRepositoryPath"];
+        [[NSUserDefaults standardUserDefaults] setObject:[repositoryPath stringByAppendingPathComponent:@"journal.txt"] forKey:@"FScriptJournalName"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+      }  
     }
-    else
+    else 
     {
       NSLog(@"Failed to create the repository in the user's \"Application Support\" directory.");
+    }
+
+    if (!repositoryCreated)
+    {
       NSInteger choice = NSRunAlertPanel(@"Instalation" , @"F-Script is about to create a directory named \"FScriptRepository\" in your home directory. This directory will be used as a repository for things like extension bundles for F-Script and a journal file.", @"create the repository", @"don't create the repository", @"create the repository elsewhere...");
   
       if (choice == NSAlertOtherReturn || choice == NSAlertDefaultReturn)
@@ -265,20 +278,20 @@ NSString  *findPathToFileInLibraryWithinSystemDomain(NSString *fileName)
         }
         else repositoryPath = [NSHomeDirectory() stringByAppendingPathComponent:@"FScriptRepository"];
         
-        if (repositoryPath)
+        error = nil;
+        [fileManager createDirectoryAtPath:[repositoryPath stringByAppendingPathComponent:@"classes"] withIntermediateDirectories:YES attributes:nil error:&error];
+        if (error) 
+          NSLog(@"Failed to create the repository: %@", error);
+        else
         {
-        
+          repositoryCreated = YES;
           if ([[NSUserDefaults standardUserDefaults] respondsToSelector:@selector(setObject:forKey:inDomain:)])
             [[NSUserDefaults standardUserDefaults] setObject:repositoryPath forKey:@"FScriptRepositoryPath" inDomain:NSGlobalDomain]; // This is an undocumented Cocoa API in Mac OS X 10.1
           else
             [[NSUserDefaults standardUserDefaults] setObject:repositoryPath forKey:@"FScriptRepositoryPath"];
-
-          //[[NSUserDefaults standardUserDefaults] setObject:repositoryPath forKey:@"FScriptRepositoryPath"];
-          [fileManager createDirectoryAtPath:repositoryPath attributes:nil];
-          [fileManager createDirectoryAtPath:[repositoryPath stringByAppendingPathComponent:@"classes"] attributes:nil];
-  
           [[NSUserDefaults standardUserDefaults] setObject:[repositoryPath stringByAppendingPathComponent:@"journal.txt"] forKey:@"FScriptJournalName"];
-        }  
+          [[NSUserDefaults standardUserDefaults] synchronize];
+        }
       }
     }       
   }
