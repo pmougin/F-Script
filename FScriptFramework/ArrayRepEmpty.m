@@ -2,7 +2,7 @@
 /*   This software is open source. See the license.  */  
 
 #import "ArrayRepEmpty.h"
-#import "Number.h"
+#import "Number_fscript.h"
 #import "ArrayRepId.h"
 #import "ArrayRepDouble.h"
 #import "ArrayRepBoolean.h" 

@@ -3,7 +3,7 @@
 
 
 #import "FSSymbolTable.h"
-#import "Number.h"
+#import "Number_fscript.h"
 #import "FSArray.h"
 #import "FSBoolean.h"
 #import "Space.h"

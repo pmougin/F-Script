@@ -10,7 +10,7 @@
 #import "BlockInspector.h"
 #import "string.h"          // memcpy() 
 #import "ArrayPrivate.h"
-#import "Number.h" 
+#import "Number_fscript.h" 
 #import "FScriptFunctions.h"
 #import "FSBooleanPrivate.h"
 #import "ArrayRepId.h"

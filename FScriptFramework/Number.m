@@ -3,7 +3,7 @@
 
 #import "build_config.h"
 
-#import "Number.h"
+#import "Number_fscript.h"
 #import "NumberPrivate.h"
 #import "FSNSNumber.h"
 #import "FScriptFunctions.h"

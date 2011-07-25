@@ -62,7 +62,7 @@
 #import <WebKit/WebJavaPlugIn.h>
 #import <XgridFoundation/XgridFoundation.h>
 
-#import "Number.h"
+#import "Number_fscript.h"
 #import "FSBoolean.h"
 
 @implementation FSConstantsDictionaryGenerator

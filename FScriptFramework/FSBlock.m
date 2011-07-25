@@ -21,7 +21,7 @@
 #import "FSNSString.h"
 #import "FSInterpreterResultPrivate.h"
 #import "FSReturnSignal.h"
-#import "Block.h"
+#import "Block_fscript.h"
 
 void __attribute__ ((constructor)) initializeFSBlock(void) 
 {

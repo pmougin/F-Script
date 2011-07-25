@@ -2,7 +2,7 @@
 /*   This software is open source. See the license.  */  
 
 #import "build_config.h"
-#import "Array.h"    
+#import "Array_fscript.h"    
 #import "ArrayPrivate.h"
 #import "ArrayRepId.h"
 #import "FScriptFunctions.h"

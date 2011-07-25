@@ -3,6 +3,10 @@ build/*
 *.pbxuser
 *.mode1v3
 
+# xcode 4 user noise
+*.xcworkspace
+xcuserdata
+
 # old skool
 .svn
 

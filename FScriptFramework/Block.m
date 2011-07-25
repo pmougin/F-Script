@@ -3,7 +3,7 @@
 /*   This software is open source. See the license.  */  
 
 #import "build_config.h"
-#import "Block.h"
+#import "Block_fscript.h"
 #import "BlockPrivate.h"
 #import "BlockRep.h"
 #import "FSExecEngine.h"
@@ -15,7 +15,7 @@
 #import "FSBooleanPrivate.h"
 #import "BlockInspector.h"
 #import "FScriptFunctions.h"
-#import "Number.h"
+#import "Number_fscript.h"
 #import "FSVoid.h"
 #import "FSMiscTools.h"
 #import "FSNSString.h"
