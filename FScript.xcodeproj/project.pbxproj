@@ -3624,7 +3624,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		8F2881E908F9C040005B3C5A /* Development */ = {
+		8F2881E908F9C040005B3C5A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH)";
@@ -3661,9 +3661,9 @@
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		8F2881EA08F9C040005B3C5A /* Deployment */ = {
+		8F2881EA08F9C040005B3C5A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -3697,9 +3697,9 @@
 				WRAPPER_EXTENSION = framework;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		8F2881ED08F9C040005B3C5A /* Development */ = {
+		8F2881ED08F9C040005B3C5A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = "$(value) NO";
@@ -3719,9 +3719,9 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		8F2881EE08F9C040005B3C5A /* Deployment */ = {
+		8F2881EE08F9C040005B3C5A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -3741,9 +3741,9 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		8F2881F108F9C040005B3C5A /* Development */ = {
+		8F2881F108F9C040005B3C5A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = "$(value) NO";
@@ -3766,9 +3766,9 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		8F2881F208F9C040005B3C5A /* Deployment */ = {
+		8F2881F208F9C040005B3C5A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -3789,9 +3789,9 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		8F2881F508F9C040005B3C5A /* Development */ = {
+		8F2881F508F9C040005B3C5A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				AUTO_SHADOW = YES;
@@ -3817,9 +3817,9 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		8F2881F608F9C040005B3C5A /* Deployment */ = {
+		8F2881F608F9C040005B3C5A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -3856,9 +3856,9 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		8F2881FD08F9C040005B3C5A /* Development */ = {
+		8F2881FD08F9C040005B3C5A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -3890,9 +3890,9 @@
 				WARNING_CFLAGS = "-Wmost";
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		8F2881FE08F9C040005B3C5A /* Deployment */ = {
+		8F2881FE08F9C040005B3C5A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -3916,9 +3916,9 @@
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 			};
-			name = Deployment;
+			name = Release;
 		};
-		8F6392D40BDB8522005C8D94 /* Development */ = {
+		8F6392D40BDB8522005C8D94 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -3946,9 +3946,9 @@
 				WRAPPER_EXTENSION = ibplugin;
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		8F6392D50BDB8522005C8D94 /* Deployment */ = {
+		8F6392D50BDB8522005C8D94 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -3975,7 +3975,7 @@
 				WRAPPER_EXTENSION = ibplugin;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -3983,56 +3983,56 @@
 		8F2881E808F9C040005B3C5A /* Build configuration list for PBXNativeTarget "FScriptFramework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8F2881E908F9C040005B3C5A /* Development */,
-				8F2881EA08F9C040005B3C5A /* Deployment */,
+				8F2881E908F9C040005B3C5A /* Debug */,
+				8F2881EA08F9C040005B3C5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Debug;
 		};
 		8F2881EC08F9C040005B3C5A /* Build configuration list for PBXNativeTarget "FSTest1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8F2881ED08F9C040005B3C5A /* Development */,
-				8F2881EE08F9C040005B3C5A /* Deployment */,
+				8F2881ED08F9C040005B3C5A /* Debug */,
+				8F2881EE08F9C040005B3C5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Debug;
 		};
 		8F2881F008F9C040005B3C5A /* Build configuration list for PBXNativeTarget "FSTest2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8F2881F108F9C040005B3C5A /* Development */,
-				8F2881F208F9C040005B3C5A /* Deployment */,
+				8F2881F108F9C040005B3C5A /* Debug */,
+				8F2881F208F9C040005B3C5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Debug;
 		};
 		8F2881F408F9C040005B3C5A /* Build configuration list for PBXNativeTarget "F-Script" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8F2881F508F9C040005B3C5A /* Development */,
-				8F2881F608F9C040005B3C5A /* Deployment */,
+				8F2881F508F9C040005B3C5A /* Debug */,
+				8F2881F608F9C040005B3C5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Debug;
 		};
 		8F2881FC08F9C040005B3C5A /* Build configuration list for PBXProject "FScript" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8F2881FD08F9C040005B3C5A /* Development */,
-				8F2881FE08F9C040005B3C5A /* Deployment */,
+				8F2881FD08F9C040005B3C5A /* Debug */,
+				8F2881FE08F9C040005B3C5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Debug;
 		};
 		8F6392D30BDB8522005C8D94 /* Build configuration list for PBXNativeTarget "FScriptIBPlugin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8F6392D40BDB8522005C8D94 /* Development */,
-				8F6392D50BDB8522005C8D94 /* Deployment */,
+				8F6392D40BDB8522005C8D94 /* Debug */,
+				8F6392D50BDB8522005C8D94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Development;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
