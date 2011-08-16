@@ -86,13 +86,22 @@
 #pragma mark 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
   FSInterpreterResult *result = [_interpreter execute:textField.text];
+  NSString *textToAppend = nil;
+  if ([result isOK] == YES) {
+    textToAppend = [result result];
+  }
+  else {
+    textToAppend = [result errorMessage];
+  }
+  
   NSString *currentText = [_outputTextView text];
   if (currentText == nil) {
     currentText = @"";
   }
+
   NSMutableString *outputText = [NSMutableString stringWithString:currentText];
   [outputText appendString:@"\n"];
-  [outputText appendFormat:@"%@", [result result]];
+  [outputText appendFormat:@"%@", textToAppend];
   _outputTextView.text = outputText;
   return YES;
 }
