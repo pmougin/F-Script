@@ -5,7 +5,6 @@
 
 #import "BlockPrivate.h"
 #import "BlockRep.h"
-#import "BlockInspector.h"
 #import "ArrayRepDouble.h"
 #import <string.h>          // memcpy() 
 #import "ArrayPrivate.h"  

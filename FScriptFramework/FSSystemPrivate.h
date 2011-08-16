@@ -2,6 +2,7 @@
 /*   This software is open source. See the license.       */  
 
 #import "FSSystem.h"
+#import "FSInterpreter.h"
 
 @interface FSSystem (FSSystemPrivate)
 

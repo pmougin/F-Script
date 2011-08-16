@@ -4,10 +4,15 @@
 #import "FSConstantsInitialization.h"
 #import "FSInterpreter.h"
 #import "FSGenericPointerPrivate.h"
-#import <CoreAudio/AudioHardware.h>
-#import <IOBluetooth/OBEX.h>
 
-#import <Cocoa/Cocoa.h>
+#if !TARGET_OS_IPHONE
+# import <AppKit/AppKit.h>
+# import <CoreAudio/AudioHardware.h>
+# import <IOBluetooth/OBEX.h>
+#endif
+
+#import <CoreData/CoreData.h>
+#import <Foundation/Foundation.h>
 
 void FSConstantsInitialization(NSMutableDictionary *d)
 {
@@ -20,10 +25,6 @@ void FSConstantsInitialization(NSMutableDictionary *d)
     [d addEntriesFromDictionary:[NSKeyedUnarchiver unarchiveObjectWithFile:path]]; 
   } 
  
-  if (NSMultipleValuesMarker) [d setObject:NSMultipleValuesMarker forKey:@"NSMultipleValuesMarker"]; 
-  if (NSNoSelectionMarker)    [d setObject:NSNoSelectionMarker    forKey:@"NSNoSelectionMarker"]; 
-  if (NSNotApplicableMarker)  [d setObject:NSNotApplicableMarker  forKey:@"NSNotApplicableMarker"];
-  
   if (NSErrorMergePolicy)                      [d setObject:NSErrorMergePolicy                      forKey:@"NSErrorMergePolicy"]; 
   if (NSMergeByPropertyStoreTrumpMergePolicy)  [d setObject:NSMergeByPropertyStoreTrumpMergePolicy  forKey:@"NSMergeByPropertyStoreTrumpMergePolicy"]; 
   if (NSMergeByPropertyObjectTrumpMergePolicy) [d setObject:NSMergeByPropertyObjectTrumpMergePolicy forKey:@"NSMergeByPropertyObjectTrumpMergePolicy"]; 
@@ -36,6 +37,11 @@ void FSConstantsInitialization(NSMutableDictionary *d)
   [d setObject:[NSNumber numberWithUnsignedLong:NSUIntegerMax]    forKey:@"NSUIntegerMax"];
   [d setObject:[NSNumber numberWithLong:NSUndefinedDateComponent] forKey:@"NSUndefinedDateComponent"];
   
+#if !TARGET_OS_IPHONE
+  if (NSMultipleValuesMarker) [d setObject:NSMultipleValuesMarker forKey:@"NSMultipleValuesMarker"]; 
+  if (NSNoSelectionMarker)    [d setObject:NSNoSelectionMarker    forKey:@"NSNoSelectionMarker"]; 
+  if (NSNotApplicableMarker)  [d setObject:NSNotApplicableMarker  forKey:@"NSNotApplicableMarker"];
+
 #ifdef __LP64__
   // 64-bit code
   [d setObject:[[[FSGenericPointer alloc] initWithCPointer:(CGFloat *)NSFontIdentityMatrix freeWhenDone:NO type:"d"] autorelease] forKey:@"NSFontIdentityMatrix"];
@@ -74,6 +80,10 @@ void FSConstantsInitialization(NSMutableDictionary *d)
   [d setObject:[NSValue valueWithPoint:NSZeroPoint] forKey:@"NSZeroPoint"];
   [d setObject:[NSValue valueWithRect:NSZeroRect]   forKey:@"NSZeroRect"];
   [d setObject:[NSValue valueWithSize:NSZeroSize]   forKey:@"NSZeroSize"];
-
+#else
+  [d setObject:[NSValue valueWithCGPoint:CGPointZero] forKey:@"CGPointZero"];
+  [d setObject:[NSValue valueWithCGRect:CGRectZero]   forKey:@"CGRectZero"];
+  [d setObject:[NSValue valueWithCGSize:CGSizeZero]   forKey:@"CGSizeZero"];
+#endif  
   // NSLog(@"constantsDictionary count = %lu", (unsigned long)[d count]);
 }

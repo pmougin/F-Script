@@ -7,7 +7,9 @@
 void __attribute__ ((constructor)) initializeFSReplacementForCoderForClass(void) 
 {
   [NSKeyedUnarchiver setClass:[FSReplacementForCoderForClass class] forClassName:@"ReplacementForCoderForClass"];
+#if !TARGET_OS_IPHONE
   [NSUnarchiver decodeClassName:@"ReplacementForCoderForClass" asClassName:@"FSReplacementForCoderForClass"];  
+#endif
 }
 
 @implementation FSReplacementForCoderForClass

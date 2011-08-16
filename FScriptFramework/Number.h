@@ -49,7 +49,11 @@
 - (NSNumber *)negated;
 - (NSNumber *)operator_asterisk:(NSNumber *)operand ;
 - (NSNumber *)operator_hyphen:(NSNumber *)operand;
+#if TARGET_OS_IPHONE
+- (CGPoint)operator_less_greater:(NSNumber *)operand;
+#else
 - (NSPoint)operator_less_greater:(NSNumber *)operand;
+#endif
 - (NSNumber *)operator_plus:(id)operand;
 - (NSNumber *)operator_slash:(NSNumber *)operand;
 - (FSBoolean *)operator_equal:(id)operand;

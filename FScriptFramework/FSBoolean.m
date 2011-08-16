@@ -51,11 +51,13 @@ BOOL BooleanSetupTooLate = NO;
 
 -(NSUInteger)hash {return self == fsTrue;}
 
+#if !TARGET_OS_IPHONE
 - (id)replacementObjectForPortCoder:(NSPortCoder *)encoder
 {
   if ([encoder isBycopy]) return self;
   return [super replacementObjectForPortCoder:encoder];
 }
+#endif
 
 -(void)release                       {}
 

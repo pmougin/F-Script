@@ -14,7 +14,6 @@
 #import "FSBooleanPrivate.h"
 #import "FSNSObject.h"
 #import <objc/objc-runtime.h>
-#import <AppKit/AppKit.h>
 
 /* Note: Cocoa implementation of NSProxy is completely broken at the *class* level: most methods in the 
    NSObject protocol are not provided at the class level, the superclass method return incorect results etc.

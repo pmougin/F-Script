@@ -181,12 +181,14 @@ if (s == nil) return nil;
     case 'q':                      itemSize = sizeof(long long);          break;
     case 'Q':                      itemSize = sizeof(unsigned long long); break;
     case fscode_NSRange:           itemSize = sizeof(NSRange);            break;
-    case fscode_NSPoint:
-    case fscode_CGPoint:           itemSize = sizeof(NSPoint);            break;
-    case fscode_NSSize:  
-    case fscode_CGSize:            itemSize = sizeof(NSSize);             break;
-    case fscode_NSRect:  
-    case fscode_CGRect:            itemSize = sizeof(NSRect);             break;
+#if !TARGET_OS_IPHONE
+    case fscode_NSPoint:           itemSize = sizeof(NSPoint);            break;
+    case fscode_NSSize:            itemSize = sizeof(NSSize);             break;
+    case fscode_NSRect:            itemSize = sizeof(NSRect);             break;
+#endif
+    case fscode_CGPoint:           itemSize = sizeof(CGPoint);            break;
+    case fscode_CGSize:            itemSize = sizeof(CGSize);             break;
+    case fscode_CGRect:            itemSize = sizeof(CGRect);             break;
     case fscode_CGAffineTransform: itemSize = sizeof(CGAffineTransform);  break;
     default:                       itemSize = 0;
   }   

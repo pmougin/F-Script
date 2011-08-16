@@ -22,7 +22,9 @@ id NSNumberClass;
 void __attribute__ ((constructor)) initializeFSNumber(void) 
 {
   [NSKeyedUnarchiver setClass:[FSNumber class] forClassName:@"Number"];
+#if !TARGET_OS_IPHONE
   [NSUnarchiver decodeClassName:@"Number" asClassName:@"FSNumber"];
+#endif
   FSNumberClass = [FSNumber class];
   NSNumberClass = [NSNumber class]; 
 }
@@ -221,6 +223,15 @@ FSNumber *numberWithDouble(double val)
   else                                              return [super operator_hyphen:operand];   
 }        
 
+#if TARGET_OS_IPHONE
+- (CGPoint)operator_less_greater:(NSNumber *)operand
+{
+  if (operand && ((id)operand)->isa == FSNumberClass && value >= -CGFLOAT_MAX && value <= CGFLOAT_MAX && ((FSNumber *)operand)->value >= -CGFLOAT_MAX && ((FSNumber *)operand)->value <= CGFLOAT_MAX) 
+    return CGPointMake(value,((FSNumber *)operand)->value); 
+  else                                              
+    return [super operator_less_greater:operand];   
+}
+#else
 - (NSPoint)operator_less_greater:(NSNumber *)operand
 {
   if (operand && ((id)operand)->isa == FSNumberClass && value >= -CGFLOAT_MAX && value <= CGFLOAT_MAX && ((FSNumber *)operand)->value >= -CGFLOAT_MAX && ((FSNumber *)operand)->value <= CGFLOAT_MAX) 
@@ -228,6 +239,7 @@ FSNumber *numberWithDouble(double val)
   else                                              
     return [super operator_less_greater:operand];   
 }
+#endif
 
 - (NSNumber *)operator_plus:(id)operand
 {

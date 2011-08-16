@@ -118,9 +118,11 @@
   case '*':  { char *p = ((char **)cPointer)[index]; return (p ? [Pointer pointerWithCPointer:p type:"c"] : nil ); }
   case ':':  return [FSBlock blockWithSelector:((SEL *)cPointer)[index]];
   case fscode_NSRange: return [NSValue valueWithRange:((NSRange *)cPointer)[index]];
+#if !TARGET_OS_IPHONE
   case fscode_NSPoint: return [NSValue valueWithPoint:((NSPoint *)cPointer)[index]];
   case fscode_NSSize:  return [NSValue valueWithSize: ((NSSize *) cPointer)[index]];
   case fscode_NSRect:  return [NSValue valueWithRect: ((NSRect *) cPointer)[index]];
+#endif
   case '^':  { void *p = ((void **)cPointer)[index]; return (p ? [Pointer pointerWithCPointer:p type:type+1] : nil ); } 
   case 'v':  FSExecError(@"dereferencing \"void *\" pointer");
   default:   FSExecError(@"can't dereference pointer: the type of the referenced data is not supported by F-Script");
@@ -264,7 +266,7 @@
       return elem;
     }
     else FSArgumentError(elem,2,@"NSValue containing an NSRange",@"at:put:");
-    
+#if !TARGET_OS_IPHONE
   case fscode_NSPoint:
     if ([elem isKindOfClass:[NSValue class]] && strcmp([elem objCType],@encode(NSPoint)) == 0)
     {
@@ -288,7 +290,7 @@
       return elem;
     }
     else FSArgumentError(elem,2,@"NSValue containing an NSRect",@"at:put:");
-  
+#endif  
   case '^':  
     if      (elem == nil)                          ((void **)cPointer)[index] = NULL; 
     else if ([elem isKindOfClass:[Pointer class]]) ((void **)cPointer)[index] = [elem cPointer]; 

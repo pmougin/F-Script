@@ -3,7 +3,11 @@
 
 #import <limits.h>
 #import  <Foundation/Foundation.h>
-#include <ffi/ffi.h>
+#if TARGET_OS_IPHONE
+# include "ffi.h"
+#else
+# include <ffi/ffi.h>
+#endif
 
 @class FSArray;
 @class FSInterpreter;

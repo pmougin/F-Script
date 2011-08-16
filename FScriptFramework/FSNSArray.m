@@ -4,7 +4,6 @@
 #import "FSNSArrayPrivate.h"
 #import "FSArray.h"
 #import "FSMiscTools.h"
-#import "FSCollectionInspector.h"
 #import "FSNSString.h"
 #import "FScriptFunctions.h"
 #import "FSSystemPrivate.h"

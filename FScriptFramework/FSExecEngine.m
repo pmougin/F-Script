@@ -31,7 +31,6 @@
 #import "FSObjectPointer.h"
 #import "FSObjectPointerPrivate.h"
 #import "FSReturnSignal.h"
-#import <ScriptingBridge/ScriptingBridge.h>
 #import "FSBooleanPrivate.h"
 #import "FSMethod.h"
 #import "FSCNIdentifier.h"
@@ -49,10 +48,12 @@
 #import "FSCNReturn.h"
 #import "FSCNMethod.h"
 #import "FSCNDictionary.h"
-#import "FScriptTextView.h"
 #import "FSGlobalScope.h"
 #import "FSAssociation.h"
-#import "FSNewlyAllocatedObject.h"
+
+#if !TARGET_OS_IPHONE
+# import "FScriptTextView.h"
+#endif
 
 static NSMutableSet *issuedWarnings;
 
@@ -102,6 +103,7 @@ static NSString *description(enum FSMapType mapType, NSUInteger argumentNumber, 
   return nil; // to avoid a warning
 }
 
+#if !TARGET_OS_IPHONE
 static NSAffineTransform *FSNSAffineTransformFromCGAffineTransform(CGAffineTransform cgat)
 {
   NSAffineTransformStruct matrix = {cgat.a, cgat.b, cgat.c, cgat.d, cgat.tx, cgat.ty};
@@ -116,6 +118,7 @@ static CGAffineTransform FSCGAffineTransformFromNSAffineTransform(NSAffineTransf
   CGAffineTransform result = {matrix.m11, matrix.m12, matrix.m21, matrix.m22, matrix.tX, matrix.tY};
   return result;
 }
+#endif
 
 id FSMapToObject(void *valuePtr, NSUInteger index, char fsEncodedType, const char *foundationStyleEncodedType, NSString *unsuportedTypeErrorMessage, NSString *ivarName)
 {
@@ -138,6 +141,11 @@ id FSMapToObject(void *valuePtr, NSUInteger index, char fsEncodedType, const cha
       case 'Q': return [NSNumber numberWithUnsignedLongLong:((unsigned long long *)valuePtr)[index]];       
       case ':': return [FSBlock blockWithSelector:((SEL *)valuePtr)[index]];
       case fscode_NSRange: return [NSValue valueWithRange:((NSRange *)valuePtr)[index]];
+#if TARGET_OS_IPHONE
+      case fscode_CGPoint: return [NSValue valueWithCGPoint:((CGPoint *)valuePtr)[index]];
+      case fscode_CGSize:  return [NSValue valueWithCGSize:((CGSize *)valuePtr)[index]];
+      case fscode_CGRect:  return [NSValue valueWithCGRect:((CGRect *)valuePtr)[index]];
+#else
       case fscode_NSPoint:
       case fscode_CGPoint: return [NSValue valueWithPoint:((NSPoint *)valuePtr)[index]];
       case fscode_NSSize:
@@ -145,6 +153,7 @@ id FSMapToObject(void *valuePtr, NSUInteger index, char fsEncodedType, const cha
       case fscode_NSRect:
       case fscode_CGRect:  return [NSValue valueWithRect:((NSRect *)valuePtr)[index]];
       case fscode_CGAffineTransform: return FSNSAffineTransformFromCGAffineTransform(((CGAffineTransform *)valuePtr)[index]);
+#endif
       case '*':
       case '^': 
         if ( ((void **)valuePtr)[index] == NULL ) return nil;
@@ -280,6 +289,29 @@ void FSMapFromObject(void *valuePtr, NSUInteger index, char fsEncodedType, id ob
     else                                                       ((NSRange *)valuePtr)[index] = [object rangeValue];
     break;
   }
+#if TARGET_OS_IPHONE
+    case fscode_CGPoint:
+    {
+      if      (![object isKindOfClass:[NSValue class]])          FSExecError([NSString stringWithFormat:@"%@ is %@. An instance of NSValue containing a CGPoint was expected", description(mapType, argumentNumber, selector, ivarName), descriptionForFSMessage(object)]);
+      else if (strcmp([object objCType], @encode(CGPoint)) != 0) FSExecError([NSString stringWithFormat:@"%@ must be an NSValue containing a CGPoint", description(mapType, argumentNumber, selector, ivarName)]);    
+      else                                                       ((CGPoint *)valuePtr)[index] = [object CGPointValue];
+      break;
+    }
+    case fscode_CGSize:
+    {
+      if      (![object isKindOfClass:[NSValue class]])          FSExecError([NSString stringWithFormat:@"%@ is %@. An instance of NSValue containing a CGSize was expected", description(mapType, argumentNumber, selector, ivarName), descriptionForFSMessage(object)]);
+      else if (strcmp([object objCType], @encode(CGSize)) != 0)  FSExecError([NSString stringWithFormat:@"%@ must be an NSValue containing a CGSize", description(mapType, argumentNumber, selector, ivarName)]);    
+      else                                                       ((CGSize *)valuePtr)[index] = [object CGSizeValue];
+      break;
+    }
+    case fscode_CGRect:
+    {
+      if      (![object isKindOfClass:[NSValue class]])          FSExecError([NSString stringWithFormat:@"%@ is %@. An instance of NSValue containing a CGRect was expected", description(mapType, argumentNumber, selector, ivarName), descriptionForFSMessage(object)]);
+      else if (strcmp([object objCType], @encode(CGRect)) != 0)  FSExecError([NSString stringWithFormat:@"%@ must be an NSValue containing a CGRect", description(mapType, argumentNumber, selector, ivarName)]);    
+      else                                                       ((CGRect *)valuePtr)[index] = [object CGRectValue];
+      break;
+    }
+#else
   case fscode_NSPoint:
   case fscode_CGPoint:
   {
@@ -304,12 +336,13 @@ void FSMapFromObject(void *valuePtr, NSUInteger index, char fsEncodedType, id ob
     else                                                       ((NSRect *)valuePtr)[index] = [object rectValue];
     break;
   }
-  case fscode_CGAffineTransform:
-  {
-    if (![object isKindOfClass:[NSAffineTransform class]]) FSExecError([NSString stringWithFormat:@"%@ is %@. An instance of NSAffineTransform was expected", description(mapType, argumentNumber, selector, ivarName), descriptionForFSMessage(object)]);
-    else ((CGAffineTransform *)valuePtr)[index] = FSCGAffineTransformFromNSAffineTransform(object);
-    break;
-  }
+    case fscode_CGAffineTransform:
+    {
+      if (![object isKindOfClass:[NSAffineTransform class]]) FSExecError([NSString stringWithFormat:@"%@ is %@. An instance of NSAffineTransform was expected", description(mapType, argumentNumber, selector, ivarName), descriptionForFSMessage(object)]);
+      else ((CGAffineTransform *)valuePtr)[index] = FSCGAffineTransformFromNSAffineTransform(object);
+      break;
+    }
+#endif
   case '*':
   case '^':
     if (object == nil) ((void **)valuePtr)[index] = NULL; 
@@ -445,6 +478,7 @@ id sendMsgNoPattern(id receiver, SEL selector, NSUInteger argumentCount, id *arg
   }
   else if (/*(receiver!=[NSProxy class]) &&*/ ![receiver respondsToSelector:selector] && [receiver methodSignatureForSelector:selector] == nil) // A receiver capable of forwarding the message will return a non-nil signature
   {    
+#if !TARGET_OS_IPHONE
     if ( (isKindOfClassNSDistantObject(receiver) && (           // fix for broken NSProxy meta-class level implementation in OS X
              selector == @selector(operator_equal_equal:)     || selector == @selector(operator_tilde_tilde:) 
           || selector == @selector(applyBlock:)
@@ -456,7 +490,8 @@ id sendMsgNoPattern(id receiver, SEL selector, NSUInteger argumentCount, id *arg
           || selector == @selector(initWithLocal:connection:) || selector == @selector(initWithTarget:connection:)))
           || (isKindOfClassNSProtocolChecker(receiver) && (
              selector == @selector(protocol)                  || selector == @selector(target) 
-          || selector == @selector(initWithTarget:protocol:))) ) 
+          || selector == @selector(initWithTarget:protocol:)
+        )))
       switch (argumentCount)
       {
         case 2:  return objc_msgSend(receiver,selector); 
@@ -464,7 +499,9 @@ id sendMsgNoPattern(id receiver, SEL selector, NSUInteger argumentCount, id *arg
         case 4:  return objc_msgSend(receiver,selector,args[2],args[3]);
         default: assert(0);
       }   
-    else if (selector == @selector(_ul_count) && [receiver isProxy])
+    else 
+#endif
+    if (selector == @selector(_ul_count) && [receiver isProxy])
     {  
       return ([receiver isKindOfClass:[NSArray class]] ? [FSNumber numberWithDouble:[receiver count]] : [FSNumber numberWithDouble:1]);
     }
@@ -1201,8 +1238,9 @@ static void addMethodsToClass(NSArray *methods, Class class)
       if (methodNode->isClassMethod) ok = [method addToClass:object_getClass(class)];
       else                           ok = [method addToClass:class]; 
       
+#if !TARGET_OS_IPHONE
       if (ok) [FScriptTextView registerMethodNameForCompletion:NSStringFromSelector(method->selector)];
-      
+#endif
       if (!ok) FSExecError([NSString stringWithFormat:@"invalid method \"%@\"", NSStringFromSelector(method->selector)]);
     }
 }
@@ -1567,9 +1605,9 @@ id execute_rec(FSCNBase *codeNode, FSSymbolTable *localSymbolTable, NSInteger *e
     if (!redefinition)
       objc_registerClassPair(class); // This call is made after the class is set up because we might have defined an +initialize method 
                                      // and we don't want the ObjC run-time to call it before we add it to the class
-    
+#if !TARGET_OS_IPHONE
     [FScriptTextView registerClassNameForCompletion:className];
-    
+#endif
     return class;  
   }
   

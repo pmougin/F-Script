@@ -2791,7 +2791,14 @@
 			isa = PBXProject;
 			buildConfigurationList = 8F2881FC08F9C040005B3C5A /* Build configuration list for PBXProject "FScript" */;
 			compatibilityVersion = "Xcode 3.0";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 0CD4E2FB00D7DD4D7BE9C1BD;
 			productRefGroup = 0CD4E2FC00D7DDB47BE9C1BD /* Products */;
 			projectDirPath = "";

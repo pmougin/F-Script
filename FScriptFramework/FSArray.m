@@ -23,7 +23,6 @@
 #import "FSNSArrayPrivate.h"
 #import "FSArrayEnumerator.h"
 #import "FSNSMutableArray.h"
-#import "FSCollectionInspector.h"
 #import "FSReplacementForCoderForNilInArray.h"
 
 @interface FSArray(ArrayPrivateInternal)
@@ -35,7 +34,9 @@
 void __attribute__ ((constructor)) initializeFSArray(void) 
 {
   [NSKeyedUnarchiver setClass:[FSArray class] forClassName:@"Array"];
+#if !TARGET_OS_IPHONE
   [NSUnarchiver decodeClassName:@"Array" asClassName:@"FSArray"];  
+#endif
 }
 
 /*static int comp_unsigned_int(const void *a,const void *b)
@@ -611,6 +612,7 @@ typedef struct fs_objc_object {
   return self;
 }
 
+#if !TARGET_OS_IPHONE
 - (id)replacementObjectForPortCoder:(NSPortCoder *)encoder 
 // Overhide the NSArray behavior (which is to pass arrays by copy by default), with a by reference behavior by default. 
 // This is because passing an object by copy only works if the receiving process is linked with the class of the object.
@@ -619,6 +621,7 @@ typedef struct fs_objc_object {
   if ([encoder isBycopy]) return self;
   else  return [NSDistantObject proxyWithLocal:self connection:[encoder connection]];
 }
+#endif
 
 - (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject
 {

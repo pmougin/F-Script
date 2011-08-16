@@ -5,7 +5,11 @@
 
 @class FSSymbolTable;
 
+#if TARGET_OS_IPHONE
+@interface FSUnarchiver:NSKeyedUnarchiver
+#else
 @interface FSUnarchiver:NSUnarchiver
+#endif
 {
   FSSymbolTable *loaderEnvironmentSymbolTable;
   FSSymbolTable *symbolTableForCompiledCodeNode;

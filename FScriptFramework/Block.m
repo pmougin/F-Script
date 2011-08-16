@@ -13,7 +13,6 @@
 #import "ArrayPrivate.h"
 #import <Foundation/Foundation.h>
 #import "FSBooleanPrivate.h"
-#import "BlockInspector.h"
 #import "FScriptFunctions.h"
 #import "Number.h"
 #import "FSVoid.h"
@@ -26,7 +25,9 @@
 void __attribute__ ((constructor)) initializeBlock(void) 
 {
   [NSKeyedUnarchiver setClass:[Block class] forClassName:@"Block"];
+#if !TARGET_OS_IPHONE
   [NSUnarchiver decodeClassName:@"Block" asClassName:@"Block"];  
+#endif
 }
 
 

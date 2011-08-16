@@ -13,7 +13,6 @@
 #import "ArrayPrivate.h"
 #import <Foundation/Foundation.h>
 #import "FSBooleanPrivate.h"
-#import "BlockInspector.h"
 #import "FScriptFunctions.h"
 #import "FSNumber.h"
 #import "FSVoid.h"
@@ -23,10 +22,16 @@
 #import "FSReturnSignal.h"
 #import "Block.h"
 
+#if !TARGET_OS_IPHONE
+# import "BlockInspector.h"
+#endif
+
 void __attribute__ ((constructor)) initializeFSBlock(void) 
 {
   [NSKeyedUnarchiver setClass:[FSBlock class] forClassName:@"Block"];
+#if !TARGET_OS_IPHONE
   [NSUnarchiver decodeClassName:@"Block" asClassName:@"FSBlock"];  
+#endif
 }
 
 
@@ -397,7 +402,9 @@ NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *s)
 
 - (void) inspect
 {
+#if !TARGET_OS_IPHONE
   [[self inspector] activate]; 
+#endif
 }
 
 - (id)onException:(FSBlock *)handler
@@ -807,11 +814,17 @@ NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *s)
   }          
 }
 
+#if TARGET_OS_IPHONE
+- (id) inspector {
+  return nil;
+}
+#else
 - (BlockInspector *)inspector 
 { 
   if (!inspector) inspector = [[BlockInspector alloc] initWithBlock:self];
   return inspector;
 }
+#endif
 
 - (SEL)messageToArgumentSelector
 {
@@ -849,6 +862,7 @@ NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *s)
   
 - sync
 {
+#if !TARGET_OS_IPHONE
   if ([inspector edited])
   {
     BlockRep * new = [blockRep copy];
@@ -859,6 +873,7 @@ NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *s)
     [blockRep useRetain];
     [inspector setEdited:NO]; 
   }    
+#endif
   return self;
 }       
 
