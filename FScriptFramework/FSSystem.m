@@ -277,8 +277,8 @@ static BOOL loadNonKeyedArchives;
       {
         @try
         {
-          unarchiver = [[[FSKeyedUnarchiver alloc] initForReadingWithData:data loaderEnvironmentSymbolTable:[executor symbolTable] symbolTableForCompiledCodeNode:nil] autorelease];
-          r = [unarchiver decodeObjectForKey:@"root"];
+          FSKeyedUnarchiver * keyedUnarchiver = [[[FSKeyedUnarchiver alloc] initForReadingWithData:data loaderEnvironmentSymbolTable:[executor symbolTable] symbolTableForCompiledCodeNode:nil] autorelease];
+          r = [keyedUnarchiver decodeObjectForKey:@"root"];
         }
         @catch (id exception)
         {
