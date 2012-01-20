@@ -53,7 +53,7 @@ void __attribute__ ((constructor)) initializeBlock(void)
 
 + (id)allocWithZone:(NSZone *)zone
 {
-  return [FSBlock allocWithZone:zone];
+  return (id)[FSBlock allocWithZone:zone];
 }
 
 + blockWithSelector:(SEL)theSelector
