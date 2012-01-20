@@ -106,6 +106,9 @@ static NSString *headerCellStringForBlock(FSBlock *block)
 - (IBAction)add:(id)sender 
 {
   FSBlock *defaultBlock = [[interpreter execute:@"#self"] result];
+    
+  // TODO: as of 10.7 the signature of NSTableColumn initWithIdentifier: has changed to
+  // - (id)initWithIdentifier:(NSString *)identifier;
   NSTableColumn *column = [[[NSTableColumn alloc] initWithIdentifier:defaultBlock] autorelease];
   NSInteger newColumnIndex = [tableView numberOfColumns] > 0 && [[[tableView tableColumns] objectAtIndex:0] identifier] == externalColumnIdentifier ? 1 : 0;
   
