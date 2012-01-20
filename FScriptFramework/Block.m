@@ -22,7 +22,6 @@
 #import "FSInterpreterResultPrivate.h"
 #import "FSReturnSignal.h"
 
-
 void __attribute__ ((constructor)) initializeBlock(void) 
 {
   [NSKeyedUnarchiver setClass:[Block class] forClassName:@"Block"];

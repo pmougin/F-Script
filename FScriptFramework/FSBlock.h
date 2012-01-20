@@ -2,6 +2,7 @@
 /*   This software is open source. See the license.       */
 
 #import "FSNSObject.h"
+#import "BlockSignature.h"
 
 extern NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *block);
 

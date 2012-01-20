@@ -2,6 +2,7 @@
 /*   This software is open source. See the license.       */
 
 #import "FSNSObject.h"
+#import "BlockSignature.h"
 
 @class BlockInspector, FSBoolean, FSMsgContext, BlockRep, FSSymbolTable, FSCNBase, FSInterpreter, FSInterpreterResult;
 
