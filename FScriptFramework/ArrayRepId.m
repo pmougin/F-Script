@@ -12,6 +12,7 @@
 #import "FSCompiler.h"
 #import "FSVoid.h"
 #import <objc/objc-runtime.h>
+#import <objc/objc-auto.h>
 #import "FSBlock.h"
 #import "BlockRep.h" 
 #import "BlockPrivate.h"
