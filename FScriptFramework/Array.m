@@ -102,7 +102,7 @@
 
 + (id)allocWithZone:(NSZone *)zone
 {
-  return [FSArray allocWithZone:zone];
+  return (id)[FSArray allocWithZone:zone];
 }
 
 + (id)arrayWithObject:(id)anObject
