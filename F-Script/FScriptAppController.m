@@ -403,7 +403,7 @@ NSString  *findPathToFileInLibraryWithinSystemDomain(NSString *fileName)
 
 - (void)dealloc
 {
-  if ([[NSApplication sharedApplication] delegate] == self)
+  if ((id)[[NSApplication sharedApplication] delegate] == self)
     [[NSApplication sharedApplication] setDelegate:nil];
   // since we don't retain outlets infoPanel and interpreterView, we don't have to release them here.
   [showConsoleMenuItem release];
