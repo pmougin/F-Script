@@ -30,7 +30,7 @@
 - (void) addObjectsFromFSArray:(Array *)otherArray;
 - (NSUInteger)indexOfObject:(id)anObject inRange:(NSRange)range identical:(BOOL)identical;
 - (enum ArrayRepType)type;
-- (Array *)initWithRep:(id)theRep; // TODO: this should most likely be listed in a public header
+- (Array *)initWithRep:(id)theRep;
 @end
 
 
