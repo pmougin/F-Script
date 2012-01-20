@@ -3886,7 +3886,7 @@
 				IBC_FLATTEN_NIBS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.6;
 				WARNING_CFLAGS = "-Wmost";
 				ZERO_LINK = NO;
 			};
@@ -3913,7 +3913,7 @@
 				INSTALL_OWNER = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "";
-				SDKROOT = macosx;
+				SDKROOT = macosx10.6;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
