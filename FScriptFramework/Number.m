@@ -302,7 +302,7 @@
                                        
 + allocWithZone:(NSZone *)zone
 {
-  return [FSNumber allocWithZone:zone];
+  return (id)[FSNumber allocWithZone:zone];
 }
 
 
