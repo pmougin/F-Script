@@ -17,7 +17,7 @@ const int FSObjectBrowserBottomBarHeight;
   FSInterpreter *interpreter;
   NSBrowser *browser;
   FSObjectBrowserBottomBarTextDisplay *bottomBarTextDisplay;
-  NSView *selectedView;
+  id selectedView;
   NSString *filterString;
   NSMutableSet *matrixes;
   enum {FSBrowsingWorkspace, FSBrowsingClasses, FSBrowsingObject, FSBrowsingNothing} browsingMode;
