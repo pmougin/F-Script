@@ -37,6 +37,8 @@ enum FSContext_symbol_status {DEFINED, UNDEFINED};
 
 - (id)value;
 
+- (oneway void)release;
+
 @end
 
 struct FSContextIndex

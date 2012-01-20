@@ -451,7 +451,7 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
 
 - (NSUInteger)retainCount  { return retainCount;}
 
-- (void)release  { if (--retainCount == 0) [self dealloc];}  
+- (oneway void)release  { if (--retainCount == 0) [self dealloc];}  
 
 - (void) removeAllObjects
 {
