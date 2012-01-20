@@ -32,5 +32,4 @@
 - (void)replaceDoubleAtIndex:(NSUInteger)index withDouble:(double)aDouble;
 - (enum ArrayRepType)repType;
 - (FSArray *)where:(NSArray *)booleans; // precondition: booleans is actualy an array and is of same size as the receiver
-- (oneway void)release;
 @end

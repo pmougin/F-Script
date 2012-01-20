@@ -74,7 +74,7 @@ void FSPointer_validateDereferencingWithSelector_index(FSPointer *s, SEL selecto
   return retainCount;
 }
 
-- (void)release
+- (oneway void)release
 {
   if (--retainCount == 0)  [self dealloc];
 }

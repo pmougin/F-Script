@@ -100,7 +100,7 @@
   return [super retain];
 }
 
-- (void)release
+- (oneway void)release
 {
   //NSLog([NSString stringWithFormat:@"FSObjectBrowserMatrix %p release", self]);
   [super release];

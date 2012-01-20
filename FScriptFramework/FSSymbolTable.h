@@ -36,9 +36,6 @@ enum FSContext_symbol_status {DEFINED, UNDEFINED};
 - (NSString *)symbol;
 
 - (id)value;
-
-- (oneway void)release;
-
 @end
 
 struct FSContextIndex

@@ -93,7 +93,7 @@
 
 - (NSUInteger)retainCount  { return retainCount;}
 
-- (void)release  { if (--retainCount == 0) [self dealloc];}  
+- (oneway void)release  { if (--retainCount == 0) [self dealloc];}  
 
 - (void)setValue:(id)theValue
 {

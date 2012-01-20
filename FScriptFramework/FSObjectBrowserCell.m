@@ -38,7 +38,7 @@
 
 - (NSString *)label { return label; }
 
-- (void) release
+- (oneway void) release
 {
   //NSLog(@"release called");
   [super release];
