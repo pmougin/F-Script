@@ -3654,7 +3654,6 @@
 				OTHER_REZFLAGS = "";
 				PRINCIPAL_CLASS = "";
 				PRODUCT_NAME = FScript;
-				SDKROOT = macosx;
 				SECTORDER_FLAGS = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wmost";
@@ -3690,7 +3689,6 @@
 				OTHER_REZFLAGS = "";
 				PRINCIPAL_CLASS = "";
 				PRODUCT_NAME = FScript;
-				SDKROOT = macosx;
 				SECTORDER_FLAGS = "";
 				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wmost";
