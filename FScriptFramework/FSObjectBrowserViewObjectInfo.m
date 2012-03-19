@@ -116,9 +116,9 @@
 - (void)addNSUndoManager:(id)object;
 - (void)addNSATSTypesetter:(id)object;
 
-- (void)addNSView:(id)object;
-- (void)addNSControl:(id)object;
-- (void)addNSWindow:(id)object;
+- (void)processNSView:(id)object;
+- (void)processNSControl:(id)object;
+- (void)processNSWindow:(id)object;
 @end
 
 static id objectFromAnimationBlockingMode(NSAnimationBlockingMode animationBlockingMode)
@@ -1474,7 +1474,7 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
   [objectHelper release];
 }
 
-@end
+@end 
 
 
 @implementation FSObjectBrowserViewObjectHelper
@@ -3236,7 +3236,7 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
   }
   else if ([object isKindOfClass:[NSView class]]) 
   {
-    [self addNSView:object];
+    [self processNSView:object];
   }
   
   if ([object isKindOfClass:[NSViewController class]])
@@ -3251,7 +3251,7 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
   }
   else if ([object isKindOfClass:[NSWindow class]])
   {
-    [self addNSWindow:object];
+    [self processNSWindow:object];
   }
   else if ([object isKindOfClass:[NSWindowController class]])
   { 
@@ -3563,7 +3563,7 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
     ADD_BOOL(                [o usesFontLeading]                    ,@"Uses font leading")
 }
 
-- (void)addNSView:(id)object
+- (void)processNSView:(id)object
 {
 
     if ([object isKindOfClass:[NSBox class]])
@@ -3604,7 +3604,7 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
     }
     else if ([object isKindOfClass:[NSControl class]])
     {
-      [self addNSControl:object];
+      [self processNSControl:object];
     }
     else if ([object isKindOfClass:[NSClipView class]])
     {
@@ -3837,7 +3837,7 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
     ADD_OBJECT(            [o window]                             ,@"Window")
 }
 
-- (void)addNSControl:(id)object
+- (void)processNSControl:(id)object
 {
   {
     if ([object isKindOfClass:[NSBrowser class]])
@@ -4218,8 +4218,8 @@ static id objectFromWritingDirection(NSWritingDirection writingDirection)
       ADD_OBJECT(          [o target]                             ,@"Target")
       }
 }
-
-- (void)addNSWindow:(id)object
+ 
+- (void)processNSWindow:(id)object
 {
   { 
     if ([object isKindOfClass:[NSPanel class]])
