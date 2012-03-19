@@ -2097,8 +2097,10 @@
 				8FBB10A4044E28FD00181279 /* TestFS.h */,
 				0CD4E3A000D7DFE17BE9C1BD /* TestFS.m */,
 			);
+			indentWidth = 2;
 			path = FScriptFramework;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		8F6392E00BDB855B005C8D94 /* FScriptIBPlugin */ = {
 			isa = PBXGroup;
@@ -2790,7 +2792,7 @@
 		0CD4E2FA00D7DD4D7BE9C1BD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 8F2881FC08F9C040005B3C5A /* Build configuration list for PBXProject "FScript" */;
 			compatibilityVersion = "Xcode 3.2";
