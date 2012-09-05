@@ -1098,7 +1098,6 @@
 		8FC291720C4A82D10071E9CC /* SecurityFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FC291710C4A82D10071E9CC /* SecurityFoundation.framework */; };
 		8FC291800C4A82F90071E9CC /* SecurityInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FC2917F0C4A82F90071E9CC /* SecurityInterface.framework */; };
 		8FC291930C4A83380071E9CC /* SyncServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FC291920C4A83380071E9CC /* SyncServices.framework */; };
-		8FC291A90C4A83A50071E9CC /* XgridFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FC291A80C4A83A50071E9CC /* XgridFoundation.framework */; };
 		8FCA00C30EEAF34300B10420 /* Block_fscript.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FCA00C10EEAF34300B10420 /* Block_fscript.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8FCA00C40EEAF34300B10420 /* Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA00C20EEAF34300B10420 /* Block.m */; };
 		8FCA00C50EEAF34300B10420 /* Block_fscript.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FCA00C10EEAF34300B10420 /* Block_fscript.h */; };
@@ -1697,7 +1696,6 @@
 				8FC291800C4A82F90071E9CC /* SecurityInterface.framework in Frameworks */,
 				8FC291930C4A83380071E9CC /* SyncServices.framework in Frameworks */,
 				8FF5AEFA0961E56400A3BEA9 /* WebKit.framework in Frameworks */,
-				8FC291A90C4A83A50071E9CC /* XgridFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2792,7 +2790,7 @@
 		0CD4E2FA00D7DD4D7BE9C1BD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 			};
 			buildConfigurationList = 8F2881FC08F9C040005B3C5A /* Build configuration list for PBXProject "FScript" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -3630,6 +3628,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH)";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = "$(value) NO";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -3667,6 +3666,7 @@
 		8F2881EA08F9C040005B3C5A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -3702,6 +3702,7 @@
 		8F2881ED08F9C040005B3C5A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = "$(value) NO";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
@@ -3724,6 +3725,7 @@
 		8F2881EE08F9C040005B3C5A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
@@ -3746,6 +3748,7 @@
 		8F2881F108F9C040005B3C5A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = "$(value) NO";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -3771,6 +3774,7 @@
 		8F2881F208F9C040005B3C5A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_ENABLE_OBJC_GC = unsupported;
@@ -3795,6 +3799,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				AUTO_SHADOW = YES;
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = "$(value) NO";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3822,6 +3827,7 @@
 		8F2881F608F9C040005B3C5A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3886,7 +3892,7 @@
 				IBC_FLATTEN_NIBS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "";
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				WARNING_CFLAGS = "-Wmost";
 				ZERO_LINK = NO;
 			};
@@ -3913,7 +3919,7 @@
 				INSTALL_OWNER = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "";
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
@@ -3921,6 +3927,7 @@
 		8F6392D40BDB8522005C8D94 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3951,6 +3958,7 @@
 		8F6392D50BDB8522005C8D94 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

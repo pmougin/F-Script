@@ -109,7 +109,7 @@ static NSString *headerCellStringForBlock(FSBlock *block)
     
   // TODO: as of 10.7 the signature of NSTableColumn initWithIdentifier: has changed to
   // - (id)initWithIdentifier:(NSString *)identifier;
-  NSTableColumn *column = [[[NSTableColumn alloc] initWithIdentifier:defaultBlock] autorelease];
+  NSTableColumn *column = [[[NSTableColumn alloc] initWithIdentifier:(void *)defaultBlock] autorelease];
   NSInteger newColumnIndex = [tableView numberOfColumns] > 0 && [[[tableView tableColumns] objectAtIndex:0] identifier] == externalColumnIdentifier ? 1 : 0;
   
   [[column headerCell] setStringValue:headerCellStringForBlock(defaultBlock)];  
@@ -346,7 +346,7 @@ static NSString *headerCellStringForBlock(FSBlock *block)
     NSUInteger i;
     const NSUInteger count = [filteredSortedModelArray count];
     NSTableColumn *column = [[tableView tableColumns] objectAtIndex:[tableView selectedColumn]];
-    FSBlock *block = [column identifier];
+    FSBlock *block = (void *)[column identifier];
     FSArray *objects = [FSArray arrayWithCapacity:count];
 
     if ([column identifier] == externalColumnIdentifier) return [[filteredSortedExternals copy] autorelease];
@@ -528,7 +528,7 @@ static NSString *headerCellStringForBlock(FSBlock *block)
   {
     NSUInteger i;
     const NSUInteger count = [sortedModelArray count];
-    FSBlock *block = [column identifier];
+    FSBlock *block = (id)[column identifier];
     FSArray *objects = [FSArray arrayWithCapacity:count];   
     
     for (i = 0; i < count; i++)
@@ -594,7 +594,7 @@ static NSString *headerCellStringForBlock(FSBlock *block)
     if ([aTableColumn identifier] == externalColumnIdentifier) 
       object = [filteredSortedExternals objectAtIndex:rowIndex];
     else   
-      object = [[aTableColumn identifier] value:[filteredSortedModelArray objectAtIndex:rowIndex]];
+      object = [(id)[aTableColumn identifier] value:[filteredSortedModelArray objectAtIndex:rowIndex]];
 
     if ([object isKindOfClass:[NSString class]]) result = object; // Because we don't want the quotes to appear.
     else result = printStringLimited(object, 500);

@@ -60,7 +60,7 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <WebKit/WebKit.h>
 #import <WebKit/WebJavaPlugIn.h>
-#import <XgridFoundation/XgridFoundation.h>
+//#import <XgridFoundation/XgridFoundation.h>
 
 #import "Number_fscript.h"
 #import "FSBoolean.h"

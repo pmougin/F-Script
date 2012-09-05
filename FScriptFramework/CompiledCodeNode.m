@@ -57,7 +57,7 @@
     default: assert(0);
   }
 
-  r = [NSMutableString stringWithFormat:@"\n****************************\n%@: type = %@, firstCharIndex = %d, lastCharIndex = %d", [self class], type, firstCharIndex, lastCharIndex];
+  r = [NSMutableString stringWithFormat:@"\n****************************\n%@: type = %@, firstCharIndex = %ld, lastCharIndex = %ld", [self class], type, firstCharIndex, lastCharIndex];
 
   switch (nodeType)
   {
@@ -85,7 +85,7 @@
       break;
   }
 
-  [r appendFormat:@", \n subnodeList ( %d elements)", [subnodes count]];
+  [r appendFormat:@", \n subnodeList ( %ld elements)", [subnodes count]];
 
   for (i = 0; i < [subnodes count]; i++)
     [r appendString:[[subnodes objectAtIndex:i] description]];  
