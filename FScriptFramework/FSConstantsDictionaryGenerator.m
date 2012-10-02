@@ -41,8 +41,8 @@
 //#import <OpenDirectory/OpenDirectory.h>
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/glu.h>
-#import <OpenGL/CGLProfilerFunctionEnum.h>
-#import <OpenGL/CGLProfiler.h>
+//#import <OpenGL/CGLProfilerFunctionEnum.h> // missing in 10.8 SDK
+//#import <OpenGL/CGLProfiler.h>  // missing in 10.8 SDK
 #import <OpenGL/CGLRenderers.h>
 #import <OSAKit/OSAKit.h>
 #import <PreferencePanes/PreferencePanes.h>
