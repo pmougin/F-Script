@@ -711,7 +711,7 @@
 		8F6DA8FF055FC71F0050409A /* BlockInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E32800D7DFE17BE9C1BD /* BlockInspector.h */; };
 		8F6DA900055FC71F0050409A /* BlockPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E32B00D7DFE17BE9C1BD /* BlockPrivate.h */; };
 		8F6DA901055FC71F0050409A /* BlockRep.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E32C00D7DFE17BE9C1BD /* BlockRep.h */; };
-		8F6DA902055FC71F0050409A /* BlockSignature.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E32E00D7DFE17BE9C1BD /* BlockSignature.h */; };
+		8F6DA902055FC71F0050409A /* BlockSignature.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E32E00D7DFE17BE9C1BD /* BlockSignature.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8F6DA903055FC71F0050409A /* BlockStackElem.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E32F00D7DFE17BE9C1BD /* BlockStackElem.h */; };
 		8F6DA904055FC71F0050409A /* build_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33200D7DFE17BE9C1BD /* build_config.h */; settings = {ATTRIBUTES = (); }; };
 		8F6DA905055FC71F0050409A /* CLIView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0CD4E33300D7DFE17BE9C1BD /* CLIView.h */; };
@@ -2522,6 +2522,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F6DA902055FC71F0050409A /* BlockSignature.h in Headers */,
 				8F6DA8F4055FC71F0050409A /* FSAirplane.h in Headers */,
 				8F6DA8F6055FC71F0050409A /* ArrayPrivate.h in Headers */,
 				8F6DA8F7055FC71F0050409A /* ArrayRep.h in Headers */,
@@ -2535,7 +2536,6 @@
 				8F6DA8FF055FC71F0050409A /* BlockInspector.h in Headers */,
 				8F6DA900055FC71F0050409A /* BlockPrivate.h in Headers */,
 				8F6DA901055FC71F0050409A /* BlockRep.h in Headers */,
-				8F6DA902055FC71F0050409A /* BlockSignature.h in Headers */,
 				8F6DA903055FC71F0050409A /* BlockStackElem.h in Headers */,
 				8F6DA904055FC71F0050409A /* build_config.h in Headers */,
 				8F6DA905055FC71F0050409A /* CLIView.h in Headers */,
