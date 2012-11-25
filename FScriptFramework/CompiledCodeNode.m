@@ -85,7 +85,7 @@
       break;
   }
 
-  [r appendFormat:@", \n subnodeList ( %ld elements)", [subnodes count]];
+  [r appendFormat:@", \n subnodeList ( %ld elements)", (long)[subnodes count]];
 
   for (i = 0; i < [subnodes count]; i++)
     [r appendString:[[subnodes objectAtIndex:i] description]];  

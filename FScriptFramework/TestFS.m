@@ -365,7 +365,7 @@ static NSInteger p = 362;
 { NSLog(@"TestFS return %p", &p); return &p;}
 
 + (NSInteger *)pointerWith:object with:(NSInteger)i
-{ NSLog(@"object received: %@, int received:%ld . TestFS return %p",object, i, &p); return &p;}
+{ NSLog(@"object received: %@, int received:%ld . TestFS return %p",object, (long)i, &p); return &p;}
 
 + (void) setPValue:(NSInteger)new
 { p = new; }
@@ -375,7 +375,7 @@ static NSInteger p = 362;
 + (void)setPointer:(NSInteger *)p
 {
   NSLog(@"setPointer: received pointer to %p", p);
-  NSLog(@"%ld",*p);
+  NSLog(@"%ld", (long)*p);
 }
 
 + (FSPointer *)fsPointer 

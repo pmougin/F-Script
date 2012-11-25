@@ -2,7 +2,7 @@
 /*   This software is open source. See the license.                              */
 
 #import "FSNewlyAllocatedObjectHolder.h"
-
+#import <objc/objc-runtime.h>
 
 @implementation FSNewlyAllocatedObjectHolder
 
@@ -25,7 +25,7 @@
 
 - (NSString *)printString
 {
-  return [[@"Holder for a newly allocated " stringByAppendingString:NSStringFromClass(object->isa)] stringByAppendingString:@". Don't forget to initialize it (use an init... method) and to use the object returned by the init... method instead of this holder." ];
+  return [[@"Holder for a newly allocated " stringByAppendingString:NSStringFromClass(object_getClass(object))] stringByAppendingString:@". Don't forget to initialize it (use an init... method) and to use the object returned by the init... method instead of this holder." ];
 }
 
 @end
