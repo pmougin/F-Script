@@ -87,14 +87,14 @@
   else return NSDragOperationCopy;
 }*/
 
-+ allocWithZone:(NSZone *)zone
++ (id)allocWithZone:(NSZone *)zone
 {
   id r = [super allocWithZone:zone];
   //NSLog([NSString stringWithFormat:@"FSObjectBrowserMatrix %p allocWithZone:", r]);
   return r;
 }
 
-- retain
+- (id)retain
 {
   //NSLog([NSString stringWithFormat:@"FSObjectBrowserMatrix %p retain", self]);
   return [super retain];

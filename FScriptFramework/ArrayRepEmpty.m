@@ -28,7 +28,7 @@
 /////////////////////////////// OTHER METHODS //////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-+ arrayRepEmptyWithCapacity:(NSUInteger)aNumItems
++ (id)arrayRepEmptyWithCapacity:(NSUInteger)aNumItems
 {
   return [[[self alloc] initWithCapacity:aNumItems] autorelease];
 }
@@ -47,7 +47,7 @@
 
 - (ArrayRepId *)     asArrayRepId       { return [[[ArrayRepId     alloc] initWithCapacity:capacity] autorelease];  }
 
-- copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
   return [[ArrayRepEmpty allocWithZone:zone] initWithCapacity:capacity];  
 }
@@ -56,11 +56,11 @@
 
 - (NSString *)descriptionLimited:(NSUInteger)nbElem { return @"{}" ; }
 
-- indexWithArray:(FSArray *)index {return [FSArray array];}
+- (id)indexWithArray:(FSArray *)index {return [FSArray array];}
 
-- init { return [self initWithCapacity:0]; }
+- (id)init { return [self initWithCapacity:0]; }
 
-- initWithCapacity:(NSUInteger)aNumItems
+- (id)initWithCapacity:(NSUInteger)aNumItems
 {
   if ((self = [super init]))
   {

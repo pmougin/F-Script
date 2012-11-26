@@ -17,6 +17,6 @@
 - (SEL)messageToArgumentSelector;
 - (FSBlock *)totalCopy;
 - (void)setNewRepAfterCompilation:(BlockRep*)newRep;
-- sync;         
+- (id)sync;         
 
 @end

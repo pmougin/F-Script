@@ -8,6 +8,6 @@
 
 }
 
-+ managedObject;
++ (id)managedObject;
 
 @end

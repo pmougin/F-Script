@@ -28,7 +28,7 @@
   return [ArrayRepId arrayWithArray:objects];  
 }
 
-- copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
   return [[ArrayRepFetchRequest allocWithZone:zone] initWithFetchRequest:fetchRequest objectContext:objectContext];  
 }
@@ -40,7 +40,7 @@
   [super dealloc];
 } 
 
-- initWithFetchRequest:(NSFetchRequest *)theFetchRequest objectContext:(NSManagedObjectContext *)theObjectContext
+- (id)initWithFetchRequest:(NSFetchRequest *)theFetchRequest objectContext:(NSManagedObjectContext *)theObjectContext
 {
   if ((self = [super init]))
   {

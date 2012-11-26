@@ -42,7 +42,7 @@
   return self;
 }
 
-- setMessageWithReceiver:(CompiledCodeNode *) theReceiver 
+- (id)setMessageWithReceiver:(CompiledCodeNode *) theReceiver 
                 selector:(NSString *)  theSelector
                 operatorSymbols:(NSString*) theOperatorSymbols
                 pattern:(FSPattern *) thePattern

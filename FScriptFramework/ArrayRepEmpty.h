@@ -22,7 +22,7 @@
 
 - (ArrayRepDouble *)  asArrayRepDouble;
 - (ArrayRepBoolean *) asArrayRepBoolean;
-- init;
-- initWithCapacity:(NSUInteger)aNumItems;
+- (id)init;
+- (id)initWithCapacity:(NSUInteger)aNumItems;
 
 @end

@@ -178,7 +178,7 @@
    return [self isKindOfClass:[NSArray class]] ? [(id)self count] : 1;
 }
 
-- _ul_objectAtIndex:(NSUInteger)index 
+- (id)_ul_objectAtIndex:(NSUInteger)index 
 { 
   return [self isKindOfClass:[NSArray class]] ? [(id)self objectAtIndex:index] : [self self];
 }

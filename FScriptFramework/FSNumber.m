@@ -44,7 +44,7 @@ FSNumber *numberWithDouble(double val)
 
 ///////////////////////////////   USER METHODS
 
-+ new
++ (id)new
 {
   return numberWithDouble(0);
 }
@@ -387,19 +387,19 @@ FSNumber *numberWithDouble(double val)
    return NSAllocateObject(self, 0, NULL);
 }             
                                        
-+ allocWithZone:(NSZone *)zone
++ (id)allocWithZone:(NSZone *)zone
 {
   return NSAllocateObject(self, 0, NULL);
 }
 
-+ numberWithDouble:(double)val
++ (id)numberWithDouble:(double)val
 {
    return numberWithDouble(val);
 }  
 
-- copy                        {retainCount++; return self; }
+- (id)copy                        {retainCount++; return self; }
 
-- copyWithZone:(NSZone *)zone {retainCount++; return self; }
+- (id)copyWithZone:(NSZone *)zone {retainCount++; return self; }
 
 - (void)dealloc
 {
@@ -444,7 +444,7 @@ FSNumber *numberWithDouble(double val)
 - (id)initWithBool:(BOOL)val {return [self initWithDouble:val];}
 - (id)initWithChar:(char)val {return [self initWithDouble:val];}
 
-- initWithDouble:(double)val // designated initializer
+- (id)initWithDouble:(double)val // designated initializer
 {
   if ((self = [super init]))
   {

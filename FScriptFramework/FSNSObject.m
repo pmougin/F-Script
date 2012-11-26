@@ -32,7 +32,7 @@
 
 @implementation NSObject (FSNSObject)
 
-+ replacementObjectForCoder:(NSCoder *)encoder
++ (id)replacementObjectForCoder:(NSCoder *)encoder
 {
   if (!encoder || [encoder isKindOfClass:[FSArchiver class]] || [encoder isKindOfClass:[FSKeyedArchiver class]]) // we provide a replacment only for archiving.
                                                   // Distributing seems to be automaticaly handled
@@ -184,7 +184,7 @@
 
 - (NSUInteger) _ul_count  { return 1; }
 
-- _ul_objectAtIndex:(NSUInteger)index  { return self;}
+- (id)_ul_objectAtIndex:(NSUInteger)index  { return self;}
 
 //////////////////////////////// PRIVATE for use by FSNSDistantObject ////////////////
 

@@ -19,7 +19,7 @@
 
 ///////////////////////////////   USER METHODS
 
-+ new
++ (id)new
 {
   return [[self alloc] initWithDouble:0];
 }
@@ -300,23 +300,23 @@
   return [self allocWithZone:nil];
 }             
                                        
-+ allocWithZone:(NSZone *)zone
++ (id)allocWithZone:(NSZone *)zone
 {
   return (id)[FSNumber allocWithZone:zone];
 }
 
 
-+ numberWithDouble:(double)val
++ (id)numberWithDouble:(double)val
 {
   return [[[self alloc] initWithDouble:val] autorelease];
 }  
 
-- copy                        
+- (id)copy                        
 {
   assert(0);
 }
 
-- copyWithZone:(NSZone *)zone 
+- (id)copyWithZone:(NSZone *)zone 
 {
   assert(0);
 }
@@ -352,7 +352,7 @@
   assert(0);
 }
 
-- initWithDouble:(double)val // designated initializer
+- (id)initWithDouble:(double)val // designated initializer
 {
   assert(0);
 }

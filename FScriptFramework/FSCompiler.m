@@ -168,7 +168,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
 
 @implementation FSCompiler
 
-+ compiler
++ (id)compiler
 {
   return [[[self alloc] init] autorelease];
 }
@@ -276,7 +276,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
     return sel_getUid([[NSString stringWithFormat:@"operator%@:",operator_name(selectorStr)] UTF8String]);
 }
 
-- init
+- (id)init
 {
   // NSLog(@"FSCompiler init");
   

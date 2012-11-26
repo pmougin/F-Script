@@ -38,7 +38,7 @@
 - (NSArray *)arrayByAddingObjectsFromArray:(NSArray *)otherArray;
 - (NSString *)componentsJoinedByString:(NSString *)separator;
 - (BOOL)containsObject:(id)anObject;
-- copyWithZone:(NSZone *)zone;
+- (id)copyWithZone:(NSZone *)zone;
 - (NSUInteger)count;
 - (NSString *)description;
 - (NSString *)descriptionWithLocale:(NSDictionary *)locale;
@@ -48,14 +48,14 @@
 - (NSUInteger)indexOfObject:(id)anObject inRange:(NSRange)range;
 - (NSUInteger)indexOfObjectIdenticalTo:(id)anObject;
 - (NSUInteger)indexOfObjectIdenticalTo:(id)anObject inRange:(NSRange)range;
-- init;
-- initWithCapacity:(NSUInteger)aNumItems;  // designated initializer
-- initWithObject:(id)object;
-- initWithObjects:(id *)objects count:(NSUInteger)nb;
+- (id)init;
+- (id)initWithCapacity:(NSUInteger)aNumItems;  // designated initializer
+- (id)initWithObject:(id)object;
+- (id)initWithObjects:(id *)objects count:(NSUInteger)nb;
 - (void)insertObject:anObject atIndex:(NSUInteger)index;
 - (BOOL)isEqualToArray:(NSArray *)anArray;
-- mutableCopyWithZone:(NSZone *)zone;
-- objectAtIndex:(NSUInteger)index;
+- (id)mutableCopyWithZone:(NSZone *)zone;
+- (id)objectAtIndex:(NSUInteger)index;
 - (NSEnumerator *)objectEnumerator;
 - (void)removeLastObject;
 - (void)removeObjectAtIndex:(NSUInteger)index;

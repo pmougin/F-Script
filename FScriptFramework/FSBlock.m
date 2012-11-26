@@ -67,22 +67,22 @@ NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *s)
    return NSAllocateObject(self, 0, NULL);
 }             
                                        
-+ allocWithZone:(NSZone *)zone
++ (id)allocWithZone:(NSZone *)zone
 {
   return NSAllocateObject(self, 0, NULL);
 }
 
-+ blockWithSelector:(SEL)theSelector
++ (id)blockWithSelector:(SEL)theSelector
 {
   return [[@"#" stringByAppendingString:[FSCompiler stringFromSelector:theSelector]] asBlock]; 
 }
 
-+ blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable
++ (id)blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable
 {
   return [self blockWithSource:source parentSymbolTable:parentSymbolTable onError:nil];
 }  
 
-+ blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable onError:(FSBlock *)errorBlock
++ (id)blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable onError:(FSBlock *)errorBlock
 {
 
   struct BlockSignature signature = {0,NO}; 
@@ -117,10 +117,10 @@ NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *s)
   return [blockRep compilForBlock:self onError:errorBlock];
 }    
 
-- copy
+- (id)copy
 { return [self copyWithZone:NULL]; }
 
-- copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
   [self compilIfNeeded];
   
@@ -220,7 +220,7 @@ NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *s)
   return self;
 }  
 
-- initWithCode:(FSCNBase *)theCode symbolTable:(FSSymbolTable*)theSymbolTable signature:(struct BlockSignature)theSignature source:(NSString*)theSource isCompiled:(BOOL)is_comp isCompact:(BOOL)isCompactArg sel:(SEL)theSel selStr:(NSString*)theSelStr
+- (id)initWithCode:(FSCNBase *)theCode symbolTable:(FSSymbolTable*)theSymbolTable signature:(struct BlockSignature)theSignature source:(NSString*)theSource isCompiled:(BOOL)is_comp isCompact:(BOOL)isCompactArg sel:(SEL)theSel selStr:(NSString*)theSelStr
 {
   if ((self = [super init]))
   {
@@ -354,7 +354,7 @@ NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *s)
   return [blockRep binding:name];
 }*/
 
-- blockFromString:(NSString *)source  // May raise
+- (id)blockFromString:(NSString *)source  // May raise
 {
   FSVerifClassArgsNoNil(@"blockFromString:",1,source,[NSString class]);
   
@@ -362,7 +362,7 @@ NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *s)
   return [FSBlock blockWithSource:source parentSymbolTable:[blockRep symbolTable]];
 }
 
-- blockFromString:(NSString *)source onError:(FSBlock *)errorBlock // May raise
+- (id)blockFromString:(NSString *)source onError:(FSBlock *)errorBlock // May raise
 {
   FSVerifClassArgsNoNil(@"blockFromString:onError",2,source,[NSString class],errorBlock,[FSBlock class]);
   
@@ -847,7 +847,7 @@ NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *s)
   blockRep = newRep;
 }  
   
-- sync
+- (id)sync
 {
   if ([inspector edited])
   {

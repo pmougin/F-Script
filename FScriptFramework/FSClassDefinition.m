@@ -5,7 +5,7 @@
 
 @implementation FSClassDefinition
 
-+ classDefinition
++ (id)classDefinition
 {
   return [[[self alloc] init] autorelease];
 }

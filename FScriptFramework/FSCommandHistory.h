@@ -29,18 +29,18 @@ store is removed.
   NSInteger head, queue, cursor;
 }
 
-- addStr:(NSString *)str; // adds a string
+- (id)addStr:(NSString *)str; // adds a string
 - (void)dealloc;
 - (void)encodeWithCoder:(NSCoder *)coder;
-- goToFirst;              // move the cursor to the most recently added string
-- goToLast;               // move the cursor to the least recently added string               
-- goToNext;               // move the cursor forward
-- goToPrevious;           // move the cursor backward
+- (id)goToFirst;              // move the cursor to the most recently added string
+- (id)goToLast;               // move the cursor to the least recently added string               
+- (id)goToNext;               // move the cursor forward
+- (id)goToPrevious;           // move the cursor backward
 - (NSString *)getMostRecentlyInsertedStr; // get the most recently inserted (i.e. added) string
 - (NSString *)getStr;     // get the string for at the current cursor position
-- init;
+- (id)init;
 - (id)initWithCoder:(NSCoder *)coder;
-- initWithUIntSize:(NSUInteger)size;  // designated initializer. The capacity of the receiver is
+- (id)initWithUIntSize:(NSUInteger)size;  // designated initializer. The capacity of the receiver is
                                         // set to the value of the argument. The receiver is filled
                                         // with empty strings.
 - (NSInteger)size;

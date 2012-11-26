@@ -163,9 +163,9 @@ typedef struct fs_objc_object {
   assert(0);
 }
 
-- copy  {  assert(0);  }
+- (id)copy  {  assert(0);  }
 
-- copyWithZone:(NSZone *)zone  {   assert(0);   }
+- (id)copyWithZone:(NSZone *)zone  {   assert(0);   }
 
 - (NSUInteger)count 
 {
@@ -252,32 +252,32 @@ typedef struct fs_objc_object {
   assert(0);
 }
 
-- init
+- (id)init
 {
   assert(0);
 }   
 
-- initFrom:(NSUInteger)from to:(NSUInteger)to step:(NSUInteger)step
+- (id)initFrom:(NSUInteger)from to:(NSUInteger)to step:(NSUInteger)step
 {
   assert(0);
 }           
 
-- initFilledWith:(id)elem count:(NSUInteger)nb
+- (id)initFilledWith:(id)elem count:(NSUInteger)nb
 {
   assert(0);
 } 
 
-- initWithCapacity:(NSUInteger)aNumItems
+- (id)initWithCapacity:(NSUInteger)aNumItems
 {
   assert(0);
 }
 
-- initWithObject:(id)object
+- (id)initWithObject:(id)object
 {
   assert(0);
 }
 
-- initWithObjects:(id *)objects count:(NSUInteger)nb
+- (id)initWithObjects:(id *)objects count:(NSUInteger)nb
 {
   assert(0);
 }
@@ -302,12 +302,12 @@ typedef struct fs_objc_object {
   assert(0);
 }
         
-- mutableCopyWithZone:(NSZone *)zone 
+- (id)mutableCopyWithZone:(NSZone *)zone 
 { 
   assert(0);
 }
     
-- objectAtIndex:(NSUInteger)index
+- (id)objectAtIndex:(NSUInteger)index
 {
   assert(0);
 }   
@@ -373,7 +373,7 @@ typedef struct fs_objc_object {
 
 -(NSUInteger) _ul_count {   assert(0);   }
  
-- _ul_objectAtIndex:(NSUInteger)index
+- (id)_ul_objectAtIndex:(NSUInteger)index
 { 
   assert(0);
 }

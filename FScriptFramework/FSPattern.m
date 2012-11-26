@@ -8,12 +8,12 @@
 
 @implementation FSPattern
 
-+ patternWithDeep:(int)theDeep level:(FSArray *)theLevel nextPattern:(FSPattern*)theNextPatter
++ (id)patternWithDeep:(int)theDeep level:(FSArray *)theLevel nextPattern:(FSPattern*)theNextPatter
 {
   return [[[self alloc] initWithDeep:theDeep level:theLevel nextPattern:theNextPatter] autorelease];
 }  
 
-+ patternFromIntermediateRepresentation:(NSArray *)ap
++ (id)patternFromIntermediateRepresentation:(NSArray *)ap
 {
   NSInteger nb = [ap count];
   NSInteger level_count;
@@ -108,7 +108,7 @@
   return r;
 }
 
-- initWithDeep:(int)theDeep level:(FSArray *)theLevel nextPattern:(FSPattern*)theNextPattern
+- (id)initWithDeep:(int)theDeep level:(FSArray *)theLevel nextPattern:(FSPattern*)theNextPattern
 {
   if ((self = [super init]))
   {

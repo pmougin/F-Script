@@ -13,21 +13,21 @@
   BlockInspector *inspector;
 }
 
-+ allocWithZone:(NSZone *)zone;
-+ blockWithSelector:(SEL)theSelector;
-+ blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable;  // May raise
-+ blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable onError:(Block *)errorBlock; // May raise
++ (id)allocWithZone:(NSZone *)zone;
++ (id)blockWithSelector:(SEL)theSelector;
++ (id)blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable;  // May raise
++ (id)blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable onError:(Block *)errorBlock; // May raise
 
 - (NSArray *)argumentsNames;
 - (void) compilIfNeeded; // May raise
 - (id) compilOnError:(Block *)errorBlock; // May raise
-- copy;
-- copyWithZone:(NSZone *)zone;
+- (id)copy;
+- (id)copyWithZone:(NSZone *)zone;
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 - (FSInterpreterResult *)executeWithArguments:(NSArray *)arguments;
 - (id) initWithBlockRep:(BlockRep *)theBlockRep;
 - (id)initWithCoder:(NSCoder *)aDecoder;
-- initWithCode:(FSCNBase *)theCode symbolTable:(FSSymbolTable*)theSymbolTable signature:(struct BlockSignature)theSignature source:(NSString*)theSource isCompiled:(BOOL)is_comp isCompact:(BOOL)isCompactArg sel:(SEL)theSel selStr:(NSString*)theSelStr;
+- (id)initWithCode:(FSCNBase *)theCode symbolTable:(FSSymbolTable*)theSymbolTable signature:(struct BlockSignature)theSignature source:(NSString*)theSource isCompiled:(BOOL)is_comp isCompact:(BOOL)isCompactArg sel:(SEL)theSel selStr:(NSString*)theSelStr;
    // This method retains theCode, theSymbolTable and theSource. No copy.
 - (BOOL) isCompact;  // May raise
 - (FSMsgContext *)msgContext;

@@ -24,9 +24,9 @@ enum FSContext_symbol_status {DEFINED, UNDEFINED};
 
 - (id)initWithCoder:(NSCoder *)coder;
 
-- initWrapperWithValue:(id)theValue symbol:(NSString *)theSymbol;
+- (id)initWrapperWithValue:(id)theValue symbol:(NSString *)theSymbol;
 
-- initWrapperWithValue:(id)theValue symbol:(NSString *)theSymbol status:(enum FSContext_symbol_status)theStatus;
+- (id)initWrapperWithValue:(id)theValue symbol:(NSString *)theSymbol status:(enum FSContext_symbol_status)theStatus;
 // symbol is not copied.
 
 - (void)setValue:(id)theValue;
@@ -68,7 +68,7 @@ struct FSContextValueWrapper
 }
 
 + (void)initialize;
-+ symbolTable;
++ (id)symbolTable;
 
 - (FSArray *)allDefinedSymbols;
 
@@ -89,10 +89,10 @@ struct FSContextValueWrapper
 - (struct FSContextIndex)indexOfSymbol:(NSString *)theKey;
 // Note : field "index" of the result is set to -1 if symbol is not found
 
-- init;
-- initWithParent:(FSSymbolTable *)theParent;
-- initWithParent:(FSSymbolTable *)theParent tryToAttachWhenDecoding:(BOOL)shouldTry;
-- initWithParent:(FSSymbolTable *)theParent tryToAttachWhenDecoding:(BOOL)shouldTry locals:(struct FSContextValueWrapper *)theLocals localCount:(NSUInteger)theLocalCount;
+- (id)init;
+- (id)initWithParent:(FSSymbolTable *)theParent;
+- (id)initWithParent:(FSSymbolTable *)theParent tryToAttachWhenDecoding:(BOOL)shouldTry;
+- (id)initWithParent:(FSSymbolTable *)theParent tryToAttachWhenDecoding:(BOOL)shouldTry locals:(struct FSContextValueWrapper *)theLocals localCount:(NSUInteger)theLocalCount;
 
 - (id)initWithCoder:(NSCoder *)coder;
 
@@ -102,7 +102,7 @@ struct FSContextValueWrapper
 
 - (BOOL) isEmpty;
 
-- objectForIndex:(struct FSContextIndex)index isDefined:(BOOL *)isDefined;
+- (id)objectForIndex:(struct FSContextIndex)index isDefined:(BOOL *)isDefined;
 
 - (id)objectForSymbol:(NSString *)symbol found:(BOOL *)found; // foud may be passed as NULL
 
@@ -116,7 +116,7 @@ struct FSContextValueWrapper
 
 - (void)setToNilSymbolsFrom:(NSUInteger)ind;
 
-- setObject:(id)theValue forIndex:(struct FSContextIndex)theIndex;
+- (id)setObject:(id)theValue forIndex:(struct FSContextIndex)theIndex;
 
 - (NSString *)symbolForIndex:(struct FSContextIndex)index;
 

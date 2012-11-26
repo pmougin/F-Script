@@ -200,7 +200,7 @@
   if (startDate) [times addObject:[FSNumber numberWithDouble:-[startDate timeIntervalSinceNow]]];
 }
 
-- init
+- (id)init
 {
   if ((self = [super init]))
   {

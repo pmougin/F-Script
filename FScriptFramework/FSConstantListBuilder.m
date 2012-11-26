@@ -65,7 +65,7 @@ b constantsInitializerString.
 
 @implementation FSConstantListBuilder
 
-- init
+- (id)init
 {
   if (self = [super init])
   {

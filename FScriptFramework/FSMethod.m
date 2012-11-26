@@ -28,7 +28,7 @@ static NSMapTable          *instances;
 }
 
 - (void *) dispatcher;
-- initWithMethod:(FSMethod *)theMethod;
+- (id)initWithMethod:(FSMethod *)theMethod;
 - (void)setMethod:(FSMethod *)theMethod;
 
 @end
@@ -275,7 +275,7 @@ void fscript_setDynamicIvarNames(Class class, NSSet *ivarNames)
 
 @implementation FSMethodHolder
 
-- initWithMethod:(FSMethod *)theMethod
+- (id)initWithMethod:(FSMethod *)theMethod
 {
   self = [super init];
   if (self != nil) 

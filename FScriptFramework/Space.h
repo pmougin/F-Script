@@ -20,7 +20,7 @@
 
 - (void)dealloc;
 - (void)encodeWithCoder:(NSCoder *)coder;
-- initSymbolTableLocale:(FSSymbolTable*)symb_loc;  // Will point to symb_loc
+- (id)initSymbolTableLocale:(FSSymbolTable*)symb_loc;  // Will point to symb_loc
 - (id)initWithCoder:(NSCoder *)coder;
 - (FSSymbolTable*)localSymbolTable;
 

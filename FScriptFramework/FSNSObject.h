@@ -37,7 +37,7 @@
 
 // OTHER METHODS
 
-+ replacementObjectForCoder:(NSCoder *)encoder;
++ (id)replacementObjectForCoder:(NSCoder *)encoder;
 - (id)classOrMetaclass;
 
 

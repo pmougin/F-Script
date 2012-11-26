@@ -71,12 +71,12 @@
   return self;
 }
 
-- initWrapperWithValue:(id)theValue symbol:(NSString *)theSymbol
+- (id)initWrapperWithValue:(id)theValue symbol:(NSString *)theSymbol
 {
   return [self initWrapperWithValue:theValue symbol:theSymbol status:DEFINED];
 }  
 
-- initWrapperWithValue:(id)theValue symbol:(NSString *)theSymbol status:(enum FSContext_symbol_status)theStatus
+- (id)initWrapperWithValue:(id)theValue symbol:(NSString *)theSymbol status:(enum FSContext_symbol_status)theStatus
 {
   if ((self = [super init]))
   {
@@ -136,7 +136,7 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
   }
 }  
   
-+ symbolTable
++ (id)symbolTable
 {
   return [[[self alloc] init] autorelease];
 }  
@@ -347,22 +347,22 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
   }    
 }      
 
-- init
+- (id)init
 {
   return [self initWithParent:nil];
 }
 
-- initWithParent:(FSSymbolTable *)theParent
+- (id)initWithParent:(FSSymbolTable *)theParent
 {
   return [self initWithParent:theParent tryToAttachWhenDecoding:YES];
 }
 
-- initWithParent:(FSSymbolTable *)theParent tryToAttachWhenDecoding:(BOOL)shouldTry
+- (id)initWithParent:(FSSymbolTable *)theParent tryToAttachWhenDecoding:(BOOL)shouldTry
 {
   return [self initWithParent:theParent tryToAttachWhenDecoding:shouldTry locals:NULL localCount:0];
 } 
 
-- initWithParent:(FSSymbolTable *)theParent tryToAttachWhenDecoding:(BOOL)shouldTry locals:(struct FSContextValueWrapper *)theLocals localCount:(NSUInteger)theLocalCount
+- (id)initWithParent:(FSSymbolTable *)theParent tryToAttachWhenDecoding:(BOOL)shouldTry locals:(struct FSContextValueWrapper *)theLocals localCount:(NSUInteger)theLocalCount
 {
   if ((self = [super init]))
   {
@@ -401,7 +401,7 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
 
 - (BOOL) isEmpty  { return (localCount == 0);}
 
-- objectForIndex:(struct FSContextIndex)index isDefined:(BOOL *)isDefined
+- (id)objectForIndex:(struct FSContextIndex)index isDefined:(BOOL *)isDefined
 {
   FSSymbolTable *s = self;
   
@@ -493,7 +493,7 @@ void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransi
 }
 
 
-- setObject:(id)object forIndex:(struct FSContextIndex)index
+- (id)setObject:(id)object forIndex:(struct FSContextIndex)index
 {
   NSInteger i; 
   FSSymbolTable *s = self;

@@ -867,6 +867,6 @@ void transpose_rec(NSArray *arrayToTranspose, NSInteger *pos, NSUInteger pos_cou
 
 -(NSUInteger) _ul_count  { return [self count]; }
 
-- _ul_objectAtIndex:(NSUInteger)index { return [self objectAtIndex:index];}
+- (id)_ul_objectAtIndex:(NSUInteger)index { return [self objectAtIndex:index];}
 
 @end

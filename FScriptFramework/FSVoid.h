@@ -8,7 +8,7 @@
 + (FSVoid*) fsVoid;
 
 - (id)autorelease;
-- awakeAfterUsingCoder:(NSCoder *)aDecoder;
+- (id)awakeAfterUsingCoder:(NSCoder *)aDecoder;
 - (id) copy;
 - (id) copyWithZone:(NSZone *)zone;
 - (NSString *) printString;

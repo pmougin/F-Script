@@ -45,7 +45,7 @@ static BOOL loadNonKeyedArchives;
   }
 }
 
-+ system:(id)theExecutor
++ (id)system:(id)theExecutor
 { return [[[self alloc] init:theExecutor] autorelease]; }
 
 
@@ -76,10 +76,10 @@ static BOOL loadNonKeyedArchives;
   }
 }
 
-- copy
+- (id)copy
 { return [self copyWithZone:NULL]; }
 
-- copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 { return [[FSSystem allocWithZone:zone] init:executor]; }
 
 - (void)dealloc
@@ -98,7 +98,7 @@ static BOOL loadNonKeyedArchives;
   return [NSNull null];
 }
 
-- init:(id)theExecutor
+- (id)init:(id)theExecutor
 {
   if ((self = [super init]))
   {
@@ -122,13 +122,13 @@ static BOOL loadNonKeyedArchives;
   NSBeep();
 }
  
-- blockFromString:(NSString *)source // May raise
+- (id)blockFromString:(NSString *)source // May raise
 {
   FSVerifClassArgsNoNil(@"blockFromString:", 1, source, [NSString class]);
   return [FSBlock blockWithSource:source parentSymbolTable:[executor symbolTable]]; // May raise
 }
 
-- blockFromString:(NSString *)source onError:(FSBlock *)errorBlock // May raise
+- (id)blockFromString:(NSString *)source onError:(FSBlock *)errorBlock // May raise
 {
   FSVerifClassArgsNoNil(@"blockFromString:onError:", 2, source, [NSString class], errorBlock, [FSBlock class]);
   return [FSBlock blockWithSource:source parentSymbolTable:[executor symbolTable] onError:errorBlock]; // May raise

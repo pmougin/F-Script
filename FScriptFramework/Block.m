@@ -56,17 +56,17 @@ void __attribute__ ((constructor)) initializeBlock(void)
   return (id)[FSBlock allocWithZone:zone];
 }
 
-+ blockWithSelector:(SEL)theSelector
++ (id)blockWithSelector:(SEL)theSelector
 {
   return [[@"#" stringByAppendingString:[FSCompiler stringFromSelector:theSelector]] asBlock]; 
 }
 
-+ blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable
++ (id)blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable
 {
   return [self blockWithSource:source parentSymbolTable:parentSymbolTable onError:nil];
 }  
 
-+ blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable onError:(Block *)errorBlock
++ (id)blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable onError:(Block *)errorBlock
 {
   struct BlockSignature signature = {0,NO}; 
   Block *r = [[[self alloc] initWithCode:nil symbolTable:parentSymbolTable signature:signature source:[[source copy] autorelease] isCompiled:NO isCompact:NO sel:(SEL)0 selStr:nil] autorelease];
@@ -91,12 +91,12 @@ void __attribute__ ((constructor)) initializeBlock(void)
   assert(0);
 }    
 
-- copy
+- (id)copy
 { 
   assert(0);
 }
 
-- copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
   assert(0);
 }
@@ -127,7 +127,7 @@ void __attribute__ ((constructor)) initializeBlock(void)
   assert(0);
 }  
 
-- initWithCode:(FSCNBase *)theCode symbolTable:(FSSymbolTable*)theSymbolTable signature:(struct BlockSignature)theSignature source:(NSString*)theSource isCompiled:(BOOL)is_comp isCompact:(BOOL)isCompactArg sel:(SEL)theSel selStr:(NSString*)theSelStr
+- (id)initWithCode:(FSCNBase *)theCode symbolTable:(FSSymbolTable*)theSymbolTable signature:(struct BlockSignature)theSignature source:(NSString*)theSource isCompiled:(BOOL)is_comp isCompact:(BOOL)isCompactArg sel:(SEL)theSel selStr:(NSString*)theSelStr
 {
   assert(0);
 }
@@ -221,12 +221,12 @@ void __attribute__ ((constructor)) initializeBlock(void)
  return [blockRep binding:name];
  }*/
 
-- blockFromString:(NSString *)source  // May raise
+- (id)blockFromString:(NSString *)source  // May raise
 {
   assert(0);
 }
 
-- blockFromString:(NSString *)source onError:(Block *)errorBlock // May raise
+- (id)blockFromString:(NSString *)source onError:(Block *)errorBlock // May raise
 {
   assert(0);
 }
@@ -421,7 +421,7 @@ void __attribute__ ((constructor)) initializeBlock(void)
   assert(0);
 }  
 
-- sync
+- (id)sync
 {
   assert(0);
 }       

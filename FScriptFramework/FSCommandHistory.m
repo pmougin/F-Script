@@ -5,7 +5,7 @@
 
 @implementation FSCommandHistory 
 
-- addStr:(NSString *)str 
+- (id)addStr:(NSString *)str 
 { 
   if ([array count] != 0)
   {
@@ -55,19 +55,19 @@
   return self;
 }
 
-- goToFirst
+- (id)goToFirst
 {
   cursor = head;
   return self;
 }
 
-- goToLast
+- (id)goToLast
 {
   cursor = queue;
   return self;
 }
 
-- goToNext
+- (id)goToNext
 {
   if ([array count] != 0)
   {
@@ -77,7 +77,7 @@
   return self;
 }
 
-- goToPrevious
+- (id)goToPrevious
 {
   if([array count] != 0)
   {
@@ -99,9 +99,9 @@
   else                    return(@"");    
 }  
 
-- init {return [self initWithUIntSize:0];}
+- (id)init {return [self initWithUIntSize:0];}
 
-- initWithUIntSize:(NSUInteger)size
+- (id)initWithUIntSize:(NSUInteger)size
 {
   if ((self = [super init]))
   {

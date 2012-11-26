@@ -31,7 +31,7 @@ static NSMutableCharacterSet *letterDigitUnderscoreCharacterSet;
 }
 
 
-+ completionStrings // private; for testing purpose
++ (id)completionStrings // private; for testing purpose
 {
   return completionStrings;
 }

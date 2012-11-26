@@ -17,12 +17,12 @@
 - (void)addBoolean:(char)aBoolean;
 - (char *)booleansPtr;
 - (NSUInteger)indexOfObject:(id)anObject inRange:(NSRange)range identical:(BOOL)identical;
-- init;
-- initFilledWithBoolean:(char)elem count:(NSUInteger)nb; // contract: a return value of nil means not enough memory
-- initWithCapacity:(NSUInteger)aNumItems; // contract: a return value of nil means not enough memory
-- initWithBooleans:(char *)elems count:(NSUInteger)nb;
-- initWithBooleansNoCopy:(char *)tab count:(NSUInteger)nb;
-- copyWithZone:(NSZone *)zone;
+- (id)init;
+- (id)initFilledWithBoolean:(char)elem count:(NSUInteger)nb; // contract: a return value of nil means not enough memory
+- (id)initWithCapacity:(NSUInteger)aNumItems; // contract: a return value of nil means not enough memory
+- (id)initWithBooleans:(char *)elems count:(NSUInteger)nb;
+- (id)initWithBooleansNoCopy:(char *)tab count:(NSUInteger)nb;
+- (id)copyWithZone:(NSZone *)zone;
 - (void)replaceBooleanAtIndex:(NSUInteger)index withBoolean:(char)aBoolean;
 - (enum ArrayRepType)repType;
 

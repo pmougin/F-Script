@@ -359,7 +359,7 @@
 - (ArrayRepId *) asArrayRepId
 { return self;}
 
-- copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
   return [[[self class] allocWithZone:zone] initWithObjects:t count:count];  
 }
@@ -422,7 +422,7 @@
   }    
 }
 
-- indexWithArray:(FSArray *)index
+- (id)indexWithArray:(FSArray *)index
 {
   switch ([index type])
   {
@@ -554,7 +554,7 @@
   return nil; // W
 } 
 
-- init
+- (id)init
 {
   return [self initWithCapacity:0];
 }   
@@ -578,7 +578,7 @@
   return nil;
 } */
 
-- initFilledWith:(id)elem count:(NSUInteger)nb
+- (id)initFilledWith:(id)elem count:(NSUInteger)nb
 {
   if (self = [self initWithCapacity:nb])
   { 
@@ -588,7 +588,7 @@
   return nil; 
 } 
 
-- initWithCapacity:(NSUInteger)aNumItems
+- (id)initWithCapacity:(NSUInteger)aNumItems
 { 
   if ((self = [super init]))
   {
@@ -606,7 +606,7 @@
   return nil;
 }
 
-- initWithObjectsNoCopy:(id *)tab count:(NSUInteger)nb
+- (id)initWithObjectsNoCopy:(id *)tab count:(NSUInteger)nb
 {
   if ((self = [super init]))
   {
@@ -619,7 +619,7 @@
   return nil;    
 }
 
-- initWithObjects:(id *)objects count:(NSUInteger)nb
+- (id)initWithObjects:(id *)objects count:(NSUInteger)nb
 {
   NSUInteger i;
   
@@ -652,7 +652,7 @@
   t[index] = [anObject retain];
 }    
   
-- objectAtIndex:(NSUInteger)index
+- (id)objectAtIndex:(NSUInteger)index
 {
   if (index >= count) [NSException raise:NSRangeException format:@"index beyond the end of the array in method -ObjectAtIndex:"];
   return t[index];

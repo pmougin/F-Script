@@ -10,10 +10,10 @@
   NSString *className;
 }
 
-- awakeAfterUsingCoder:(NSCoder *)aCoder;
+- (id)awakeAfterUsingCoder:(NSCoder *)aCoder;
 - (void)dealloc;
 - (void)encodeWithCoder:(NSCoder *)aCoder;
-- initWithClass:(Class)theClass;
+- (id)initWithClass:(Class)theClass;
 - (id)initWithCoder:(NSCoder *)aDecoder;
 
 @end

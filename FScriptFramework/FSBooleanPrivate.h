@@ -15,12 +15,12 @@ extern FSBoolean *fsFalse;
 
 @interface False(FalsePrivate)
 
-- awakeAfterUsingCoder:(NSCoder *)aDecoder;
+- (id)awakeAfterUsingCoder:(NSCoder *)aDecoder;
 
 @end
 
 @interface True(TruePrivate)
 
-- awakeAfterUsingCoder:(NSCoder *)aDecoder;
+- (id)awakeAfterUsingCoder:(NSCoder *)aDecoder;
 
 @end
