@@ -155,7 +155,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
 - (FSCNIdentifier *) identifierWithCompilationContext:(struct compilationContext)compilationContext;
 - (FSCNArray *) arrayWithCompilationContext:(struct compilationContext)compilationContext;
 - (FSCNBlock *) blockWithCompilationContext:(struct compilationContext)compilationContext parentSymbolTable:(FSSymbolTable *)symbTab;
-- (FSCNArray *) dictionaryWithCompilationContext:(struct compilationContext)compilationContext;
+- (FSCNDictionary *) dictionaryWithCompilationContext:(struct compilationContext)compilationContext;
 - (id) patternElt;
 - (FSCNMethod *)methodWithCompilationContext:(struct compilationContext)compilationContext;
 - (NSString *)typeWithCompilationContext:(struct compilationContext)compilationContext;
@@ -168,7 +168,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
 
 @implementation FSCompiler
 
-+ compiler
++ (id)compiler
 {
   return [[[self alloc] init] autorelease];
 }
@@ -276,7 +276,7 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
     return sel_getUid([[NSString stringWithFormat:@"operator%@:",operator_name(selectorStr)] UTF8String]);
 }
 
-- init
+- (id)init
 {
   // NSLog(@"FSCompiler init");
   
@@ -1324,11 +1324,11 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   return r;
 } 
 
-- (FSCNArray *) dictionaryWithCompilationContext:(struct compilationContext)compilationContext
+- (FSCNDictionary *) dictionaryWithCompilationContext:(struct compilationContext)compilationContext
 {
   NSMutableArray *entries = [NSMutableArray array];
   int32_t firstCharIndex = token_first_char_index;
-  FSCNArray *r;
+  FSCNDictionary *r;
   
   [self checkToken:DICTIONARY_BEGIN :@"\"#{\" expected"];
   [self scan];

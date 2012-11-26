@@ -141,7 +141,7 @@ void __attribute__ ((constructor)) initializeFSExecutor(void)
   return [r autorelease];
 }
 
-- initWithInterpreter:(FSInterpreter *)theInterpreter
+- (id)initWithInterpreter:(FSInterpreter *)theInterpreter
 {
   if ((self = [super init]))
   {
@@ -238,7 +238,7 @@ void __attribute__ ((constructor)) initializeFSExecutor(void)
   return [localSymbolTable objectForSymbol:symbol found:found];
 }
 
-- performOpenFile:(NSString *)file
+- (id)performOpenFile:(NSString *)file
 {
   NSString *fname = [file lastPathComponent];
   NSUInteger nb = [fname length];

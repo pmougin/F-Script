@@ -31,14 +31,14 @@ struct res_scan
   NSInteger errorLastCharIndex;
 }  
 
-+ compiler;
++ (id)compiler;
 + (FSMethod *)dummyDeallocMethodForClassNamed:(NSString *)className;
 + (BOOL)isValidIdentifier:(NSString *)str;
 + (NSString *)stringFromSelector:(SEL)selector;
 + (SEL)selectorFromString:(NSString *)selectorStr;
 
 - (void) dealloc;
-- init;
+- (id)init;
 - (FSCompilationResult *) compileCode:(const char *)utf8str withParentSymbolTable:(FSSymbolTable *)symbol_table;
 - (FSCompilationResult *) compileCodeForBlock:(const char *)utf8str withParentSymbolTable:(FSSymbolTable *)symbol_table;
 //- (CompilationResult *) compileCodeForMethod:(const char *)utf8strs;

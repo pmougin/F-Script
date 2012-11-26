@@ -9,8 +9,8 @@
   NSString *name;
 }
 
-+ namedNumberWithDouble:(double)val name:(NSString *)theName;
-- initWithDouble:(double)val name:(NSString *)theName;  //designated initializer
++ (id)namedNumberWithDouble:(double)val name:(NSString *)theName;
+- (id)initWithDouble:(double)val name:(NSString *)theName;  //designated initializer
 - (void) dealloc;
 - (NSString *)description;
 

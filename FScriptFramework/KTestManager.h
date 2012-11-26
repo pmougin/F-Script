@@ -24,7 +24,7 @@
 -(void) assertError:(FSBlock *)b;
 -(void) dealloc;
 -(void) finish;
-- init;
+- (id)init;
 -(void) setShouldLog:(BOOL)should;
 -(void) startCategory:(NSString *)categoryName;
 -(void) startTest:(NSString *)testName;

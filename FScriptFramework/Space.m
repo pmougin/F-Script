@@ -51,7 +51,7 @@
   return self;
 }
 
-- initSymbolTableLocale:(FSSymbolTable*)symb_loc
+- (id)initSymbolTableLocale:(FSSymbolTable*)symb_loc
 {
   if ((self = [super init]))
   {

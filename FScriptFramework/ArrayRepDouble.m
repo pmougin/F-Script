@@ -894,7 +894,7 @@ static int comp(const void *a,const void *b)
 /////////////////////////////// OTHER METHODS //////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-+ arrayRepDoubleWithCapacity:(NSUInteger)aNumItems
++ (id)arrayRepDoubleWithCapacity:(NSUInteger)aNumItems
 {
   return [[[self alloc] initWithCapacity:aNumItems] autorelease];
 }
@@ -938,7 +938,7 @@ static int comp(const void *a,const void *b)
   return r;
 }
 
-- copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
   return [[ArrayRepDouble allocWithZone:zone] initWithDoubles:t count:count];  
 }
@@ -987,7 +987,7 @@ static int comp(const void *a,const void *b)
   return str; 
 }
 
-- indexWithArray:(FSArray *)index
+- (id)indexWithArray:(FSArray *)index
 {
   assert(![index isProxy]);
 
@@ -1121,9 +1121,9 @@ static int comp(const void *a,const void *b)
   return nil; //W
 }
 
-- init { return [self initWithCapacity:0]; }
+- (id)init { return [self initWithCapacity:0]; }
 
-- initFilledWithDouble:(double)elem count:(NSUInteger)nb // contract: a return value of nil means not enough memory
+- (id)initFilledWithDouble:(double)elem count:(NSUInteger)nb // contract: a return value of nil means not enough memory
 {
   if (self = [self initWithCapacity:nb])
   {    
@@ -1133,7 +1133,7 @@ static int comp(const void *a,const void *b)
   return nil;
 }
 
-- initFrom:(NSUInteger)from to:(NSUInteger)to step:(NSUInteger)step // contract: a return value of nil means not enough memory
+- (id)initFrom:(NSUInteger)from to:(NSUInteger)to step:(NSUInteger)step // contract: a return value of nil means not enough memory
 {
   if (to < from) return [self init];
   
@@ -1153,7 +1153,7 @@ static int comp(const void *a,const void *b)
   return nil;
 }          
 
-- initWithCapacity:(NSUInteger)aNumItems // contract: a return value of nil means not enough memory
+- (id)initWithCapacity:(NSUInteger)aNumItems // contract: a return value of nil means not enough memory
 {
   if (self = [super init])
   {
@@ -1171,7 +1171,7 @@ static int comp(const void *a,const void *b)
   return nil;    
 }
 
-- initWithDoubles:(double *)elems count:(NSUInteger)nb
+- (id)initWithDoubles:(double *)elems count:(NSUInteger)nb
 {  
   if ((self = [self initWithCapacity:nb]))
   {
@@ -1182,7 +1182,7 @@ static int comp(const void *a,const void *b)
   return nil;
 }
 
-- initWithDoublesNoCopy:(double *)tab count:(NSUInteger)nb
+- (id)initWithDoublesNoCopy:(double *)tab count:(NSUInteger)nb
 {
   if ((self = [super init]))
   {
@@ -1242,7 +1242,7 @@ static int comp(const void *a,const void *b)
 
 - (NSUInteger)retainCount  { return retainCount;}
 
-- (void)release              { if (--retainCount == 0) [self dealloc];}  
+- (oneway void)release              { if (--retainCount == 0) [self dealloc];}  
 
 - (NSArray *)subarrayWithRange:(NSRange)range
 {  

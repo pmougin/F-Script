@@ -18,7 +18,7 @@
 
 //   USER METHODS
 
-+ new;
++ (id)new;
 
 - (NSNumber *)abs;
 - (NSNumber *)arcCos;
@@ -71,9 +71,9 @@
 
 //    SYSTEM METHODS 
 
-+ numberWithDouble:(double)val;
++ (id)numberWithDouble:(double)val;
 
-- copyWithZone:(NSZone *)zone;
+- (id)copyWithZone:(NSZone *)zone;
 - (double) doubleValue;
 - (BOOL) hasFrac_bool; // deprecated
 //- (unsigned int) hash;

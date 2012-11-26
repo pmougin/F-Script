@@ -26,7 +26,7 @@ FSVoid *fsVoid;
 
 -(id)autorelease                 {return self;}  
 
-- awakeAfterUsingCoder:(NSCoder *)aDecoder
+- (id)awakeAfterUsingCoder:(NSCoder *)aDecoder
 {
   [self release];
   return fsVoid;

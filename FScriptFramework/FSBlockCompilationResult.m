@@ -5,7 +5,7 @@
 
 @implementation FSBlockCompilationResult
 
-+ blockCompilationResultWithType:(enum FSBlockCompilationResultType)theType errorMessage:(NSString *)theErrorMessage errorFirstCharacterIndex:(NSInteger)first errorLastCharacterIndex:(NSInteger)last
++ (id)blockCompilationResultWithType:(enum FSBlockCompilationResultType)theType errorMessage:(NSString *)theErrorMessage errorFirstCharacterIndex:(NSInteger)first errorLastCharacterIndex:(NSInteger)last
 {
   return [[[self alloc] initWithType:theType errorMessage:theErrorMessage errorFirstCharacterIndex:first errorLastCharacterIndex:last] autorelease];
 }
@@ -16,7 +16,7 @@
   [super dealloc];        
 }
 
-- initWithType:(enum FSBlockCompilationResultType)theType errorMessage:(NSString *)theErrorMessage errorFirstCharacterIndex:(NSInteger)first errorLastCharacterIndex:(NSInteger)last
+- (id)initWithType:(enum FSBlockCompilationResultType)theType errorMessage:(NSString *)theErrorMessage errorFirstCharacterIndex:(NSInteger)first errorLastCharacterIndex:(NSInteger)last
 {
   if ((self = [super init]))
   {

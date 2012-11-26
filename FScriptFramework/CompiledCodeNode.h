@@ -33,23 +33,23 @@
   SEL sel;
 }
 
-+ compiledCodeNode;
++ (id)compiledCodeNode;
 
-- addSubnode:(CompiledCodeNode *)subnode;
+- (id)addSubnode:(CompiledCodeNode *)subnode;
 - (long)firstCharIndex;
 - (long)lastCharIndex;
-- copy;
-- copyWithZone:(NSZone *)zone;
+- (id)copy;
+- (id)copyWithZone:(NSZone *)zone;
 - (void)dealloc;
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 - (CompiledCodeNode *)getSubnode:(unsigned)pos;
 //- (Array *)getListSubnode;
-- init;
+- (id)init;
 - (id)initWithCoder:(NSCoder *)aDecoder;
-- insertSubnode:(CompiledCodeNode *)subnode at:(unsigned)pos;
+- (id)insertSubnode:(CompiledCodeNode *)subnode at:(unsigned)pos;
 - (unsigned)subnodeCount;
-- setSubnode:(CompiledCodeNode *)subnode at:(unsigned)pos;
-- removeSubnode:(unsigned)pos;
+- (id)setSubnode:(CompiledCodeNode *)subnode at:(unsigned)pos;
+- (id)removeSubnode:(unsigned)pos;
 
 - (enum FSCNType) nodeType;
 - (struct FSContextIndex) identifier;
@@ -62,19 +62,19 @@
 - (id) object;
 - (FSPattern *)pattern;
 
-- setBlockRep:(BlockRep *) theBlockRep;
-- setFirstCharIndex:(long)first;
-- setLastCharIndex:(long)last;
-- setFirstCharIndex:(long)first last:(long)last;
-- setFSIdentifier:(struct FSContextIndex) theIdentifier symbol:(NSString *)theSymbol;
-- setSubnodes:(FSArray *)theListSubnode;
-- setMessageWithReceiver:(CompiledCodeNode *) theReceiver 
+- (id)setBlockRep:(BlockRep *) theBlockRep;
+- (id)setFirstCharIndex:(long)first;
+- (id)setLastCharIndex:(long)last;
+- (id)setFirstCharIndex:(long)first last:(long)last;
+- (id)setFSIdentifier:(struct FSContextIndex) theIdentifier symbol:(NSString *)theSymbol;
+- (id)setSubnodes:(FSArray *)theListSubnode;
+- (id)setMessageWithReceiver:(CompiledCodeNode *) theReceiver 
                 selector:(NSString *)  theSelector
                 operatorSymbols:(NSString*) theOperatorSymbols;
-- setNodeType:(enum FSCNType) theNodeType;
-- setNumber:(FSNumber *)theNumber;
-- setobject:(id)theobject;
-- setReceiver:(CompiledCodeNode*)theReceiver;
+- (id)setNodeType:(enum FSCNType) theNodeType;
+- (id)setNumber:(FSNumber *)theNumber;
+- (id)setobject:(id)theobject;
+- (id)setReceiver:(CompiledCodeNode*)theReceiver;
 
 -(void)translateCharRange:(int32_t)translation;                
 

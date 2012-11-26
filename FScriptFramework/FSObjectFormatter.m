@@ -5,7 +5,7 @@
 #import "FSObjectFormatter.h"
 #import "FSNSObject.h"
 #import "FSMiscTools.h"
-#import "Number.h"
+#import "Number_fscript.h"
 
 
 @implementation FSObjectFormatter

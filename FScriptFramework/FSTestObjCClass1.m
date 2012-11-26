@@ -54,7 +54,7 @@
   return iv_voidPtr;
 }
 
-- tags 
+- (id)tags 
 {
   return [NSArray arrayWithObject:@"FSTestObjCClass1"];
 }

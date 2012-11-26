@@ -2,7 +2,7 @@
 //  This software is open source. See the license.
 
 #import <Cocoa/Cocoa.h>
-#import "FSObjectBrowserView.h";
+#import "FSObjectBrowserView.h"
 
 @interface FSObjectBrowserView (FSObjectBrowserViewObjectInfo)
 

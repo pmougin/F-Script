@@ -5,7 +5,7 @@
 
 @implementation FSCoreDataSample
 
-+ managedObject
++ (id)managedObject
 {
   NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
   NSManagedObjectModel *objectModel = [[NSManagedObjectModel alloc] init];

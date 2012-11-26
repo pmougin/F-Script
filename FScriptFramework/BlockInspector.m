@@ -25,7 +25,7 @@ static NSPoint topLeftPoint = {0,0}; // Used for cascading windows.
  
 @implementation BlockInspector
 
-- activate
+- (id)activate
 {
   if (!splitView)
   {    
@@ -180,7 +180,7 @@ static NSPoint topLeftPoint = {0,0}; // Used for cascading windows.
   [super dealloc];
 }     
 
-- initWithBlock:(FSBlock*)bl
+- (id)initWithBlock:(FSBlock*)bl
 {
   if ([super init])
   {
@@ -330,7 +330,7 @@ static NSPoint topLeftPoint = {0,0}; // Used for cascading windows.
   return [[[sourceView documentView] textStorage] string];
 }  
  
-- update
+- (id)update
 {
   NSTextView *documentView = [sourceView documentView];
   NSRange selectedRange = [documentView selectedRange];

@@ -13,6 +13,7 @@
 #import <math.h>
 #import "FSBlock.h"
 #import "BlockPrivate.h"
+#import <objc/objc-runtime.h>
 
 @class NSPortCoder;
 
@@ -43,7 +44,7 @@ FSNumber *numberWithDouble(double val)
 
 ///////////////////////////////   USER METHODS
 
-+ new
++ (id)new
 {
   return numberWithDouble(0);
 }
@@ -96,7 +97,7 @@ FSNumber *numberWithDouble(double val)
 
 - (FSBoolean *)between:(NSNumber *)a and:(NSNumber *)b
 {
-  if (a && ((id)a)->isa == FSNumberClass && b && ((id)b)->isa == FSNumberClass) 
+  if (a && object_getClass((id)a) == FSNumberClass && b && object_getClass((id)b) == FSNumberClass)
   {
     if ( ((FSNumber *)a)->value <= ((FSNumber *)b)->value )
       return value >= ((FSNumber *)a)->value && value <= ((FSNumber *)b)->value ? fsTrue : fsFalse;
@@ -108,7 +109,7 @@ FSNumber *numberWithDouble(double val)
 
 - (NSNumber *)bitAnd:(NSNumber *)operand 
 {
-  if (operand && ((id)operand)->isa == FSNumberClass && value >=0 && ((FSNumber *)operand)->value >= 0 && value <= UINT_MAX && ((FSNumber *)operand)->value <= UINT_MAX && value == floor(value) && ((FSNumber *)operand)->value == floor(((FSNumber *)operand)->value))
+  if (operand && object_getClass(operand) == FSNumberClass && value >=0 && ((FSNumber *)operand)->value >= 0 && value <= UINT_MAX && ((FSNumber *)operand)->value <= UINT_MAX && value == floor(value) && ((FSNumber *)operand)->value == floor(((FSNumber *)operand)->value))
     return [FSNumber numberWithDouble:(NSUInteger)value & (NSUInteger)(((FSNumber *)operand)->value)];
   else 
     return [super bitAnd:operand];
@@ -116,7 +117,7 @@ FSNumber *numberWithDouble(double val)
 
 - (NSNumber *)bitOr:(NSNumber *)operand 
 {
-  if (operand && ((id)operand)->isa == FSNumberClass && value >=0 && ((FSNumber *)operand)->value >= 0 && value <= UINT_MAX && ((FSNumber *)operand)->value <= UINT_MAX && value == floor(value) && ((FSNumber *)operand)->value == floor(((FSNumber *)operand)->value))
+  if (operand && object_getClass(operand) == FSNumberClass && value >=0 && ((FSNumber *)operand)->value >= 0 && value <= UINT_MAX && ((FSNumber *)operand)->value <= UINT_MAX && value == floor(value) && ((FSNumber *)operand)->value == floor(((FSNumber *)operand)->value))
     return [FSNumber numberWithDouble:(NSUInteger)value | (NSUInteger)(((FSNumber *)operand)->value)];
   else 
     return [super bitOr:operand];
@@ -124,7 +125,7 @@ FSNumber *numberWithDouble(double val)
 
 - (NSNumber *)bitXor:(NSNumber *)operand 
 {
-  if (operand && ((id)operand)->isa == FSNumberClass && value >=0 && ((FSNumber *)operand)->value >= 0 && value <= UINT_MAX && ((FSNumber *)operand)->value <= UINT_MAX && value == floor(value) && ((FSNumber *)operand)->value == floor(((FSNumber *)operand)->value))
+  if (operand && object_getClass(operand) == FSNumberClass && value >=0 && ((FSNumber *)operand)->value >= 0 && value <= UINT_MAX && ((FSNumber *)operand)->value <= UINT_MAX && value == floor(value) && ((FSNumber *)operand)->value == floor(((FSNumber *)operand)->value))
     return [FSNumber numberWithDouble:(NSUInteger)value ^ (NSUInteger)(((FSNumber *)operand)->value)];
   else 
     return [super bitXor:operand];
@@ -194,13 +195,13 @@ FSNumber *numberWithDouble(double val)
 
 - (NSNumber *)max:(NSNumber *)operand
 {
-  if (operand && ((id)operand)->isa == FSNumberClass) return value > ((FSNumber *)operand)->value ? (NSNumber *)self : operand;
+  if (operand && object_getClass(operand) == FSNumberClass) return value > ((FSNumber *)operand)->value ? (NSNumber *)self : operand;
   else return [super max:operand]; 
 }  
 
 - (NSNumber *)min:(NSNumber *)operand
 {
-  if (operand && ((id)operand)->isa == FSNumberClass)  return value < ((FSNumber *)operand)->value ? (NSNumber *)self : operand;
+  if (operand && object_getClass(operand) == FSNumberClass)  return value < ((FSNumber *)operand)->value ? (NSNumber *)self : operand;
   else return [super min:operand];
 }  
 
@@ -211,19 +212,19 @@ FSNumber *numberWithDouble(double val)
 
 - (NSNumber *)operator_asterisk:(NSNumber *)operand 
 {  
-  if (operand && ((id)operand)->isa == FSNumberClass) return numberWithDouble(value * ((FSNumber *)operand)->value); 
+  if (operand && object_getClass(operand) == FSNumberClass) return numberWithDouble(value * ((FSNumber *)operand)->value); 
   else                                              return [super operator_asterisk:operand];   
 }  
 
 - (NSNumber *)operator_hyphen:(NSNumber *)operand
 {
-  if (operand && ((id)operand)->isa == FSNumberClass) return numberWithDouble(value - ((FSNumber *)operand)->value); 
+  if (operand && object_getClass(operand)== FSNumberClass) return numberWithDouble(value - ((FSNumber *)operand)->value); 
   else                                              return [super operator_hyphen:operand];   
 }        
 
 - (NSPoint)operator_less_greater:(NSNumber *)operand
 {
-  if (operand && ((id)operand)->isa == FSNumberClass && value >= -CGFLOAT_MAX && value <= CGFLOAT_MAX && ((FSNumber *)operand)->value >= -CGFLOAT_MAX && ((FSNumber *)operand)->value <= CGFLOAT_MAX) 
+  if (operand && object_getClass(operand) == FSNumberClass && value >= -CGFLOAT_MAX && value <= CGFLOAT_MAX && ((FSNumber *)operand)->value >= -CGFLOAT_MAX && ((FSNumber *)operand)->value <= CGFLOAT_MAX) 
     return NSMakePoint(value,((FSNumber *)operand)->value); 
   else                                              
     return [super operator_less_greater:operand];   
@@ -231,7 +232,7 @@ FSNumber *numberWithDouble(double val)
 
 - (NSNumber *)operator_plus:(id)operand
 {
-  if (operand && ((id)operand)->isa == FSNumberClass) return numberWithDouble(value + ((FSNumber *)operand)->value); 
+  if (operand && object_getClass(operand) == FSNumberClass) return numberWithDouble(value + ((FSNumber *)operand)->value); 
   else if (operand == fsFalse)                      return self;
   else if (operand == fsTrue)                       return numberWithDouble(value + 1);
   else                                              return [super operator_plus:operand];
@@ -239,7 +240,7 @@ FSNumber *numberWithDouble(double val)
          
 - (NSNumber *)operator_slash:(NSNumber *)operand
 {
-  if (operand && ((id)operand)->isa == FSNumberClass && ((FSNumber *)operand)->value != 0.0) 
+  if (operand && object_getClass(operand) == FSNumberClass && ((FSNumber *)operand)->value != 0.0) 
     return numberWithDouble(value / ((FSNumber *)operand)->value);
   else                                                                                       
     return [super operator_slash:operand];    
@@ -247,43 +248,43 @@ FSNumber *numberWithDouble(double val)
 
 - (FSBoolean *)operator_equal:(id)operand  
 { 
-  if (operand && ((id)operand)->isa == FSNumberClass)  return (value == ((FSNumber *)operand)->value ? fsTrue : fsFalse);
+  if (operand && object_getClass(operand) == FSNumberClass)  return (value == ((FSNumber *)operand)->value ? fsTrue : fsFalse);
   else                                               return [super operator_equal:operand];   
 }
 
 - (FSBoolean *)operator_tilde_equal:(id)operand
 { 
-  if (operand && ((id)operand)->isa == FSNumberClass)  return (value != ((FSNumber *)operand)->value ? fsTrue : fsFalse);
+  if (operand && object_getClass(operand) == FSNumberClass)  return (value != ((FSNumber *)operand)->value ? fsTrue : fsFalse);
   else                                               return [super operator_tilde_equal:operand];   
 }
 
 - (FSBoolean *)operator_greater:(NSNumber *)operand
 { 
-  if (operand && ((id)operand)->isa == FSNumberClass)  return (value > ((FSNumber *)operand)->value ? fsTrue : fsFalse);
+  if (operand && object_getClass(operand) == FSNumberClass)  return (value > ((FSNumber *)operand)->value ? fsTrue : fsFalse);
   else                                               return [super operator_greater:operand];   
 }
 
 - (FSBoolean *)operator_greater_equal:(NSNumber *)operand 
 {
-  if (operand && ((id)operand)->isa == FSNumberClass)  return (value >= ((FSNumber *)operand)->value ? fsTrue : fsFalse);
+  if (operand && object_getClass(operand) == FSNumberClass)  return (value >= ((FSNumber *)operand)->value ? fsTrue : fsFalse);
   else                                               return [super operator_greater_equal:operand];   
 }    
 
 - (FSBoolean *)operator_less:(id)operand
 {
-  if (operand && ((id)operand)->isa == FSNumberClass) return (value < ((FSNumber *)operand)->value ? fsTrue : fsFalse);
+  if (operand && object_getClass(operand) == FSNumberClass) return (value < ((FSNumber *)operand)->value ? fsTrue : fsFalse);
   else                                              return [super operator_less:operand];   
 } 
     
 - (FSBoolean *)operator_less_equal:(NSNumber *)operand  
 {
-  if (operand && ((id)operand)->isa == FSNumberClass) return (value <= ((FSNumber *)operand)->value ? fsTrue : fsFalse);
+  if (operand && object_getClass(operand) == FSNumberClass) return (value <= ((FSNumber *)operand)->value ? fsTrue : fsFalse);
   else                                              return [super operator_less_equal:operand];   
 } 
 
 - (NSNumber *)raisedTo:(NSNumber *)operand 
 {
-  if (operand && ((id)operand)->isa == FSNumberClass) 
+  if (operand && object_getClass(operand) == FSNumberClass) 
   {
     double operandValue = ((FSNumber *)operand)->value;
     if ((value < 0.0 && [(FSNumber *)operand hasFrac_bool]) || (value == 0.0 && operandValue <= 0.0)) 
@@ -304,7 +305,7 @@ FSNumber *numberWithDouble(double val)
   
 - (NSNumber *)rem:(NSNumber *)operand 
 {  
-  if (operand && ((id)operand)->isa == FSNumberClass && ((FSNumber *)operand)->value != 0.0)
+  if (operand && object_getClass(operand) == FSNumberClass && ((FSNumber *)operand)->value != 0.0)
     return numberWithDouble(fmod(value,((FSNumber *)operand)->value));
   else 
     return [super rem:operand];   
@@ -386,19 +387,19 @@ FSNumber *numberWithDouble(double val)
    return NSAllocateObject(self, 0, NULL);
 }             
                                        
-+ allocWithZone:(NSZone *)zone
++ (id)allocWithZone:(NSZone *)zone
 {
   return NSAllocateObject(self, 0, NULL);
 }
 
-+ numberWithDouble:(double)val
++ (id)numberWithDouble:(double)val
 {
    return numberWithDouble(val);
 }  
 
-- copy                        {retainCount++; return self; }
+- (id)copy                        {retainCount++; return self; }
 
-- copyWithZone:(NSZone *)zone {retainCount++; return self; }
+- (id)copyWithZone:(NSZone *)zone {retainCount++; return self; }
 
 - (void)dealloc
 {
@@ -443,7 +444,7 @@ FSNumber *numberWithDouble(double val)
 - (id)initWithBool:(BOOL)val {return [self initWithDouble:val];}
 - (id)initWithChar:(char)val {return [self initWithDouble:val];}
 
-- initWithDouble:(double)val // designated initializer
+- (id)initWithDouble:(double)val // designated initializer
 {
   if ((self = [super init]))
   {
@@ -465,7 +466,11 @@ FSNumber *numberWithDouble(double val)
    
 - (BOOL) isEqual:anObject
 {
-  if (anObject && anObject->isa == FSNumberClass) // direct isa access for better performance
+  // direct isa access was used for better performance.
+  // this is now deprecated in the modern runtime as features such as tagged pointers may break.
+  // also note that object_getClass returns the swizzled classname in the case of KVO activation.
+  // if this proves to be a problem then -class is the answer as it returns the unswizzled class.
+  if (anObject && object_getClass(anObject) == FSNumberClass) 
     return value == ((FSNumber *)anObject)->value;
   else 
     return [super isEqual:anObject];

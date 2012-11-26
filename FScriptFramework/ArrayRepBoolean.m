@@ -184,7 +184,7 @@
 
 - (char *)booleansPtr {return t;}
 
-- copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
   return [[ArrayRepBoolean allocWithZone:zone] initWithBooleans:t count:count];  
 }
@@ -220,9 +220,9 @@
   }    
 }
 
-- init { return [self initWithCapacity:0]; }
+- (id)init { return [self initWithCapacity:0]; }
 
-- initFilledWithBoolean:(char)elem count:(NSUInteger)nb // contract: a return value of nil means not enough memory
+- (id)initFilledWithBoolean:(char)elem count:(NSUInteger)nb // contract: a return value of nil means not enough memory
 {
   if (self = [self initWithCapacity:nb])
   {    
@@ -232,7 +232,7 @@
   return nil;
 }
 
-- initWithCapacity:(NSUInteger)aNumItems // contract: a return value of nil means not enough memory  
+- (id)initWithCapacity:(NSUInteger)aNumItems // contract: a return value of nil means not enough memory  
 {
   if ((self = [super init]))
   {
@@ -250,7 +250,7 @@
   return nil;    
 }
 
-- initWithBooleans:(char *)elems count:(NSUInteger)nb
+- (id)initWithBooleans:(char *)elems count:(NSUInteger)nb
 {  
   if (self = [self initWithCapacity:nb])
   {
@@ -261,7 +261,7 @@
   return nil;
 }
 
-- initWithBooleansNoCopy:(char *)tab count:(NSUInteger)nb
+- (id)initWithBooleansNoCopy:(char *)tab count:(NSUInteger)nb
 {
   if ((self = [super init]))
   {
@@ -306,7 +306,7 @@
 
 - (NSUInteger)retainCount  { return retainCount;}
 
-- (void)release              { if (--retainCount == 0) [self dealloc];}  
+- (oneway void)release              { if (--retainCount == 0) [self dealloc];}  
 
 - (NSArray *)subarrayWithRange:(NSRange)range
 {  

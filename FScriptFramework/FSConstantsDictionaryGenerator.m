@@ -41,8 +41,8 @@
 //#import <OpenDirectory/OpenDirectory.h>
 #import <OpenGL/OpenGL.h>
 #import <OpenGL/glu.h>
-#import <OpenGL/CGLProfilerFunctionEnum.h>
-#import <OpenGL/CGLProfiler.h>
+//#import <OpenGL/CGLProfilerFunctionEnum.h> // missing in 10.8 SDK
+//#import <OpenGL/CGLProfiler.h>  // missing in 10.8 SDK
 #import <OpenGL/CGLRenderers.h>
 #import <OSAKit/OSAKit.h>
 #import <PreferencePanes/PreferencePanes.h>
@@ -60,9 +60,9 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <WebKit/WebKit.h>
 #import <WebKit/WebJavaPlugIn.h>
-#import <XgridFoundation/XgridFoundation.h>
+//#import <XgridFoundation/XgridFoundation.h>
 
-#import "Number.h"
+#import "Number_fscript.h"
 #import "FSBoolean.h"
 
 @implementation FSConstantsDictionaryGenerator

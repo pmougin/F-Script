@@ -25,10 +25,10 @@
 
 @implementation CompiledCodeNode
 
-+ compiledCodeNode
++ (id)compiledCodeNode
 { return [[[self alloc] init] autorelease]; }
 
-- addSubnode:(CompiledCodeNode *)subnode
+- (id)addSubnode:(CompiledCodeNode *)subnode
 {
   assert(subnode != nil);
   [subnodes addObject:subnode];
@@ -57,7 +57,7 @@
     default: assert(0);
   }
 
-  r = [NSMutableString stringWithFormat:@"\n****************************\n%@: type = %@, firstCharIndex = %d, lastCharIndex = %d", [self class], type, firstCharIndex, lastCharIndex];
+  r = [NSMutableString stringWithFormat:@"\n****************************\n%@: type = %@, firstCharIndex = %ld, lastCharIndex = %ld", [self class], type, firstCharIndex, lastCharIndex];
 
   switch (nodeType)
   {
@@ -85,7 +85,7 @@
       break;
   }
 
-  [r appendFormat:@", \n subnodeList ( %d elements)", [subnodes count]];
+  [r appendFormat:@", \n subnodeList ( %ld elements)", (long)[subnodes count]];
 
   for (i = 0; i < [subnodes count]; i++)
     [r appendString:[[subnodes objectAtIndex:i] description]];  
@@ -99,10 +99,10 @@
 - (long)lastCharIndex
 { return lastCharIndex; } 
 
-- copy
+- (id)copy
 { return [self retain]; /*return [self copyWithZone:NULL]; */ }
 
-- copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
   return [self retain];
 }           
@@ -353,7 +353,7 @@
   return subnodes;
 } */ 
   
-- init
+- (id)init
 {
   if ((self = [super init]))
   {
@@ -365,7 +365,7 @@
   return nil;    
 }  
     
-- insertSubnode:(CompiledCodeNode *)subnode at:(unsigned)pos
+- (id)insertSubnode:(CompiledCodeNode *)subnode at:(unsigned)pos
 {
   [subnodes insertObject:subnode atIndex:pos];
   return self;
@@ -376,26 +376,26 @@
   return [subnodes count];
 }  
 
-- setFirstCharIndex:(long)first
+- (id)setFirstCharIndex:(long)first
 { firstCharIndex = first; return self; }
 
-- setLastCharIndex:(long)last
+- (id)setLastCharIndex:(long)last
 { lastCharIndex = last; return self; }
 
-- setFirstCharIndex:(long)first last:(long)last
+- (id)setFirstCharIndex:(long)first last:(long)last
 {
   firstCharIndex = first;
   lastCharIndex = last;
   return self;
 }  
 
-- setSubnode:(CompiledCodeNode *)subnode at:(unsigned)pos
+- (id)setSubnode:(CompiledCodeNode *)subnode at:(unsigned)pos
 {
   [subnodes replaceObjectAtIndex:pos withObject:subnode];
   return self;
 }  
 
-- removeSubnode:(unsigned)pos
+- (id)removeSubnode:(unsigned)pos
 {
   [subnodes removeObjectAtIndex:pos];
   return self;
@@ -427,14 +427,14 @@
   return msgContext;
 }  
 
-- setBlockRep:(BlockRep *) theBlockRep
+- (id)setBlockRep:(BlockRep *) theBlockRep
 {
   nodeType = BLOCK;
   object = [theBlockRep retain];
   return self;
 } 
 
-- setFSIdentifier:(struct FSContextIndex) theIdentifier symbol:(NSString*)theSymbol
+- (id)setFSIdentifier:(struct FSContextIndex) theIdentifier symbol:(NSString*)theSymbol
 { 
   nodeType = IDENTIFIER;
   identifier = theIdentifier;
@@ -442,14 +442,14 @@
   return self; 
 }
 
-- setSubnodes:(FSArray *)theListSubnode
+- (id)setSubnodes:(FSArray *)theListSubnode
 {
   [subnodes autorelease];
   subnodes = [theListSubnode retain];
   return self;
 }
 
-- setMessageWithReceiver:(CompiledCodeNode *) theReceiver 
+- (id)setMessageWithReceiver:(CompiledCodeNode *) theReceiver 
                 selector:(NSString *)  theSelector
                 operatorSymbols:(NSString*) theOperatorSymbols
 {
@@ -462,27 +462,27 @@
   return self;
 }
 
-- setNodeType:(enum FSCNType) theNodeType
+- (id)setNodeType:(enum FSCNType) theNodeType
 {
   nodeType = theNodeType;
   return self;
 }  
 
-- setNumber:(FSNumber *)theNumber
+- (id)setNumber:(FSNumber *)theNumber
 {
   nodeType = NUMBER;
   object = [theNumber retain];
   return self;
 }
 
-- setobject:(id)theobject
+- (id)setobject:(id)theobject
 {
   nodeType = OBJECT;
   object = [theobject retain];
   return self;
 }            
 
-- setReceiver:(CompiledCodeNode*)theReceiver
+- (id)setReceiver:(CompiledCodeNode*)theReceiver
 {
   receiver = [theReceiver retain];
   return self;

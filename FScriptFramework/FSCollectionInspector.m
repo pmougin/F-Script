@@ -10,7 +10,7 @@
 #import "FSArray.h"
 #import "FSNSArray.h"
 //#import "FSObjectFormatter.h"
-#import "Number.h"
+#import "Number_fscript.h"
 #import "FSNSString.h"
 #import "FSCollectionInspectorView.h"
 

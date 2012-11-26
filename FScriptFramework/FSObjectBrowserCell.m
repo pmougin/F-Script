@@ -26,7 +26,7 @@
   [super dealloc];
 }
 
-- init
+- (id)init
 {
   if ((self = [super init]))
   {
@@ -38,7 +38,7 @@
 
 - (NSString *)label { return label; }
 
-- (void) release
+- (oneway void) release
 {
   //NSLog(@"release called");
   [super release];

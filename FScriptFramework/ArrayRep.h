@@ -18,8 +18,8 @@
 - (NSString *)descriptionLimited:(NSUInteger)nbElem;
 - (FSArray *) distinctId; 
 - (NSUInteger)indexOfObject:(id)anObject inRange:(NSRange)range identical:(BOOL)identical;
-- indexWithArray:(FSArray *)index;
-- (id)operator_backslash:(FSBlock*)bl; // precond: ![bl isProxy] && count != 0 
+- (id)indexWithArray:(FSArray *)index;
+- (id)operator_backslash:(FSBlock*)bl; // precond: ![bl isProxy] && count != 0
 - (void)removeLastElem;
 - (void)removeElemAtIndex:(NSUInteger)index;
 - (FSArray *)replicateWithArray:(FSArray *)operand;

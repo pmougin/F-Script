@@ -110,7 +110,7 @@ BOOL BooleanSetupTooLate = NO;
 
 @implementation True
 
-- awakeAfterUsingCoder:(NSCoder *)aDecoder
+- (id)awakeAfterUsingCoder:(NSCoder *)aDecoder
 {
   [self release];
   return fsTrue;
@@ -210,7 +210,7 @@ BOOL BooleanSetupTooLate = NO;
 
 @implementation False
 
-- awakeAfterUsingCoder:(NSCoder *)aDecoder
+- (id)awakeAfterUsingCoder:(NSCoder *)aDecoder
 {
   [self release];
   return fsFalse;

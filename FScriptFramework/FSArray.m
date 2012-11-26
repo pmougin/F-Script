@@ -148,7 +148,7 @@ typedef struct fs_objc_object {
   {
   case DOUBLE:
   {
-    if (anObject && ((struct {Class isa;} *)anObject)->isa == FSNumberClass)   // anObject is casted to avoid the warning "static access to object of type id"
+    if (anObject && object_getClass(anObject) == FSNumberClass)   // anObject is casted to avoid the warning "static access to object of type id"
       [(ArrayRepDouble *)rep addDouble:((FSNumber *)anObject)->value ];
     else if (anObject && isNSNumberWithLosslessConversionToDouble(anObject)) 
       [(ArrayRepDouble *)rep addDouble:[(NSNumber *)anObject doubleValue]];
@@ -246,7 +246,7 @@ typedef struct fs_objc_object {
 
 - (id)arrayRep {return rep;} 
 
-- awakeAfterUsingCoder:(NSCoder *)aDecoder
+- (id)awakeAfterUsingCoder:(NSCoder *)aDecoder
 {
   Class ReplacementForCoderForNilInArrayClass = [FSReplacementForCoderForNilInArray class];
   NSUInteger i, count;
@@ -285,9 +285,9 @@ typedef struct fs_objc_object {
   return [self indexOfObject:anObject] != NSNotFound;
 }
 
-- copy  { return [self copyWithZone:NULL];}
+- (id)copy  { return [self copyWithZone:NULL];}
 
-- copyWithZone:(NSZone *)zone  { return [[FSArray alloc] initWithRepNoRetain:[rep copyWithZone:zone]];}
+- (id)copyWithZone:(NSZone *)zone  { return [[FSArray alloc] initWithRepNoRetain:[rep copyWithZone:zone]];}
 
 - (NSUInteger)count 
 {
@@ -413,12 +413,12 @@ typedef struct fs_objc_object {
   return [self indexOfObject:anObject inRange:range identical:YES];
 }
 
-- init
+- (id)init
 {
   return [self initWithCapacity:0];
 }   
 
-- initFrom:(NSUInteger)from to:(NSUInteger)to step:(NSUInteger)step
+- (id)initFrom:(NSUInteger)from to:(NSUInteger)to step:(NSUInteger)step
 {
   ArrayRepDouble *representation = [[ArrayRepDouble alloc] initFrom:from to:to step:step];
 
@@ -430,7 +430,7 @@ typedef struct fs_objc_object {
   }  
 }           
 
-- initFilledWith:(id)elem count:(NSUInteger)nb
+- (id)initFilledWith:(id)elem count:(NSUInteger)nb
 {
   id representation;
   
@@ -449,12 +449,12 @@ typedef struct fs_objc_object {
   }
 } 
 
-- initWithCapacity:(NSUInteger)aNumItems
+- (id)initWithCapacity:(NSUInteger)aNumItems
 {
   return [self initWithRepNoRetain:[[ArrayRepEmpty alloc] initWithCapacity:aNumItems]];
 }
 
-- initWithObject:(id)object
+- (id)initWithObject:(id)object
 {
   if (self = [self initWithCapacity:1])
   {
@@ -464,7 +464,7 @@ typedef struct fs_objc_object {
   return nil;
 }
 
-- initWithObjects:(id *)objects count:(NSUInteger)nb
+- (id)initWithObjects:(id *)objects count:(NSUInteger)nb
 {
   NSUInteger i;
   
@@ -524,12 +524,12 @@ typedef struct fs_objc_object {
   return i == count;  
 }
         
-- mutableCopyWithZone:(NSZone *)zone 
+- (id)mutableCopyWithZone:(NSZone *)zone 
 { 
   return [[FSArray alloc] initWithRepNoRetain:[rep copyWithZone:zone]];
 }
     
-- objectAtIndex:(NSUInteger)index
+- (id)objectAtIndex:(NSUInteger)index
 {
   switch (type) 
   {
@@ -627,7 +627,7 @@ typedef struct fs_objc_object {
   
   if (type == DOUBLE)
   {
-    if (anObject && ((struct {Class isa;} *)anObject)->isa == FSNumberClass)   // anObject is casted to avoid the warning "static access to object of type id"
+    if (anObject && object_getClass(anObject) == FSNumberClass)   // anObject is casted to avoid the warning "static access to object of type id"
       [(ArrayRepDouble *)rep replaceDoubleAtIndex:index withDouble:((FSNumber *)anObject)->value];
     else if (anObject && isNSNumberWithLosslessConversionToDouble(anObject)) 
       [(ArrayRepDouble *)rep replaceDoubleAtIndex:index withDouble:[anObject doubleValue]];
@@ -700,7 +700,7 @@ typedef struct fs_objc_object {
 
 -(NSUInteger) _ul_count { return [self count]; }
  
-- _ul_objectAtIndex:(NSUInteger)index
+- (id)_ul_objectAtIndex:(NSUInteger)index
 { 
   switch (type)
   { 

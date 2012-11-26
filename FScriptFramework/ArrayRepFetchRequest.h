@@ -14,9 +14,9 @@
 + (ArrayRepFetchRequest *) arrayRepFetchRequestWithFetchRequest:(NSFetchRequest *)theFetchRequest objectContext:(NSManagedObjectContext *)theObjectContext;
 
 - (ArrayRepId *) asArrayRepId; 
-- copyWithZone:(NSZone *)zone;
+- (id)copyWithZone:(NSZone *)zone;
 - (void)dealloc;
-- initWithFetchRequest:(NSFetchRequest *)theFetchRequest objectContext:(NSManagedObjectContext *)theObjectContext;
+- (id)initWithFetchRequest:(NSFetchRequest *)theFetchRequest objectContext:(NSManagedObjectContext *)theObjectContext;
 - (enum ArrayRepType) repType;
 
 @end

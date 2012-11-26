@@ -21,19 +21,19 @@
   // FSInterpreter instance.
 }
 
-+ system:(id)theSys;
++ (id)system:(id)theSys;
 
-- copy;
-- copyWithZone:(NSZone *)zone;
+- (id)copy;
+- (id)copyWithZone:(NSZone *)zone;
 - (void)dealloc;
-- init:(id)theSys;
+- (id)init:(id)theSys;
 
 ///////////////////////////////////// USER METHODS ////////////////////////
 
 - (void)attach:(id)objectContext;
 - (void)beep;
-- blockFromString:(NSString *)source;
-- blockFromString:(NSString *)source onError:(FSBlock *)errorBlock;
+- (id)blockFromString:(NSString *)source;
+- (id)blockFromString:(NSString *)source onError:(FSBlock *)errorBlock;
 - (void)browse;
 - (void)browse:(id)anObject;
 - (void)clear;

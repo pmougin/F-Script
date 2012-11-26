@@ -1,7 +1,7 @@
 /* FSNSString.m Copyright (c) 1998-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
-#import "Number.h" 
+#import "Number_fscript.h" 
 #import "FSNSString.h"
 #import "FSSymbolTable.h"
 #import "FSBlock.h"

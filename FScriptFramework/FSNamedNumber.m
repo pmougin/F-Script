@@ -6,7 +6,7 @@
 
 @implementation FSNamedNumber
 
-+ namedNumberWithDouble:(double)val name:(NSString *)theName
++ (id)namedNumberWithDouble:(double)val name:(NSString *)theName
 {
   return [[[self alloc] initWithDouble:val name:theName] autorelease]; 
 }
@@ -28,7 +28,7 @@
   return value;
 }
 
-- initWithDouble:(double)val name:(NSString *)theName  //designated initializer
+- (id)initWithDouble:(double)val name:(NSString *)theName  //designated initializer
 {
   if ((self = [super init]))
   {

@@ -27,7 +27,7 @@
 - (FSArray *) allDefinedSymbols;
 - (void)breakCycles;
 - (FSInterpreterResult *)execute:(NSString *)command;
-- initWithInterpreter:(FSInterpreter *)theInterpreter;
+- (id)initWithInterpreter:(FSInterpreter *)theInterpreter;
 - (void)installFlightTutorial;
 - (FSInterpreter *)interpreter; // Will return nil if the associated interpreter no longer exists
 - (void)interpreterIsDeallocating;

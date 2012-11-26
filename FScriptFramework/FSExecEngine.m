@@ -70,7 +70,7 @@ void __attribute__ ((constructor)) initializeFSExecEngine(void)
 @interface FSNSObject
 
 - (NSUInteger) _ul_count;
-- _ul_objectAtIndex:(NSUInteger)index;
+- (id)_ul_objectAtIndex:(NSUInteger)index;
 
 @end
 

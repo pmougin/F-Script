@@ -68,7 +68,7 @@
   return 1;
 }
 
-+ _ul_objectAtIndex:(NSUInteger)index 
++ (id)_ul_objectAtIndex:(NSUInteger)index 
 { 
   return self;
 }

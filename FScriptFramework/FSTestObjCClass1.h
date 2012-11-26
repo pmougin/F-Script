@@ -36,7 +36,7 @@
 
 - (id) init;
 - (void) dealloc;
-- tags;
+- (id)tags;
 - (void) setDeallocationProof:(NSMutableString *)proof;
 - (void *) voidPtr;
 

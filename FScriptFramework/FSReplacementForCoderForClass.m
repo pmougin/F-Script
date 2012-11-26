@@ -12,7 +12,7 @@ void __attribute__ ((constructor)) initializeFSReplacementForCoderForClass(void)
 
 @implementation FSReplacementForCoderForClass
 
-- awakeAfterUsingCoder:(NSCoder *)aCoder
+- (id)awakeAfterUsingCoder:(NSCoder *)aCoder
 {
   id r;
   
@@ -59,7 +59,7 @@ void __attribute__ ((constructor)) initializeFSReplacementForCoderForClass(void)
   return self;
 }
 
-- initWithClass:(Class)theClass
+- (id)initWithClass:(Class)theClass
 {
   if ((self = [super init]))
   {

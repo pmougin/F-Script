@@ -40,6 +40,6 @@
 #import <FScript/FSSystem.h>
 
 // For backward compatibility with F-Script 1.x
-#import <FScript/Array.h>
-#import <FScript/Block.h>
-#import <FScript/Number.h>
+#import <FScript/Array_fscript.h>
+#import <FScript/Block_fscript.h>
+#import <FScript/Number_fscript.h>

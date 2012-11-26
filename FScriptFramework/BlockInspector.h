@@ -21,15 +21,15 @@
 }  
 
 
-- activate;
+- (id)activate;
 - (IBAction)compil:sender;
 - (BOOL)edited;
-- initWithBlock:(FSBlock*)bl;
+- (id)initWithBlock:(FSBlock*)bl;
 - (IBAction)run:sender;
 - (void)setEdited:(BOOL)newVal;
 - (void)showError:(NSString*)errorMessage; 
 - (void)showError:(NSString*)errorMessage start:(NSInteger)firstCharacterIndex end:(NSInteger)lastCharacterIndex;
 - (NSString *)source;
-- update;
+- (id)update;
 
 @end

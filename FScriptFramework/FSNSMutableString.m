@@ -3,7 +3,7 @@
 
 #import <Foundation/Foundation.h>
 #import "FSNSMutableString.h"
-#import "Number.h"
+#import "Number_fscript.h"
 #import "FScriptFunctions.h"
 #import "FSNSStringPrivate.h"
 

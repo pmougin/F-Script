@@ -162,7 +162,7 @@
   {assert(0); return nil;} //W
 }
 
-- copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone *)zone
 {
   FSSymbolTable *s;
   BlockRep *r;
@@ -376,7 +376,7 @@
 
 // If you pass NO for is_comp, you must pass the *parent* symbol table for theSybolTableArgument
 // This method retains theCode, theSymbolTable and theSource. No copy.
-- initWithCode:(FSCNBase *)theCode symbolTable:(FSSymbolTable*)theSymbolTable signature:(struct BlockSignature)theSignature source:(NSString*)theSource isCompiled:(BOOL)is_comp isCompact:(BOOL)isCompactArg sel:(SEL)theSel selStr:(NSString*)theSelStr;
+- (id)initWithCode:(FSCNBase *)theCode symbolTable:(FSSymbolTable*)theSymbolTable signature:(struct BlockSignature)theSignature source:(NSString*)theSource isCompiled:(BOOL)is_comp isCompact:(BOOL)isCompactArg sel:(SEL)theSel selStr:(NSString*)theSelStr;
 {
   if ((self = [super init]))
   {

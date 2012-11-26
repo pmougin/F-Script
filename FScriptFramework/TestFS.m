@@ -365,7 +365,7 @@ static NSInteger p = 362;
 { NSLog(@"TestFS return %p", &p); return &p;}
 
 + (NSInteger *)pointerWith:object with:(NSInteger)i
-{ NSLog(@"object received: %@, int received:%d . TestFS return %p",object, i, &p); return &p;}
+{ NSLog(@"object received: %@, int received:%ld . TestFS return %p",object, (long)i, &p); return &p;}
 
 + (void) setPValue:(NSInteger)new
 { p = new; }
@@ -375,7 +375,7 @@ static NSInteger p = 362;
 + (void)setPointer:(NSInteger *)p
 {
   NSLog(@"setPointer: received pointer to %p", p);
-  NSLog(@"%d",*p);
+  NSLog(@"%ld", (long)*p);
 }
 
 + (FSPointer *)fsPointer 
@@ -1195,18 +1195,18 @@ void logFloat(int dummy, ...)
   	// calculate the sizes of C-Primitives
 	int i = 1;
 	NSLog(@"Primitive sizes:");
-	NSLog(@"%d The size of a char is: %d.", i++, sizeof(char));
-	NSLog(@"%d The size of short is: %d.", i++, sizeof(short));
-	NSLog(@"%d The size of int is: %d.",  i++, sizeof(int));
-	NSLog(@"%d The size of long is: %d.",  i++, sizeof(long));
-	NSLog(@"%d The size of long long is: %d.",  i++, sizeof(long long));
-	NSLog(@"%d The size of a unsigned char is: %d.",  i++, sizeof(unsigned char));
-	NSLog(@"%d The size of unsigned short is: %d.",  i++, sizeof(unsigned short));
-	NSLog(@"%d The size of unsigned int is: %d.",  i++, sizeof(unsigned int));
-	NSLog(@"%d The size of unsigned long is: %d.",  i++, sizeof(unsigned long));
-	NSLog(@"%d The size of unsigned long long is: %d.",  i++, sizeof(unsigned long long));
-	NSLog(@"%d The size of a float is: %d.",  i++, sizeof(float));
-	NSLog(@"%d The size of a double is %d.",  i++, sizeof(double));
+	NSLog(@"%d The size of a char is: %lu.", i++, sizeof(char));
+	NSLog(@"%d The size of short is: %lu.", i++, sizeof(short));
+	NSLog(@"%d The size of int is: %lu.",  i++, sizeof(int));
+	NSLog(@"%d The size of long is: %lu.",  i++, sizeof(long));
+	NSLog(@"%d The size of long long is: %lu.",  i++, sizeof(long long));
+	NSLog(@"%d The size of a unsigned char is: %lu.",  i++, sizeof(unsigned char));
+	NSLog(@"%d The size of unsigned short is: %lu.",  i++, sizeof(unsigned short));
+	NSLog(@"%d The size of unsigned int is: %lu.",  i++, sizeof(unsigned int));
+	NSLog(@"%d The size of unsigned long is: %lu.",  i++, sizeof(unsigned long));
+	NSLog(@"%d The size of unsigned long long is: %lu.",  i++, sizeof(unsigned long long));
+	NSLog(@"%d The size of a float is: %lu.",  i++, sizeof(float));
+	NSLog(@"%d The size of a double is %lu.",  i++, sizeof(double));
 
   return [NSString stringWithUTF8String:@encode(NSRange)];
 }

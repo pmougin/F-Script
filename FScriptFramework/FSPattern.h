@@ -13,10 +13,10 @@
   FSPattern *nextPattern;
 }
 
-+ patternWithDeep:(int)theDeep level:(FSArray *)theLevel nextPattern:(FSPattern*)theNextPattern;
-+ patternFromIntermediateRepresentation:(NSArray *)ap;
++ (id)patternWithDeep:(int)theDeep level:(FSArray *)theLevel nextPattern:(FSPattern*)theNextPattern;
++ (id)patternFromIntermediateRepresentation:(NSArray *)ap;
 
-- initWithDeep:(int)theDeep level:(FSArray *)theLevel nextPattern:(FSPattern*)theNextPatter;
+- (id)initWithDeep:(int)theDeep level:(FSArray *)theLevel nextPattern:(FSPattern*)theNextPatter;
 - (int)deep;
 - (BOOL)isDoubleLoop;
 - (BOOL)isSimpleLoopOnReceiver;

@@ -2,6 +2,7 @@
 /*   This software is open source. See the license.       */
 
 #import "FSNSObject.h"
+#import "BlockSignature.h"
 
 extern NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *block);
 
@@ -14,22 +15,22 @@ extern NSString *FS_Block_keyOfSetValueForKeyMessage(FSBlock *block);
   BlockInspector *inspector;
 }
 
-+ allocWithZone:(NSZone *)zone;
-+ blockWithSelector:(SEL)theSelector;
-+ blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable;  // May raise
-+ blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable onError:(FSBlock *)errorBlock; // May raise
++ (id)allocWithZone:(NSZone *)zone;
++ (id)blockWithSelector:(SEL)theSelector;
++ (id)blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable;  // May raise
++ (id)blockWithSource:(NSString *)source parentSymbolTable:(FSSymbolTable *)parentSymbolTable onError:(FSBlock *)errorBlock; // May raise
 
 - (NSArray *)argumentsNames;
 - (void) compilIfNeeded; // May raise
 - (id) compilOnError:(FSBlock *)errorBlock; // May raise
-- copy;
-- copyWithZone:(NSZone *)zone;
+- (id)copy;
+- (id)copyWithZone:(NSZone *)zone;
 - (void)dealloc;
 - (void)encodeWithCoder:(NSCoder *)aCoder;
 - (FSInterpreterResult *)executeWithArguments:(NSArray *)arguments;
 - (id) initWithBlockRep:(BlockRep *)theBlockRep;
 - (id)initWithCoder:(NSCoder *)aDecoder;
-- initWithCode:(FSCNBase *)theCode symbolTable:(FSSymbolTable*)theSymbolTable signature:(struct BlockSignature)theSignature source:(NSString*)theSource isCompiled:(BOOL)is_comp isCompact:(BOOL)isCompactArg sel:(SEL)theSel selStr:(NSString*)theSelStr;
+- (id)initWithCode:(FSCNBase *)theCode symbolTable:(FSSymbolTable*)theSymbolTable signature:(struct BlockSignature)theSignature source:(NSString*)theSource isCompiled:(BOOL)is_comp isCompact:(BOOL)isCompactArg sel:(SEL)theSel selStr:(NSString*)theSelStr;
    // This method retains theCode, theSymbolTable and theSource. No copy.
 - (BOOL) isCompact;  // May raise
 - (FSMsgContext *)msgContext;

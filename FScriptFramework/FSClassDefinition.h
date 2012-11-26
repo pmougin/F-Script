@@ -10,7 +10,7 @@
   NSSet           *ivarNames;
 }
 
-+ classDefinition;
++ (id)classDefinition;
 - (NSSet *)ivarNames;
 - (NSMutableArray *)methodHolders;
 - (void)setIvarNames:(NSSet *)theIvarNames;

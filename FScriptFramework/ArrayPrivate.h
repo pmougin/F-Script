@@ -15,8 +15,8 @@
 - (id)arrayRep;
 - (void)becomeArrayOfId;
 - (void *)dataPtr;
-- initFrom:(NSUInteger)from to:(NSUInteger)to step:(NSUInteger)step;
-- initFilledWith:(id)elem count:(NSUInteger)nb;
+- (id)initFrom:(NSUInteger)from to:(NSUInteger)to step:(NSUInteger)step;
+- (id)initFilledWith:(id)elem count:(NSUInteger)nb;
 - (FSArray *)initWithRep:(id)theRep;
 - (FSArray *)initWithRepNoRetain:(id)theRep;
 - (enum ArrayRepType)type;

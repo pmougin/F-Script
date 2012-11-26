@@ -48,7 +48,7 @@
 }
 
 
-- tags 
+- (id)tags 
 {
   return [[super tags] arrayByAddingObject:@"FSTestObjCClass2"];
 }
