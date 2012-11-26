@@ -148,7 +148,7 @@ typedef struct fs_objc_object {
   {
   case DOUBLE:
   {
-    if (anObject && ((struct {Class isa;} *)anObject)->isa == FSNumberClass)   // anObject is casted to avoid the warning "static access to object of type id"
+    if (anObject && object_getClass(anObject) == FSNumberClass)   // anObject is casted to avoid the warning "static access to object of type id"
       [(ArrayRepDouble *)rep addDouble:((FSNumber *)anObject)->value ];
     else if (anObject && isNSNumberWithLosslessConversionToDouble(anObject)) 
       [(ArrayRepDouble *)rep addDouble:[(NSNumber *)anObject doubleValue]];
@@ -627,7 +627,7 @@ typedef struct fs_objc_object {
   
   if (type == DOUBLE)
   {
-    if (anObject && ((struct {Class isa;} *)anObject)->isa == FSNumberClass)   // anObject is casted to avoid the warning "static access to object of type id"
+    if (anObject && object_getClass(anObject) == FSNumberClass)   // anObject is casted to avoid the warning "static access to object of type id"
       [(ArrayRepDouble *)rep replaceDoubleAtIndex:index withDouble:((FSNumber *)anObject)->value];
     else if (anObject && isNSNumberWithLosslessConversionToDouble(anObject)) 
       [(ArrayRepDouble *)rep replaceDoubleAtIndex:index withDouble:[anObject doubleValue]];
