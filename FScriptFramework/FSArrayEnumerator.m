@@ -50,7 +50,7 @@
     if (increment == 1)
       return (FSArray *)[array subarrayWithRange:NSMakeRange(next, (last-next)+1)];
     else
-      return (FSArray *)[array subarrayWithRange:NSMakeRange(0, next+1)];
+      return [(FSArray *)[array subarrayWithRange:NSMakeRange(0, next+1)] reverse];
   }
 }
 
