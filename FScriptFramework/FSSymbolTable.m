@@ -119,7 +119,9 @@
 
 void __attribute__ ((constructor)) initializeForSymbolTabletoFSSymbolTableTransition(void)
 {
+#if !TARGET_OS_IPHONE
   [NSUnarchiver decodeClassName:@"SymbolTable" asClassName:@"FSSymbolTable"];
+#endif
   [NSKeyedUnarchiver setClass:[FSSymbolTable class] forClassName:@"SymbolTable"];
 }
 

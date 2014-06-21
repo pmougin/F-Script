@@ -1,7 +1,7 @@
 /* FSReturnSignal.h Copyright (c) 2006 Philippe Mougin. */ 
 /* This software is open source. See the license.            */
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 @class FSBlock, FSSymbolTable;
 

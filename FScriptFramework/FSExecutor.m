@@ -13,7 +13,6 @@
 #import "FSSymbolTable.h"
 #import "FSExecEngine.h"
 #import <Foundation/Foundation.h>
-#import <Foundation/NSDebug.h>
 #import "FSArray.h"
 #import "FSCompilationResult.h"
 #import "FSBoolean.h"
@@ -23,7 +22,6 @@
 #import "BlockStackElem.h"
 #import "FSBlock.h"
 #import "BlockPrivate.h"
-#import "BlockInspector.h"
 #import "FSNumber.h"
 #import "FSVoid.h"
 #import "FSMiscTools.h"
@@ -32,7 +30,9 @@
 void __attribute__ ((constructor)) initializeFSExecutor(void) 
 {
   [NSKeyedUnarchiver setClass:[FSExecutor class] forClassName:@"Executor"];
+#if !TARGET_OS_IPHONE
   [NSUnarchiver decodeClassName:@"Executor" asClassName:@"FSExecutor"];  
+#endif
 }
 
 @implementation FSExecutor

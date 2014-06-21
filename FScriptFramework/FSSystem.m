@@ -15,11 +15,16 @@
 #import "FSMiscTools.h"
 #import "FSInterpreter.h"
 #import "FSKeyedUnarchiver.h"
-#import <AppKit/AppKit.h>
-#import <CoreData/CoreData.h>
 #import "ArrayRepFetchRequest.h"
 #import "ArrayPrivate.h"
 #import "FSSymbolTable.h"
+#import <CoreData/CoreData.h>
+
+#if TARGET_OS_IPHONE
+# import <AudioToolbox/AudioToolbox.h>
+#else
+# import <AppKit/AppKit.h>
+#endif
 
 @interface FSSystem(SystemInternal)
 - (id)executor;
@@ -119,7 +124,11 @@ static BOOL loadNonKeyedArchives;
 
 - (void)beep 
 {
+#if TARGET_OS_IPHONE
+  AudioServicesPlayAlertSound(0x00001000);
+#else
   NSBeep();
+#endif
 }
  
 - blockFromString:(NSString *)source // May raise
@@ -245,12 +254,16 @@ static BOOL loadNonKeyedArchives;
 
 - (id) load
 {
+#if !TARGET_OS_IPHONE
   NSOpenPanel *openPanel = [NSOpenPanel openPanel];
   
   if([openPanel runModal] == NSOKButton) 
     return [self load:[openPanel filename]];
   else  // cancel button
     return [FSVoid fsVoid];
+#else
+  return [FSVoid fsVoid];
+#endif
 }  
  
 - (id) load:(NSString *)fileName
@@ -307,15 +320,15 @@ static BOOL loadNonKeyedArchives;
   return r;    
 }    
 
-
 - (void)loadSpace
 {
+#if !TARGET_OS_IPHONE
   NSOpenPanel *openPanel = [NSOpenPanel openPanel];
   
   if([openPanel runModal] == NSOKButton) 
      [self loadSpace:[openPanel filename]];
+#endif
 }  
-
 
 // Here is a version of loadSpace requiring the filetype to be of ".space"
 
@@ -350,10 +363,12 @@ static BOOL loadNonKeyedArchives;
 
 - (void)saveSpace
 {
+#if !TARGET_OS_IPHONE
   NSSavePanel *panel = [NSSavePanel savePanel];
     
   if ([panel runModal] == NSOKButton)
     [self saveSpace:[panel filename]];
+#endif
 }      
 
 // Here is a version of saveSpace requiring the filetype to be of ".space"

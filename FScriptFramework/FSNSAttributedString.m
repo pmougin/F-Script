@@ -2,13 +2,17 @@
 /*   This software is open source. See the license.   */
 
 #import "FSNSAttributedString.h"
-#import "FSAttributedStringInspector.h"
+#if !TARGET_OS_IPHONE
+# import "FSAttributedStringInspector.h"
+#endif
 
 @implementation NSAttributedString (FSNSAttributedString)
 
 -(void)inspect
 {
+#if !TARGET_OS_IPHONE
   [FSAttributedStringInspector attributedStringInspectorWithAttributedString:self];
+#endif
 }
 
 @end

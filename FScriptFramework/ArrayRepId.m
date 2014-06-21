@@ -15,7 +15,6 @@
 #import "FSBlock.h"
 #import "BlockRep.h" 
 #import "BlockPrivate.h"
-#import "BlockInspector.h" 
 #import "FSExecEngine.h"
 #import "FSPattern.h"
 #import "FSExecEngine.h" // sendMsg

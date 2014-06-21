@@ -7,14 +7,10 @@
 #import "BlockStackElem.h"
 #import "FSBlock.h"
 #import "BlockPrivate.h"
-#import "BlockInspector.h"
 #import "FSArray.h"
 #import "build_config.h"
 #import <objc/objc.h>
-#import <ExceptionHandling/NSExceptionHandler.h>
-#import <Cocoa/Cocoa.h>
-#import "FSCollectionInspector.h"
-#import "FSGenericObjectInspector.h"
+#import <Foundation/Foundation.h>
 #import "FSInterpreter.h"
 //#import "FScript.h"
 #import "FSNSArrayPrivate.h"
@@ -24,7 +20,14 @@
 #include <stdio.h>
 #include <limits.h>
 #import <objc/objc-runtime.h>
-#import "FSManagedObjectContextInspector.h"
+
+#if TARGET_OS_IPHONE
+# import <UIKit/UIFont.h>
+#else
+# import <AppKit/NSFont.h>
+# import "FSGenericObjectInspector.h"
+# import "FSCollectionInspector.h"
+#endif
 
 @class _NSZombie, NSFault, NSRTFD;
 
@@ -247,9 +250,11 @@ char FSEncode(const char *foundationEncodeStyleStr)
     // This is why we have the additional strncmp calls below         
                               
     if       (strcmp(ptr,@encode(NSRange))            == 0 || strncmp(ptr,"{_NSRange="         , 10) == 0) return fscode_NSRange;
+#if !TARGET_OS_IPHONE
     else if  (strcmp(ptr,@encode(NSPoint))            == 0 || strncmp(ptr,"{_NSPoint="         , 10) == 0) return fscode_NSPoint;
     else if  (strcmp(ptr,@encode(NSSize))             == 0 || strncmp(ptr,"{_NSSize="          ,  9) == 0) return fscode_NSSize;
     else if  (strcmp(ptr,@encode(NSRect))             == 0 || strncmp(ptr,"{_NSRect="          ,  9) == 0) return fscode_NSRect;
+#endif
     else if  (strcmp(ptr,@encode(CGPoint))            == 0 || strncmp(ptr,"{CGPoint="          ,  9) == 0) return fscode_CGPoint;
     else if  (strcmp(ptr,@encode(CGSize))             == 0 || strncmp(ptr,"{CGSize="           ,  8) == 0) return fscode_CGSize;
     else if  (strcmp(ptr,@encode(CGRect))             == 0 || strncmp(ptr,"{CGRect="           ,  8) == 0) return fscode_CGRect;
@@ -288,6 +293,7 @@ BOOL FSIsIgnoredSelector(SEL selector)
 
 void inspect(id object, FSInterpreter *interpreter, id argument)
 {
+#if !TARGET_OS_IPHONE
   BOOL error = NO;
   
   if (object == nil)
@@ -313,6 +319,7 @@ void inspect(id object, FSInterpreter *interpreter, id argument)
       else [FSGenericObjectInspector genericObjectInspectorWithObject:object];
     }  
   }    
+#endif
 }
 
 void inspectCollection(id collection, FSSystem *system, NSArray *blocks)  // Factorize some code that would be duplicated in each collection class otherwise
@@ -332,8 +339,9 @@ void inspectCollection(id collection, FSSystem *system, NSArray *blocks)  // Fac
       if ([[blocks objectAtIndex:i] argumentCount] > 1)
         FSExecError(@"argument 2 of method \"inspectWithSystem:blocks:\" must be an array of blocks taking no more than one argument");
     }
-  
+#if !TARGET_OS_IPHONE
   [FSCollectionInspector collectionInspectorWithCollection:collection interpreter:(system ? [system interpreter] : [FSInterpreter interpreter]) blocks:blocks];
+#endif
 }
 
 void FSInspectBlocksInCallStackForException(id exception)
@@ -378,6 +386,7 @@ void inspectBlocksInCallStack(NSArray *callStack)
   [distinctBlocks release];
 }
 
+#if !TARGET_OS_IPHONE
 BOOL isKindOfClassNSDistantObject(id object) 
 {
   Class cls = [object class];
@@ -401,6 +410,7 @@ BOOL isKindOfClassNSProtocolChecker(id object)
 
   return cls == [NSProtocolChecker class];
 }
+#endif
 
 BOOL isKindOfClassNSProxy(id object) 
 {
@@ -470,7 +480,11 @@ NSString *printStringLimited(id object, NSUInteger limit) // Hack. A better sche
 CGFloat systemFontSize(void)
 {
   //[[NSUserDefaults standardUserDefaults] floatForKey:@"FScriptFontSize"] + ([NSFont systemFontSize] - [[NSFont userFixedPitchFontOfSize:-1] pointSize]);
+#if TARGET_OS_IPHONE
+  return MAX([UIFont systemFontSize]-1, [[NSUserDefaults standardUserDefaults] floatForKey:@"FScriptFontSize"]);
+#else
   return MAX([NSFont systemFontSize]-1, [[NSUserDefaults standardUserDefaults] floatForKey:@"FScriptFontSize"]);
+#endif
 }
 
 CGFloat userFixedPitchFontSize(void)

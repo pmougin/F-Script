@@ -20,8 +20,11 @@
 #import <objc/objc-runtime.h>
 #import "FSMiscTools.h"
 #import <objc/objc-api.h>
-#import <AppKit/AppKit.h>
 #import "FSAssociation.h"
+
+#if !TARGET_OS_IPHONE
+# import <AppKit/AppKit.h>
+#endif
 
 @interface NSObject (DebugDescriptionDeclaration) 
 
@@ -150,6 +153,7 @@
        
 - (void)save
 {
+#if !TARGET_OS_IPHONE
   NSSavePanel *panel = [NSSavePanel savePanel];
   //const char *dir;
   //dir = NXHomeDirectory();  
@@ -157,6 +161,7 @@
   
   if ([panel runModal] == NSOKButton)
     [self save:[panel filename]];
+#endif
 }      
 
 - (void)throw
@@ -164,6 +169,12 @@
   @throw self;
 }
  
+#if TARGET_OS_IPHONE
+- (id) vend:(NSString *)operand
+{
+  return nil;
+}
+#else
 - (NSConnection *)vend:(NSString *)operand
 {
   NSConnection *theConnection;
@@ -179,6 +190,7 @@
   }
   else return theConnection;
 }
+#endif
 
 ///////////////////////////////// PRIVATE FOR USE BY FSExecEngine ///////////////
 

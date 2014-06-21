@@ -1,8 +1,13 @@
 /*   FSMethod.h Copyright (c) 2007-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.     */   
 
-#import <Cocoa/Cocoa.h>
-#include <ffi/ffi.h>
+#import <Foundation/Foundation.h>
+
+#if TARGET_OS_IPHONE
+# include "ffi.h"
+#else
+# include <ffi/ffi.h>
+#endif
 
 @class FSBlock, FSSymbolTable, FSCNBase;
  

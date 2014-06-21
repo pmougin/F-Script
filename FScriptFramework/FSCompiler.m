@@ -8,7 +8,7 @@
 #import "FSArray.h" 
 #import "FSBlock.h"
 #import "MessagePatternCodeNode.h"
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 #import "FSSymbolTable.h"
 #import <objc/objc.h> // sel_getName()
 #import <objc/runtime.h>
@@ -1623,12 +1623,14 @@ static NSString *FSOperatorFromObjCOperatorName(NSString *operatorName)  // ex: 
   else if ([typeBeforePointerMarks isEqualToString:@"double"])                    encoded = @encode(double);
   else if ([typeBeforePointerMarks isEqualToString:@"CGFloat"])                   encoded = @encode(CGFloat);
   else if ([typeBeforePointerMarks isEqualToString:@"NSRange"])                   encoded = @encode(NSRange);
-  else if ([typeBeforePointerMarks isEqualToString:@"NSPoint"])                   encoded = @encode(NSPoint);
   else if ([typeBeforePointerMarks isEqualToString:@"CGPoint"])                   encoded = @encode(CGPoint);
-  else if ([typeBeforePointerMarks isEqualToString:@"NSRect"])                    encoded = @encode(NSRect);
   else if ([typeBeforePointerMarks isEqualToString:@"CGRect"])                    encoded = @encode(CGRect);
-  else if ([typeBeforePointerMarks isEqualToString:@"NSSize"])                    encoded = @encode(NSSize);
   else if ([typeBeforePointerMarks isEqualToString:@"CGSize"])                    encoded = @encode(CGSize);
+#if !TARGET_OS_IPHONE
+  else if ([typeBeforePointerMarks isEqualToString:@"NSPoint"])                   encoded = @encode(NSPoint);
+  else if ([typeBeforePointerMarks isEqualToString:@"NSRect"])                    encoded = @encode(NSRect);
+  else if ([typeBeforePointerMarks isEqualToString:@"NSSize"])                    encoded = @encode(NSSize);
+#endif
   else if ([typeBeforePointerMarks isEqualToString:@"CGAffineTransform"])         encoded = @encode(CGAffineTransform);
   else if (NSClassFromString(typeBeforePointerMarks) != nil || [typeBeforePointerMarks isEqualToString:compilationContext.className])
   {  

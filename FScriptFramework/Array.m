@@ -23,7 +23,6 @@
 #import "FSNSArrayPrivate.h"
 #import "FSArrayEnumerator.h"
 #import "FSNSMutableArray.h"
-#import "FSCollectionInspector.h"
 #import "FSReplacementForCoderForNilInArray.h"
 
 @interface Array(ArrayPrivateInternal)
@@ -331,6 +330,7 @@ typedef struct fs_objc_object {
   assert(0);
 }
 
+#if !TARGET_OS_IPHONE
 - (id)replacementObjectForPortCoder:(NSPortCoder *)encoder 
 // Overhide the NSArray behavior (which is to pass arrays by copy by default), with a by reference behavior by default. 
 // This is because passing an object by copy only works if the receiving process is linked with the class of the object.
@@ -338,6 +338,7 @@ typedef struct fs_objc_object {
 {
   assert(0);
 }
+#endif
 
 - (void)replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject
 {

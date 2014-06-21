@@ -239,6 +239,20 @@
   return [FSNumber numberWithDouble:[self doubleValue] - [operand doubleValue]];
 }  
 
+#if TARGET_OS_IPHONE
+- (CGPoint)operator_less_greater:(NSNumber *)operand
+{
+  FSVerifClassArgsNoNil(@"<>",1,operand,[NSNumber class]);
+  
+  double selfValue = [self doubleValue];
+  double operandValue = [operand doubleValue];
+  
+  if (selfValue    < -CGFLOAT_MAX || selfValue    > CGFLOAT_MAX) FSExecError([NSString stringWithFormat:@"receiver of message \"<>\" has a value of %g. Expected value must be in the range [%.15g, %.15g].",selfValue,(double)-CGFLOAT_MAX,(double)CGFLOAT_MAX]);
+  if (operandValue < -CGFLOAT_MAX || operandValue > CGFLOAT_MAX) FSExecError([NSString stringWithFormat:@"argument of message \"<>\" has a value of %g. Expected value must be in the range [%.15g, %.15g].",selfValue,(double)-CGFLOAT_MAX,(double)CGFLOAT_MAX]);
+  
+  return CGPointMake(selfValue,operandValue); 
+}
+#else
 - (NSPoint)operator_less_greater:(NSNumber *)operand
 {
   FSVerifClassArgsNoNil(@"<>",1,operand,[NSNumber class]);
@@ -251,7 +265,7 @@
   
   return NSMakePoint(selfValue,operandValue); 
 }
-
+#endif
 
 - (NSNumber *)operator_plus:(id)operand
 {

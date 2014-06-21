@@ -6,7 +6,6 @@
 #import "ArrayRepBoolean.h" 
 #import "BlockPrivate.h" 
 #import "BlockRep.h"
-#import "BlockInspector.h"
 #import "string.h"          // memcpy() 
 #import "ArrayPrivate.h"
 #import "FSNumber.h" 

@@ -4,13 +4,16 @@
 #import "build_config.h"
 
 #import "FSInterpreter.h"
-#import "FSInterpreterPrivate.h"
 #import "FSExecutor.h"
 #import "FSBooleanPrivate.h"
 #import "FSVoidPrivate.h"
 #import "FSArray.h"
-#import "FSObjectBrowser.h"
 #import "FSCompiler.h"
+
+#if !TARGET_OS_IPHONE
+# import "FSInterpreterPrivate.h"
+# import "FSObjectBrowser.h"
+#endif
 
 @implementation FSInterpreter
 
@@ -53,6 +56,15 @@
   return [[[self alloc] init] autorelease];
 }
 
+#if TARGET_OS_IPHONE
+- (void)browse {
+
+}
+
+- (void)browse:(id)anObject {
+
+}
+#else
 - (FSObjectBrowserButtonCtxBlock *) objectBrowserButtonCtxBlockFromString:(NSString *)source // May raise
 {
   return [FSObjectBrowserButtonCtxBlock blockWithSource:source parentSymbolTable:[executor symbolTable]]; // May raise
@@ -69,6 +81,7 @@
 {
   [[FSObjectBrowser objectBrowserWithRootObject:anObject interpreter:self] makeKeyAndOrderFront:nil];
 }
+#endif
 
 -(void)dealloc
 {

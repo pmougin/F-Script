@@ -39,12 +39,14 @@ union ObjCValue
   float              floatValue;
   double             doubleValue;
   NSRange            NSRangeValue;
-  NSSize             NSSizeValue;
   CGSize             CGSizeValue;
-  NSPoint            NSPointValue;
   CGPoint            CGPointValue;
-  NSRect             NSRectValue;
   CGRect             CGRectValue;
+#if !TARGET_OS_IPHONE
+  NSSize             NSSizeValue;
+  NSPoint            NSPointValue;
+  NSRect             NSRectValue;
+#endif
   CGAffineTransform  CGAffineTransformValue;
   void *             voidPtrValue;  
 };

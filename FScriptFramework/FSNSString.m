@@ -77,7 +77,14 @@
 
 - (id)asClass { return NSClassFromString(self); }
 
-- (NSDate *) asDate { return [NSDate dateWithNaturalLanguageString:self]; }
+- (NSDate *) asDate { 
+#if TARGET_OS_IPHONE
+  NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+  return [formatter dateFromString:self];
+#else
+  return [NSDate dateWithNaturalLanguageString:self]; 
+#endif
+}
 
 /*-(id) asPointer
 {
@@ -184,13 +191,21 @@
 
 - (id) connect 
 { 
+#if TARGET_OS_IPHONE
+  return nil;
+#else
   return [NSConnection rootProxyForConnectionWithRegisteredName:self host:nil];
+#endif
 }
 
 - (id) connectOnHost:(NSString *)operand 
 {
+#if TARGET_OS_IPHONE
+  return nil;
+#else
   VERIF_OP_NSSTRING(@"connectOnHost:")
   return [NSConnection rootProxyForConnectionWithRegisteredName:self host:operand];
+#endif
 }
 
 - (NSString *)max:(NSString *)operand

@@ -1,7 +1,7 @@
 /* FSObjectFormatter.m Copyright (c) 2002-2009 Philippe Mougin.  */
 /*   This software is open source. See the license.  */  
 
-#import <AppKit/AppKit.h>
+#import <Foundation/Foundation.h>
 #import "FSObjectFormatter.h"
 #import "FSNSObject.h"
 #import "FSMiscTools.h"

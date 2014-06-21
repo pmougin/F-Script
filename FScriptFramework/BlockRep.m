@@ -9,7 +9,6 @@
 #import "FSArray.h"
 #import <Foundation/Foundation.h> 
 #import "FSBoolean.h"
-#import "BlockInspector.h"
 #import "FScriptFunctions.h"
 #import "FSUnarchiver.h" 
 #import "FSKeyedUnarchiver.h"

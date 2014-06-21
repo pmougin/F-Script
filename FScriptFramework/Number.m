@@ -169,10 +169,17 @@
   assert(0);
 }        
 
+#if TARGET_OS_IPHONE
+- (CGPoint)operator_less_greater:(NSNumber *)operand
+{
+  assert(0);
+}
+#else
 - (NSPoint)operator_less_greater:(NSNumber *)operand
 {
   assert(0);
 }
+#endif
 
 - (NSNumber *)operator_plus:(id)operand
 {

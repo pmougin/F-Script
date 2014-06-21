@@ -3,8 +3,11 @@
 
 #import <Foundation/Foundation.h>
 
-
+#if TARGET_OS_IPHONE
+@interface FSArchiver : NSKeyedArchiver 
+#else
 @interface FSArchiver : NSArchiver 
+#endif
 {}
 
 - (void)encodeValueOfObjCType:(const char *)valueType at:(const void *)address;

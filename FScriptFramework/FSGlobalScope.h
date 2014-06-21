@@ -1,7 +1,7 @@
 /*   FSGlobalScope.h Copyright (c) 2009 Philippe Mougin.   */
 /*   This software is open source. See the license.        */  
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 @class FSGlobalScope;
 
