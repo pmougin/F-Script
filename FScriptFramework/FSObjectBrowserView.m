@@ -1861,7 +1861,7 @@ static NSMutableArray *customButtons = nil;
       [arguments addObject:[result result]];
     else
     {
-      NSMutableString *errorArgumentString = [NSString stringWithFormat:@"Argument %ld %@", (long)(i+1), [result errorMessage]];
+      NSString *errorArgumentString = [NSString stringWithFormat:@"Argument %ld %@", (long)(i+1), [result errorMessage]];
 
       [result inspectBlocksInCallStack];
       [f selectTextAtIndex:i];
